@@ -30,7 +30,7 @@ nav
     align-items: center;
 }
 
-nav a
+header a
 {
     color:white;
     text-decoration:none;
@@ -91,6 +91,16 @@ footer
     filter:saturate(100%);
 }
 
+.formulario-projeto form
+{
+    width: 42em;
+}
+
+.formulario-projeto-datas span
+{
+    width: 11em;
+}
+
 @media (max-width: 991px) 
 {
     .foto-perfil
@@ -136,3 +146,8 @@ footer
         right:40px;
     }
 }
+
+
+
+
+
