@@ -1,0 +1,138 @@
+
+body
+{
+    width: 100%;
+}
+
+.cor-padrao
+{
+    background-color: rgb(0, 122, 204);
+    color:white;
+}
+
+header
+{
+    position: fixed;
+    width: 100%;
+
+    display: flex;
+    justify-content:space-between;
+
+    padding: 10px;
+
+    z-index:2000;
+}
+
+nav
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+nav a
+{
+    color:white;
+    text-decoration:none;
+    padding-right: 1em;
+}
+
+header h2
+{
+    position: relative;
+    right:96px;
+}
+
+.foto-perfil img
+{
+    width:200px;
+    height:200px;
+}
+
+.descricao
+{
+    text-align: justify;
+}
+
+.projetos
+{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.projetos .card
+{
+    margin-right: 1em;
+    margin-bottom: 1em;
+    width: 47%;
+}
+
+footer
+{
+    padding: 1em;
+    width: 100%;
+}
+
+.icones
+{
+    padding-top: 10px;
+}
+
+.icones img
+{
+    height: 40px;
+    filter:saturate(0);
+
+    transition: filter 0.5s ease;
+}
+
+.icones img:hover
+{
+    filter:saturate(100%);
+}
+
+@media (max-width: 991px) 
+{
+    .foto-perfil
+    {
+        text-align: center;
+    }
+
+    .projetos .card
+    {
+        width: 100%;
+    }
+
+    .icones img
+    {
+        height: 60px;
+    }
+}
+
+@media (max-width: 768px)
+{
+    nav
+    {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav p
+    {
+        padding: 0;
+        margin: 0;
+
+        text-align: left;
+    }
+
+    .header-fix
+    {
+        padding-top:28px;
+    }
+
+    header h2
+    {
+        right:40px;
+    }
+}
