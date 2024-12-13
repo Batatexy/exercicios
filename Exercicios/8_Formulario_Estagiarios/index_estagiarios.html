@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style_estagiarios.css"> 
+</head>
+
+<body>
+    <div class="fundo-branco">
+
+    </div>
+
+    <main>
+        <form>
+            <div class="campo">
+                <label for="estagiario" class="col-sm-2 col-form-label">Nome do Estagiário</label>
+                <input class="borda" type="text" id="estagiario" placeholder="Digite o Nome do Estagiário">
+            </div>
+
+            <div class="campo">
+                <label for="modulo" class="col-sm-2 col-form-label">Módulo</label>
+                <input class="borda" type="text" id="modulo" placeholder="Digite o Módulo">
+            </div>
+            
+            <div class="colunas">
+                <div>
+                    <label for="data-inicio" class="form-label mt-4">Data Início</label>
+                    <input class="borda" type="date" id="data-inicio">
+                </div>
+                
+                <div>
+                    <label for="data-fim" class="form-label mt-4">Data Fim</label>
+                    <input class="borda" type="date" id="data-fim">
+                </div>
+            </div>
+
+            <label for="prova-teorica" class="col-sm-2 col-form-label">Notas do Estagiário</label>
+            
+            <div class="colunas">
+                <div>
+                    <input class="borda" type="number" id="prova-teorica" placeholder="Prova Teórica">
+                </div>
+
+                <div>
+                    <input class="borda" type="number" id="prova-pratica" placeholder="Prova Prática">
+                </div>
+            </div>
+
+            <div>
+                <button type="submit" class="borda botao-enviar">Enviar</button>
+            </div>
+            
+            
+
+
+             
+            
+        </form>
+    </main>
+</body>
+</html>

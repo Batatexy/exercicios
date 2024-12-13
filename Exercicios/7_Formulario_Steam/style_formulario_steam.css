@@ -72,6 +72,11 @@ label
     color:white;
 }
 
+.form-floating input
+{
+    position: relative;
+}
+
 @media (max-width:574px)
 {
     .formulario-comprar-jogos img
