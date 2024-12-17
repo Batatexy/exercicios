@@ -9,17 +9,14 @@
 </head>
 
 <body>
-    
     <div class="container calculadora-simples text-center mt-5 mb-5">
         <h2>
             Calculadora Insana
         </h2>
 
-        
         <input type="number" id="numero-um">
         <input type="number" id="numero-dois">
    
-
         <div class="d-flex justify-content-center">
             <button class="btn btn-primary m-1" 
             onclick="calcular(
@@ -39,24 +36,18 @@
         </div>
     </div>
 
-
-
-
-
-
-
-    <div class="container calculadora-complexa text-center">
+    <div class="container calculadora-complexa text-center mb-5">
         <h2>
             Calculadora Mega Insana
         </h2>
 
         <div class="d-flex justify-content-center align-items-center">
             <h3 class="d-flex flex-column justify-content-center align-items-end">
-                <div id="resultado">
+                <div id="digitando-numero">
                     0
                 </div>
 
-                <div id="resultado-dois">
+                <div id="numero-calculado">
                     
                 </div>
             </h3>
@@ -71,38 +62,39 @@
                     <path d="M13.683 1a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-7.08a2 2 0 0 1-1.519-.698L.241 8.65a1 1 0 0 1 0-1.302L5.084 1.7A2 2 0 0 1 6.603 1zm-7.08 1a1 1 0 0 0-.76.35L1 8l4.844 5.65a1 1 0 0 0 .759.35h7.08a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z"/>
                   </svg>
             </button>
-            <button class="btn btn-outline-primary m-1 porcentagem">%</button>
-            <button class="btn btn-outline-primary m-1 divisao">÷</button>
+            <button class="btn btn-outline-primary m-1 simbolo">%</button>
+            <button class="btn btn-outline-primary m-1 simbolo">÷</button>
         </div>
 
         <div class="d-flex justify-content-center">
-            <button class="btn btn-secondary m-1 sete">7</button>
-            <button class="btn btn-secondary m-1 oito">8</button>
-            <button class="btn btn-secondary m-1 nove">9</button>
-            <button class="btn btn-outline-primary m-1 vezes">×</button>
+            <button class="btn btn-secondary m-1 numero">7</button>
+            <button class="btn btn-secondary m-1 numero">8</button>
+            <button class="btn btn-secondary m-1 numero">9</button>
+            <button class="btn btn-outline-primary m-1 simbolo">×</button>
         </div>
 
         <div class="d-flex justify-content-center">
-            <button class="btn btn-secondary m-1 quatro">4</button>
-            <button class="btn btn-secondary m-1 cinco">5</button>
-            <button class="btn btn-secondary m-1 seis">6</button>
-            <button class="btn btn-outline-primary m-1 menos">−</button>
+            <button class="btn btn-secondary m-1 numero">4</button>
+            <button class="btn btn-secondary m-1 numero">5</button>
+            <button class="btn btn-secondary m-1 numero">6</button>
+            <button class="btn btn-outline-primary m-1 simbolo">−</button>
         </div>
 
         <div class="d-flex justify-content-center">
-            <button class="btn btn-secondary m-1 um">1</button>
-            <button class="btn btn-secondary m-1 dois">2</button>
-            <button class="btn btn-secondary m-1 tres">3</button>
-            <button class="btn btn-outline-primary m-1 mais">+</button>
+            <button class="btn btn-secondary m-1 numero">1</button>
+            <button class="btn btn-secondary m-1 numero">2</button>
+            <button class="btn btn-secondary m-1 numero">3</button>
+            <button class="btn btn-outline-primary m-1 simbolo">+</button>
         </div>
 
         <div class="d-flex justify-content-center">
-            <button class="btn btn-secondary m-1 zero">0</button>
+            <button class="btn btn-secondary m-1 numero zero">0</button>
             <button class="btn btn-secondary m-1 virgula">,</button>
             <button class="btn btn-primary m-1 igual">=</button>
         </div>
     </div>
 
-    <script src="script_calculadora.js"></script>
+    <script src="script_calculadora_simples.js"></script>
+    <script src="script_calculadora_complexa.js"></script>
 </body>
 </html>

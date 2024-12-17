@@ -17,6 +17,10 @@
     border-radius: 4px;
 }
 
+
+
+
+
 .calculadora-complexa h3
 {
     width: 224px;
@@ -30,12 +34,11 @@
     right:18px;
 }
 
-.calculadora-complexa #resultado-dois
+.calculadora-complexa #numero-calculado
 {
     color:blue;
     font-size:14px;
 }
-
 
 .calculadora-complexa h3 div
 {
@@ -53,4 +56,3 @@
 {
     width: 108px;
 }
-
