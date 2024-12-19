@@ -1,94 +1,33 @@
-const joao = 
-{
-  nome: "João",
-  idade: 12,
-  materiasFavoritas: ["Matematica", "Portugues"],
-  falar: (mensagem) => console.log(mensagem),
-  amigo: 
-  {
-    nome: "Lucas",
-    idade: 12,
-  },
-};
-
-const pedro = 
-{
-  nome: "João",
-  idade: 12,
-  materiasFavoritas: ["Matematica", "Portugues"],
-  falar: (mensagem) => console.log(mensagem),
-  amigo: 
-  {
-    nome: "Lucas",
-    idade: 12,
-  },
-};
-
-const pessoas = 
-[
-  joao,
-  pedro,
-  {
-    nome: "Maria",
-    idade: 12,
-    materiasFavoritas: ["Matematica", "Portugues"],
-    falar: (mensagem) => console.log(mensagem),
-    amigo: 
-    {
-      nome: "Lucas",
-      idade: 12,
-    },
-  },
-];
-
-const prop = "amigo"
-
-const lista = 
-{
-    bloco1: 
-    {
-        titulo: "Titulo 1",
-        descricao: "Descrição 1",
-        editar: () => console.log(mensagem),
-        aplicar: () => console.log(mensagem),
-        remover: () => console.log(mensagem),
-    },
-
-    bloco2: 
-    {
-        titulo: "Titulo 2",
-        descricao: "Descrição 2",
-        editar: () => console.log(mensagem),
-        aplicar: () => console.log(mensagem),
-        remover: () => console.log(mensagem),
-    },
-};
+var titulo = "";
+var descricao = "";
 
 const htmlBlocos = document.querySelector(".blocos");
 document.querySelector("#adicionar svg").addEventListener("click", () =>
 {
     //Criar e colocar classes na tag li
     const elementoNovo = document.createElement("li");
-    elementoNovo.className = "cartao d-flex flex-column";
+    elementoNovo.className = "cartao";
 
     //Coloca dentro de li
     elementoNovo.innerHTML = 
     `
-        <textarea class="text-center text-capitalize titulo"></textarea>
+      <div class="d-flex flex-column">
+          <textarea class="text-center text-capitalize titulo"></textarea>
+          <textarea class="descricao"></textarea>
+      </div>
         
-        <textarea class="descricao"></textarea>
-        
-        <div class="opcoes d-flex flex-row">
-        <button class="editar">Editar</button>
-
+      <div class="opcoes d-flex flex-row">
         <button class="excluir">Excluir</button>
-        </div>
-        `;
+        <button class="aplicar">Aplicar</button>
+      </div>
+    `;
 
     //Então adiciona à lista htmlBlocos
     htmlBlocos.appendChild(elementoNovo);
     console.clear()
-    
+
+
+
     //Sempre que um novo cartão é adicionada, redefine essa espécie de "matriz"
     //document.querySelectorAll(".cartao").querySelectorAll(".exluir")
     let htmlCartao = document.querySelectorAll(".cartao")
@@ -107,6 +46,90 @@ document.querySelector("#adicionar svg").addEventListener("click", () =>
             });
         });
     });
+
+    //Aplicar e Editar
+    htmlCartao.forEach(function (i) 
+    {
+        let hmtlAplicar = i.querySelectorAll(".aplicar")
+        let hmtlEditar = i.querySelectorAll(".editar")
+
+        //Aplicar
+        hmtlAplicar.forEach(function (j)
+        {
+          j.addEventListener("click", function () 
+          {
+            titulo = "";
+            descricao = "";
+            
+            i.querySelectorAll(".titulo").forEach(function (k) 
+            {
+              titulo = k.value;
+            });
+
+            i.querySelectorAll(".descricao").forEach(function (l) 
+            {
+              descricao = l.value;
+            });
+
+            alteracao = 
+            `
+              <div class="d-flex flex-column">
+                  <h3 class="text-center text-capitalize titulo">${titulo}</h3>
+                  <p class="descricao">${descricao}</p>
+              </div>
+                
+              <div class="opcoes d-flex flex-row">
+                  <button class="editar">Editar</button>
+              </div>
+            `;
+
+            i.innerHTML = alteracao
+          });
+        });
+        
+
+
+        //Editar
+        hmtlEditar.forEach(function (m)
+        {
+          m.addEventListener("click", function () 
+          {
+            titulo = "";
+            descricao = "";
+            
+            i.querySelectorAll(".titulo").forEach(function (n) 
+            {
+              titulo = n.textContent;
+            });
+
+            i.querySelectorAll(".descricao").forEach(function (o) 
+            {
+              descricao = o.textContent;
+            });
+
+            alteracao = 
+            `
+              <div class="d-flex flex-column">
+                  <textarea class="text-center text-capitalize titulo">${titulo}</textarea>
+                  <textarea class="descricao">${descricao}</textarea>
+              </div>
+                
+              <div class="opcoes d-flex flex-row">
+                  <button class="excluir">Excluir</button>
+                  <button class="aplicar">Aplicar</button>
+              </div>
+            `;
+
+            i.innerHTML = alteracao
+          });
+        });
+
+
+
+
+    });
+
+
 });
 
 

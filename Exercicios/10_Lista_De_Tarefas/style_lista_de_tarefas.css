@@ -5,6 +5,17 @@ header
     margin-bottom:10px;
 }
 
+header a
+{
+    color: black;
+    text-decoration: none;
+}
+
+.blocos li
+{
+    list-style:none;
+}
+
 .cartao
 {
     width: 400px;
@@ -31,11 +42,30 @@ header
     margin-bottom:10px;
 }
 
+
+
 .cartao .descricao
 {
     height: 100px;
     margin-bottom:10px;
 }
+
+
+
+.opcoes
+{
+    margin-bottom:10px;
+}
+
+.cartao button
+{
+    width: 50%;
+}
+
+
+
+
+
 
 #adicionar
 {
@@ -62,19 +92,4 @@ header
     transform:scale(1.1);
     background-color: green;
     color:lightgreen;
-}
-
-.opcoes
-{
-    margin-bottom:10px;
-}
-
-.editar
-{
-    width: 50%;
-}
-
-.excluir
-{
-    width: 50%;
 }
