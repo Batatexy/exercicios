@@ -66,7 +66,7 @@ function atualizar(elementoNovo)
     document.querySelectorAll(".item").forEach((i) =>
     {
         let htmlAplicar = i.querySelectorAll(".aplicar")
-        htmlAplicar.forEach((j, index) =>
+        htmlAplicar.forEach((j, itemIndex) =>
         {
             //i= Item --> j= Botão --> k= TextArea
             j.addEventListener("click", () =>
@@ -106,8 +106,8 @@ function atualizar(elementoNovo)
                 }
                 else
                 {
-                    lista[index].titulo = tituloValue;
-                    lista[index].descricao = descricaoValue;
+                    lista[itemIndex].titulo = tituloValue;
+                    lista[itemIndex].descricao = descricaoValue;
 
                     console.clear()
                     console.log(lista);
@@ -121,7 +121,7 @@ function atualizar(elementoNovo)
                                 ${botaoCheck}
                             </button>
                                 <div class="titulo">
-                                    <h4>${lista[index].titulo}</h4>
+                                    <h4>${lista[itemIndex].titulo}</h4>
                                 </div>
                             </div>
                 
@@ -132,7 +132,7 @@ function atualizar(elementoNovo)
                         </div>
                         
                         <div class="descricao">
-                            <p>${lista[index].descricao}</p>
+                            <p>${lista[itemIndex].descricao}</p>
                         </div>
                     </div>
                     `;
@@ -144,7 +144,7 @@ function atualizar(elementoNovo)
 
         //Excluir
         let htmlExcluir = i.querySelectorAll(".excluir")
-        htmlExcluir.forEach((j, index) =>
+        htmlExcluir.forEach((j, itemIndex) =>
         {
             j.addEventListener("click", () =>
             {
@@ -152,7 +152,7 @@ function atualizar(elementoNovo)
                 //if (comfirmar == true)
                 //{
                     //Excluir o item inteiro
-                    lista.pop(index);
+                    lista.splice(itemIndex,1);
                     i.remove();
         
                     console.clear()
@@ -180,7 +180,6 @@ function atualizar(elementoNovo)
                     i.className = "item d-flex flex-column riscado";
                     j.innerHTML = botaoCheckPressed;
                 }
-
             });
         });
 
@@ -196,7 +195,7 @@ function atualizar(elementoNovo)
                     <div class="d-flex justify-content-between">
                         <div class="d-flex check-div">
                             <div class="titulo">
-                                <textarea>${lista[index].titulo}</textarea>
+                                <textarea>${lista[itemIndex].titulo}</textarea>
                             </div>
                         </div>
             
@@ -207,7 +206,7 @@ function atualizar(elementoNovo)
                     </div>
                     
                     <div class="descricao">
-                        <textarea>${lista[index].descricao}</textarea>
+                        <textarea>${lista[itemIndex].descricao}</textarea>
                     </div>
                 </div>
                 `;
