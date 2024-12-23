@@ -1,302 +1,345 @@
 const botaoCheck = `<i class="bi bi-square"></i>`
 const botaoCheckPressed = `<i class="bi bi-check-square-fill"></i>`
 const botaoAplicar = `<i class="bi bi-check2-square" style="font-size:1.2rem; position:relative; top:1px;"></i>`
-const botaoEditar = `<button class="editar" onclick="editar()"><i class="bi bi-pencil-square"></i></button>`
+const botaoEditar = `<i class="bi bi-pencil-square"></i>`
 const botaoExcluir = `<i class="bi bi-x-square"></i>`
 
+const botaoCima = `<i class="bi bi-arrow-up-circle-fill"    style="font-size:2rem; position:relative; top:32px; right:47px;"></i>`                                                  
+const botaoBaixo = `<i class="bi bi-arrow-down-circle-fill" style="font-size:2rem; position:relative; top:72px; right:96px;"></i>`
+
 let lista = []
+console.log(lista.length)
 document.querySelector("#adicionar svg").addEventListener("click", () =>
 {
     var elementoNovo = document.createElement("div");
-    elementoNovo.className = "item d-flex flex-column";
-    elementoNovo.id = lista.length;
-    elementoNovo.innerHTML =
-    `
-        <div class="d-flex justify-content-between">
-            <div class="numero-tarefa">
-                Tarefa ${lista.length + 1}
-            </div>
+    elementoNovo.className = "item-fora";
 
-            <div class="botoes">
-                <button class="aplicar" onclick="aplicar(${lista.length})">
-                    ${botaoAplicar}
-                </button>
-                
-                <button class="excluir" onclick="excluir(${lista.length})">
-                    ${botaoExcluir}
-                </button>
-            </div>
-        </div>
-
-        <div class="d-flex flex-column"> 
-            <div class="titulo">
-                <input type="text" onclick="resetInputTextarea()">
-            </div>
-            
-            <div class="descricao">
-                <textarea onclick="resetInputTextarea()"></textarea>
-            </div>
-        </div>
-    `;
+    let createID = lista.length;
 
     //Cria um objeto
     let novoItem =
     {
+        id: createID,
         status: "ativo",
+        check: false,
         titulo: "",
         descricao: "",
-        elementoNovo: elementoNovo,
     };
-
+    
     //Então adiciona à lista
     lista.push(novoItem);
 
-    console.clear();
-    console.log(lista);
+    elementoNovo.id = createID;
+    elementoNovo.innerHTML = montarItem("criar", lista[createID].id );
 
     //Cria o elemento div
     document.querySelector(".lista").appendChild(elementoNovo);
 });
 
-function aplicar(id)
+function proximoLivre()
 {
+    let quantidade = 0;
 
-    let titulo = "";
-    let descricao = "";
-
-    let tituloValue = "";
-    let descricaoValue = "";
-    
-    itemElement.querySelectorAll(".titulo input").forEach((inputElement) =>
+    for (let i=0; i < lista.length; i++)
     {
-        tituloValue = inputElement.value;
-        console.log(tituloValue);
-    });
-
-    itemElement.querySelectorAll(".descricao textarea").forEach((textareaElement) =>
-    {
-        descricao = textareaElement;
-        descricaoValue = textareaElement.value;
-    });
-
-    //Se o campo estiver vazio
-    if (tituloValue == "" || descricaoValue == "")
-    {
-        console.log("campo vazio");
-
-        if (tituloValue == "")
+        if (lista[i].status == "ativo")
         {
-            titulo.className = "campo-vazio"
-        }
-
-        if (descricaoValue == "")
-        {
-            descricao.className = "campo-vazio"
+            quantidade++;
         }
     }
-    else
-    {
-        lista[itemIndex].titulo = tituloValue;
-        lista[itemIndex].descricao = descricaoValue;
 
-        console.clear()
-        console.log(lista);
-
-        elementoNovo.innerHTML = 
-        `
-        <div class="d-flex flex-column"> 
-            <div class="d-flex justify-content-between">
-                <div class="d-flex check-div">
-                <button class="check">
-                    ${botaoCheck}
-                </button>
-                    <div class="titulo">
-                        <h4>${lista[itemIndex].titulo}</h4>
-                    </div>
-                </div>
-    
-                <div>
-                    ${botaoEditar}
-                    ${botaoExcluir}
-                </div>
-            </div>
-            
-            <div class="descricao">
-                <p>${lista[itemIndex].descricao}</p>
-            </div>
-        </div>
-        `;
-    }
-}
-
-
-
-//Textarea quando clicada volta ao normal
-function resetInputTextarea()
-{
-    document.querySelectorAll("textarea").forEach((textareaElement) =>
-    {
-        textareaElement.className = "";
-    });
+    return quantidade;
 }
 
 function excluir(id)
 {
-    let comfirmar = confirm('Apagar tarefa?')
-    if (comfirmar == true)
-    {
-        //Excluir o item inteiro
-        document.getElementById(id).remove();
+    //if (confirm('Apagar tarefa?'))
+    //{
+        console.clear();
+        console.log(document.getElementById(id));
+        console.log(lista);
 
-        console.clear()
-        console.log(document.getElementById(id))
+        //Excluir o item no html, mas trocar status no vetor
+        document.getElementById(id).remove();
+        lista[id].status = "excluido";
+    //}
+}
+
+function aplicar(id)
+{
+    let itemHtml = document.getElementById(id);
+
+    let titulo = itemHtml.querySelector(".item input");
+    let descricao = itemHtml.querySelector(".item textarea");
+
+    //Se o campo estiver vazio
+    if (!titulo.value || !descricao.value)
+    {
+        console.log("campo vazio");
+
+        if (!titulo.value)
+        {
+            titulo.className = "campo-vazio";
+            titulo.placeholder = "Digite um Título";
+        }
+
+        if (!descricao.value)
+        {
+            descricao.className = "campo-vazio";
+            descricao.placeholder = "Digite uma Descrição";
+        }
+    }
+    else
+    {
+        lista[id].titulo = titulo.value;
+        lista[id].descricao = descricao.value;
+
+        itemHtml.innerHTML = montarItem("aplicar", id );
+    }
+
+    console.clear()
+    console.log(lista);
+}
+
+
+function editar(id)
+{
+    let itemHtml = document.getElementById(id);
+    console.log(itemHtml);
+
+    itemHtml.innerHTML = montarItem("editar", id );
+
+    console.clear();
+    console.log(lista);
+}
+
+function montarItem(funcao, id)
+{
+    let texto = 
+    `
+        <div class="botoes-externos">
+            <button class="mover-cima" onclick="moverCima(${id})">
+                ${botaoCima}
+            </button>
+
+            <button class="mover-baixo" onclick="moverBaixo(${id})">
+                ${botaoBaixo}
+            </button>
+        </div>
+
+        <div class="item d-flex flex-column">
+            <div class="d-flex justify-content-between">
+    `;
+
+    if (funcao == "aplicar")
+    {
+        texto += 
+        ` 
+            <div class="d-flex">
+                <div class="check">
+                    <button onclick="check(${id})">
+        `;
+
+        if (lista[id].check)
+        {
+            texto += botaoCheckPressed;
+        }
+        else
+        {
+            texto += botaoCheck;
+        }
+
+
+        texto += 
+        `
+                    </button>
+                </div>
+        `;
+    }
+
+    //Todos
+    texto += 
+    `
+        <div class="numero-tarefa">
+            Tarefa ${proximoLivre()}
+        </div>
+    `;
+
+    if (funcao == "aplicar")
+    {
+        texto += "</div>";
+    }
+    
+    if (funcao == "criar" || funcao == "editar")
+    {
+        texto +=
+        `
+        <div class="botoes">
+            <button class="aplicar" onclick="aplicar(${id})">
+                ${botaoAplicar}
+            </button>
+                
+            <button class="excluir" onclick="excluir(${id})">
+                ${botaoExcluir}
+            </button>
+        `;
+    }
+    //Aplicar
+    else
+    {
+        texto +=
+        `
+        <div class="botoes">
+            <button class="editar" onclick="editar(${id})">
+                ${botaoEditar}
+            </button>
+                
+            <button class="excluir" onclick="excluir(${id})">
+                ${botaoExcluir}
+            </button>
+        `;
+    }
+
+    if(funcao == "criar" || funcao == "editar")
+    {
+        texto += 
+        `
+            </div>
+        </div>
+
+        <div class="d-flex flex-column"> 
+            <div class="titulo">
+                <input onclick="reset('input', ${id})" type="text" value="${lista[id].titulo}">
+            </div>
+                
+            <div class="descricao">
+                <textarea onclick="reset('textarea', ${id})">${lista[id].descricao}</textarea>
+            </div>
+        </div>
+        `;
+    }
+    //Aplicar
+    else
+    {
+        texto +=
+        `
+                </div>
+            </div>
+        
+            <div class="titulo">
+                <h3>${lista[id].titulo}</h3>
+            </div>
+            
+            <div class="descricao">
+                <p>${lista[id].descricao}</p>
+            </div>
+        `;
+    }
+
+    texto += "</div>"
+
+    return texto;
+}
+
+
+//Check
+function check(id)
+{
+    itemHtml = document.getElementById(id);
+    let check = itemHtml.querySelector(".check button i");
+    console.log(check);
+
+    if (check.className == "bi bi-square")
+    {
+        itemHtml.className += " riscado";
+        check.className = "bi bi-check-square-fill";
+        lista[id].check = true;
+    }
+    else
+    {
+        itemHtml.className = "item-fora";
+        check.className= "bi bi-square";
+
+        lista[id].check = false;
+    }
+
+    console.clear();
+    console.log(lista);
+}
+
+//Textarea quando clicada volta ao normal
+function reset(tipo, id)
+{
+    console.log("Reset");
+    let itemHtml = document.getElementById(id);
+    itemHtml.querySelector(tipo).className = "";
+
+    if (tipo == "textarea")
+    {
+        itemHtml.querySelector(".titulo textarea").className = "";
+    }
+    else
+    {
+        itemHtml.querySelector(".descricao input").className = "";
+    }
+}
+
+function moverCima(id)
+{
+    let itemHtml = document.getElementById(id);
+
+    if (lista[id-1] != null)
+    {
+        let itemDeCima = lista[id-1];
+
+        console.log("Antes da Troca")
+        console.log(itemDeCima)
+        console.log(lista[id])
+
+        
+        lista[id-1]=lista[id];
+
+        lista[id] = itemDeCima;
+        
+
+
+        let htmlDeCima = document.getElementById(id-1);
+        htmlDeCima.innerHTML = montarItem("aplicar", id-1 );
+
+        let itemHtml = document.getElementById(id);
+        itemHtml.innerHTML = montarItem("aplicar", id );
+
+        console.clear();
         console.log(lista);
     }
 }
 
 
-
-/* 
-
-
-function atualizar(elementoNovo)
+function moverBaixo(id)
 {
-    
+    let itemHtml = document.getElementById(id);
 
-    document.querySelectorAll(".item").forEach((i) =>
+    if (lista[id+1] != null)
     {
-        let htmlAplicar = i.querySelectorAll(".aplicar")
-        htmlAplicar.forEach((j, itemIndex) =>
-        {
-            //i= Item --> j= Botão --> k= TextArea
-            j.addEventListener("click", () =>
-            {
-                let titulo = "";
-                let descricao = "";
+        let itemDeBaixo = lista[id+1];
 
-                let tituloValue = "";
-                let descricaoValue = "";
-                
-                i.querySelectorAll(".titulo textarea").forEach((k) =>
-                {
-                    titulo = k;
-                    tituloValue = k.value
-                });
-
-                i.querySelectorAll(".descricao textarea").forEach((k) =>
-                {
-                    descricao = k;
-                    descricaoValue = k.value;
-                });
-
-                //Se o campo estiver vazio
-                if (tituloValue == "" || descricaoValue == "")
-                {
-                    console.log("nulo")
-
-                    if (tituloValue == "")
-                    {
-                        titulo.className = "campo-vazio"
-                    }
-
-                    if (descricaoValue == "")
-                    {
-                        descricao.className = "campo-vazio"
-                    }
-                }
-                else
-                {
-                    lista[itemIndex].titulo = tituloValue;
-                    lista[itemIndex].descricao = descricaoValue;
-
-                    console.clear()
-                    console.log(lista);
-
-                    elementoNovo.innerHTML = 
-                    `
-                    <div class="d-flex flex-column"> 
-                        <div class="d-flex justify-content-between">
-                            <div class="d-flex check-div">
-                            <button class="check">
-                                ${botaoCheck}
-                            </button>
-                                <div class="titulo">
-                                    <h4>${lista[itemIndex].titulo}</h4>
-                                </div>
-                            </div>
-                
-                            <div>
-                                ${botaoEditar}
-                                ${botaoExcluir}
-                            </div>
-                        </div>
-                        
-                        <div class="descricao">
-                            <p>${lista[itemIndex].descricao}</p>
-                        </div>
-                    </div>
-                    `;
-                }
-
-                atualizar(elementoNovo);
-            });
-        });
+        console.log("Antes da Troca")
+        console.log(itemDeBaixo)
+        console.log(lista[id])
 
         
+        lista[id+1]=lista[id];
+        lista[id] = itemDeBaixo;
+        
 
-        //Check
-        let htmlCheck = i.querySelectorAll(".check")
-        htmlCheck.forEach((j) =>
-        {
-            j.addEventListener("click", () =>
-            {
-                console.log(i.className)
-                if (i.className == "item d-flex flex-column riscado")
-                {
-                    i.className = "item d-flex flex-column"
-                    j.innerHTML = botaoCheck;
-                }
-                else
-                {
-                    i.className = "item d-flex flex-column riscado";
-                    j.innerHTML = botaoCheckPressed;
-                }
-            });
-        });
 
-        //Editar
-        let htmlEditar = i.querySelectorAll(".editar")
-        htmlEditar.forEach((j, index) =>
-        {
-            j.addEventListener("click", () =>
-            {
-                elementoNovo.innerHTML = 
-                `
-                <div class="d-flex flex-column"> 
-                    <div class="d-flex justify-content-between">
-                        <div class="d-flex check-div">
-                            <div class="titulo">
-                                <textarea>${lista[itemIndex].titulo}</textarea>
-                            </div>
-                        </div>
-            
-                        <div>
-                            ${botaoAplicar}
-                            ${botaoExcluir}
-                        </div>
-                    </div>
-                    
-                    <div class="descricao">
-                        <textarea>${lista[itemIndex].descricao}</textarea>
-                    </div>
-                </div>
-                `;
+        let htmlDeCima = document.getElementById(id+1);
+        htmlDeCima.innerHTML = montarItem("aplicar", id+1 );
 
-                atualizar(elementoNovo);
-            });
-        });
-    });
-} 
-    
+        let itemHtml = document.getElementById(id);
+        itemHtml.innerHTML = montarItem("aplicar", id );
 
-*/
+        console.clear();
+        console.log(lista);
+    }
+}

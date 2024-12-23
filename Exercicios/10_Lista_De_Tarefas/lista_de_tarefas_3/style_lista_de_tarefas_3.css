@@ -43,7 +43,7 @@ header a
     color:lightgreen;
 }
 
-.lista .item:first-child
+.lista .item-fora:first-child
 {
     margin-top:134px;
 }
@@ -87,12 +87,43 @@ header a
     color:red;
 }
 
-.lista > div
+
+
+.lista .excluir:hover,
+.lista .aplicar:hover,
+.lista .editar:hover
 {
-    margin-top:10px;
+    transform:scale(1.2);
+}
+
+.lista .excluir,
+.lista .aplicar,
+.lista .editar
+{
+    transition: 0.25s ease;
+}
+
+.aviso-vermelho::placeholder
+{
+    color:red;
+}
+
+.item-fora
+{
+    width: 100%;
+}
+
+.botoes-externos
+{
+    position:relative;
+    height: 0;
+}
+
+.lista > div > div
+{
+    margin-top:8px;
     width: 100%;
     list-style: none;
-    border:1px solid black;
 }
 
 .lista h4
@@ -100,6 +131,13 @@ header a
     position: relative;
     top:4px;
     right:10px;
+}
+
+.lista h3
+{
+    position: relative;
+    top:5px;
+    left:3px;
 }
 
 .lista p
@@ -120,10 +158,10 @@ header a
     border:2px solid black;
 }
 
-textarea:focus 
+textarea:focus, input:focus
 { 
     outline: none !important;
-    border:2px solid rgb(255, 150, 23);
+    border:2px solid rgb(255, 150, 23) !important;
 }
 
 .numero-tarefa
@@ -157,7 +195,13 @@ textarea:focus
 
 .lista .campo-vazio
 {
-    border:2px solid red;
+    border:2px solid red !important;
+}
+
+textarea.campo-vazio::placeholder,
+input.campo-vazio::placeholder
+{
+    color:red;
 }
 
 .lista .riscado
@@ -171,3 +215,11 @@ textarea:focus
 {
     margin-right:6px;
 }
+
+.check
+{
+    position: relative;
+    left:8px;
+    top:6px;
+}
+
