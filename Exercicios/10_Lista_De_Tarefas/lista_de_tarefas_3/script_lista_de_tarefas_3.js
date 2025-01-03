@@ -1,9 +1,9 @@
 //Variaveis de icones de botões:
 const botaoCheck = `<i class="bi bi-square"></i>`
 const botaoCheckPressed = `<i class="bi bi-check-square-fill"></i>`
-const botaoAplicar = `<i class="bi bi-check2-square" style="font-size:1.2rem; position:relative; top:1px;"></i>`
+const botaoAplicar = `<i class="bi bi-floppy-fill"></i>`
 const botaoEditar = `<i class="bi bi-pencil-square"></i>`
-const botaoExcluir = `<i class="bi bi-x-square"></i>`
+const botaoExcluir = `<i class="bi bi-trash-fill"></i>`
 
 const botaoCima = `<i class="bi bi-arrow-up-circle-fill"    style="font-size:2rem; position:relative; top:32px; right:47px;"></i>`                                      
 const botaoBaixo = `<i class="bi bi-arrow-down-circle-fill" style="font-size:2rem; position:relative; top:72px; right:96px;"></i>`
@@ -21,14 +21,9 @@ function atualizaTarefasTela() {
 }
 
 function getListaTarefas() {
-    let listaTarefas = [];
-    if (localStorage.getItem("lista")) {
-        listaTarefas = localStorage.getItem("lista") ? JSON.parse(localStorage.getItem("lista")) : [];   
-    } else {
-        localStorage.setItem("lista", JSON.stringify([]));
-    }
-    return listaTarefas;
+    return JSON.parse(localStorage.getItem("lista")) || [];
 }
+
 
 function setTarefa(tarefa) {
     let novaLista = getListaTarefas();
@@ -42,8 +37,6 @@ document.querySelector("#adicionar").addEventListener("click", () => {
 
 function adicionaTarefaTela(tarefa)
 {
-    var elementoNovo = document.createElement("div");
-    elementoNovo.className = "item-fora";
 
     let newId = Math.floor(Math.random() * (100 - 1 + 1) + 1);
 
@@ -58,71 +51,90 @@ function adicionaTarefaTela(tarefa)
         novoItem.titulo = tarefa.titulo;
         novoItem.descricao = tarefa.descricao;
         novoItem.isConcluido = tarefa.isConcluido;        
-        setTarefa(novoItem);
-    }    
-
-    elementoNovo.id = newId;
-    elementoNovo.innerHTML = getTemplateTarefa("criar", newId);
-    document.querySelector(".lista").appendChild(elementoNovo);
-
+    }
+    
+    let elemento = document.createElement("div");
+    elemento.classList.add("d-flex", "w-100");
+    elemento.innerHTML = getTemplateTarefa("criar", novoItem);
+    
+    document.querySelector(".lista").appendChild(elemento);
 }
 
-function getTemplateTarefa(fluxo, id) {
-    return `   
-        <div class="botoes-externos">
-            <button class="mover-cima" onclick="moverCima(${id})">
-                ${botaoCima}
-            </button>
+function salvarItem(id)
+{   
+    let novoItem = {
+        id: id,
+        isConcluido: false
+    };
 
-            <button class="mover-baixo" onclick="moverBaixo(${id})">
-                ${botaoBaixo}
-            </button>
-        </div>
+    novoItem.titulo = document.querySelector(`#${id} .titulo`).value;
+    novoItem.descricao = document.querySelector(`#${id} .descricao`).value;
 
-        <div class="item d-flex flex-column">
-            <div class="d-flex justify-content-between">
-                <div class="numero-tarefa">
-                    Tarefa ${autoIncrement + 1}
-                </div>
-            </div>
+    setTarefa(novoItem);
 
-            <div class="d-flex flex-column"> 
-                <div class="titulo">
-                    <input onclick="reset('input', ${id})" type="text" value="${getListaTarefas()[id] ? getListaTarefas()[id].titulo : ''}">
-                </div>
-                    
-                <div class="descricao">
-                    <textarea onclick="reset('textarea', ${id})">${getListaTarefas()[id] ? getListaTarefas()[id].descricao : ''}</textarea>
-                </div>
-            </div>
+    /* lista.forEach(objeto =>{
+            if(objeto.id === id){
+                lista.titulo = document.querySelector(`#${objetonovo.id}.titulo`).value;
+                lista.descricao = document.querySelector(`#${objetonovo.id}.descricao`).value;
+                setTarefa(lista);
+            };
+        }
+    ); */
 
-            <div class="botoes d-flex justify-content-end">
-
-                ${fluxo == "editar" ?
-                    `
-                    1
-                        <button class="editar" onclick="editar(${id})">
-                                ${botaoEditar}
-                        </button>
-                    `
-                    :
-                    `
-                    2
-                        <button class="aplicar" onclick="aplicar(${id})">
-                            ${botaoAplicar}
-                        </button>
-                    `
-                }
-                <button class="excluir" onclick="salvarIDClick(${id})" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    ${botaoExcluir}
-                </button>           
-            </div>
-        </div>
-    `;       
+    
 }
 
+function editarItem()
+{
+   
+}
 
+function excluirItem()
+{
+    
+}
 
+function getTemplateTarefa(fluxo, objeto) 
+{
+    return `
+    <div class="botoes-ordenacao d-flex flex-column justify-content-center align-items-center col-1 mb-2">
+        <i class="bi bi-arrow-up-circle-fill" style="font-size:2rem;" onclick="moverCima(${objeto.id})" role="button"></i>
+        <i class="bi bi-arrow-down-circle-fill" style="font-size:2rem;" onclick="moverBaixo(${objeto.id})" role="button"></i>
+    </div>
 
+    <div class="item-tarefa col-11 p-1 mb-2"> 
+        <div class="contTarefa row p-1">
+            <h3>
+                Tarefa ${autoIncrement + 1}
+            </h3>
+        </div>     
 
+        <div class="titulo p-1">
+            <input type="text" class="w-100 obrigatorio" value="${getListaTarefas()[objeto.id] ? getListaTarefas()[objeto.id].titulo : ''}">
+        </div>   
 
+        <div class="descricao p-1">
+            <textarea class="w-100 obrigatorio">${getListaTarefas()[objeto.id] ? getListaTarefas()[objeto.id].descricao : ''}</textarea>
+        </div>
+
+        <div class="botoes-acao d-flex justify-content-end">
+
+            ${
+                fluxo == "editar" 
+                ? 
+                `
+                    <i class="bi bi-pencil-square fs-5 me-2 text-primary" role="button" onclick="editarItem(${objeto.id})"></i>
+                `
+                :
+                `
+                    <i class="bi bi-floppy2-fill fs-5 me-2 text-primary" role="button" onclick="salvarItem(${objeto.id})"></i>
+                `
+            }
+
+            <i class="bi bi-trash3-fill fs-5 text-danger" role="button" onclick="excluirItem(${objeto.id})" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
+        </div>  
+
+    </div>
+    `;
+
+}

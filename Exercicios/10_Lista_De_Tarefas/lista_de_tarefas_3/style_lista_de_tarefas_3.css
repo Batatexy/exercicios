@@ -3,7 +3,7 @@ header
     background-color:bisque;
     padding: 1em;
 
-    position: fixed;
+    position: static;
     width: 100%;
     height: 120px;
 
@@ -18,12 +18,6 @@ header a
 
 #adicionar
 {
-    width: 100%;
-    margin:5px;
-}
-
-#adicionar button
-{
     border:1px solid transparent;
     background-color: transparent;
     color:black;
@@ -33,193 +27,28 @@ header a
 
     transition: background-color 0.25s ease, 
     color 0.25s ease, transform 0.25s ease;
-    
 }
 
-#adicionar button:hover
+#adicionar:hover
 {
     transform:scale(1.1);
     background-color: green;
     color:lightgreen;
 }
 
-.lista .item-fora:first-child
+
+
+.item-tarefa
 {
-    margin-top:134px;
-}
-
-.lista button
-{
-    border:0;
-    background-color: transparent;
-}
-
-.lista .aplicar
-{
-    transition: color 0.25s ease;
-    padding: 0;
-}
-
-.lista .aplicar:hover
-{
-    color:green;
-}
-
-.lista .editar
-{
-    transition: color 0.25s ease;
-    padding: 0;
-}
-
-.lista .editar:hover
-{
-    color:blue;
-}
-
-.lista .excluir
-{
-    transition: color 0.25s ease;
-    padding-left: 0;
-}
-
-.lista .excluir:hover
-{
-    color:red;
-}
-
-
-
-.lista .excluir:hover,
-.lista .aplicar:hover,
-.lista .editar:hover
-{
-    transform:scale(1.2);
-}
-
-.lista .excluir,
-.lista .aplicar,
-.lista .editar
-{
-    transition: 0.25s ease;
-}
-
-.aviso-vermelho::placeholder
-{
-    color:red;
-}
-
-.item-fora
-{
-    width: 100%;
-}
-
-.botoes-externos
-{
-    position:relative;
-    height: 0;
-}
-
-.lista > div > div
-{
-    margin-top:8px;
-    width: 100%;
-    list-style: none;
-}
-
-.lista h4
-{
-    position: relative;
-    top:4px;
-    right:10px;
-}
-
-.lista h3
-{
-    position: relative;
-    top:5px;
-    left:3px;
-}
-
-.lista p
-{
-    padding-left:4px
-}
-
-
-.lista .item
-{
-    border:2px solid black;
-}
-
-
-.lista textarea
-{
-    width: 100%;
-    border:2px solid black;
-}
-
-textarea:focus, input:focus
-{ 
-    outline: none !important;
-    border:2px solid rgb(255, 150, 23) !important;
-}
-
-.numero-tarefa
-{
-    padding-left: 10px;
-    font-size:22px;
-}
-
-.titulo, .descricao
-{
-    margin: 10px;
-}
-
-.titulo
-{
-    margin-top:0;
-    margin-bottom:0px;
-}
-
-.titulo input
-{
-    width: 100%;
     border: 2px solid black;
 }
 
-.descricao
+.item-tarefa .titulo
 {
-    margin-top: 6px;
-    margin-bottom: 4px;
+    margin: 0;;
 }
 
-.lista .campo-vazio
+.botoes-acao i:hover
 {
-    border:2px solid red !important;
+    opacity: 0.7 !important;
 }
-
-textarea.campo-vazio::placeholder,
-input.campo-vazio::placeholder
-{
-    color:red;
-}
-
-.lista .riscado
-{
-    text-decoration: line-through;
-    color:gray;
-}
-
-
-.botoes
-{
-    margin-right:6px;
-}
-
-.check
-{
-    position: relative;
-    left:8px;
-    top:6px;
-}
-

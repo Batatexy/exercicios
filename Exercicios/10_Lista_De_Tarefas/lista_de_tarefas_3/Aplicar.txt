@@ -1,0 +1,40 @@
+function aplicar(id)
+{
+    let itemHtml = document.getElementById(id);
+
+    let titulo = itemHtml.querySelector(".item input");
+    let descricao = itemHtml.querySelector(".item textarea");
+
+    //Trocar para data-campo-obrigatorio="true"
+    if (!titulo.value || !descricao.value)
+    {
+        if (!titulo.value)
+        {
+            titulo.className = "campo-vazio";
+            titulo.placeholder = "Digite um Título";
+        }
+
+        if (!descricao.value)
+        {
+            descricao.className = "campo-vazio";
+            descricao.placeholder = "Digite uma Descrição";
+        }
+    }
+    else
+    {
+        getListaTarefas()[id].titulo = titulo.value;
+        getListaTarefas()[id].descricao = descricao.value;
+
+        getListaTarefas()[id].status = "aplicado";
+        itemHtml.innerHTML = montarItem("aplicarTarefa", id );
+    }
+}
+
+function editar(id)
+{
+    let itemHtml = document.getElementById(id);
+
+    itemHtml.innerHTML = montarItem("editarTarefa", id );
+    getListaTarefas()[id].status = "editando";
+
+}
