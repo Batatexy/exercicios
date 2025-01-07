@@ -3,7 +3,7 @@ export function getListaTarefas()
     return JSON.parse(localStorage.getItem("lista")) || [];
 }
 
-export function setTarefa(novaLista) 
+export function setListaTarefas(novaLista) 
 {
     localStorage.setItem("lista", JSON.stringify(novaLista));
 }

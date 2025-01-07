@@ -1,0 +1,167 @@
+[
+  {
+    "id": 1,
+    "badgeText": "Oferta",
+    "imageUrl": "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
+    "imageAlt": "Imagem do Produto Especial",
+    "productName": "Produto Especial",
+    "reviews": 5,
+    "originalPrice": "R$50,00",
+    "discountedPrice": "R$40,00",
+    "buttonText": "Adicionar ao carrinho"
+  },
+  {
+    "id": 2,
+    "badgeText": "Novo",
+    "imageUrl": "https://dummyimage.com/450x300/ced4da/adb5bd.jpg",
+    "imageAlt": "Imagem de Lançamento",
+    "productName": "Lançamento",
+    "reviews": 4,
+    "originalPrice": "R$80,00",
+    "discountedPrice": "R$72,00",
+    "buttonText": "Adicionar ao carrinho"
+  },
+  {
+    "id": 3,
+    "badgeText": "Exclusivo",
+    "imageUrl": "https://dummyimage.com/450x300/6c757d/dee2e6.jpg",
+    "imageAlt": "Imagem do Produto Exclusivo",
+    "productName": "Produto Exclusivo",
+    "reviews": 3,
+    "originalPrice": "R$120,00",
+    "discountedPrice": "R$110,00",
+    "buttonText": "Adicionar ao carrinho"
+  },
+  {
+    "id": 4,
+    "badgeText": "Promoção",
+    "imageUrl": "https://dummyimage.com/450x300/f8f9fa/343a40.jpg",
+    "imageAlt": "Imagem do Produto em Promoção",
+    "productName": "Produto em Promoção",
+    "reviews": 5,
+    "originalPrice": "R$30,00",
+    "discountedPrice": "R$25,00",
+    "buttonText": "Adicionar ao carrinho"
+  },
+  {
+    "id": 5,
+    "badgeText": "Desconto",
+    "imageUrl": "https://dummyimage.com/450x300/e9ecef/dc3545.jpg",
+    "imageAlt": "Imagem do Produto com Desconto",
+    "productName": "Produto com Desconto",
+    "reviews": 4,
+    "originalPrice": "R$200,00",
+    "discountedPrice": "R$180,00",
+    "buttonText": "Adicionar ao carrinho"
+  },
+  {
+    "id": 6,
+    "badgeText": "Novidade",
+    "imageUrl": "https://dummyimage.com/450x300/b6d7a8/6a7f7b.jpg",
+    "imageAlt": "Imagem da Novidade",
+    "productName": "Produto Novidade",
+    "reviews": 5,
+    "originalPrice": "R$60,00",
+    "discountedPrice": "R$50,00",
+    "buttonText": "Adicionar ao carrinho"
+  },
+  {
+    "id": 7,
+    "badgeText": "Popular",
+    "imageUrl": "https://dummyimage.com/450x300/ffc107/343a40.jpg",
+    "imageAlt": "Imagem do Produto Popular",
+    "productName": "Produto Popular",
+    "reviews": 4,
+    "originalPrice": "R$45,00",
+    "discountedPrice": "R$40,00",
+    "buttonText": "Adicionar ao carrinho"
+  },
+  {
+    "id": 8,
+    "badgeText": "Limitado",
+    "imageUrl": "https://dummyimage.com/450x300/adb5bd/6c757d.jpg",
+    "imageAlt": "Imagem do Produto Limitado",
+    "productName": "Produto Limitado",
+    "reviews": 3,
+    "originalPrice": "R$90,00",
+    "discountedPrice": "R$85,00",
+    "buttonText": "Adicionar ao carrinho"
+  },
+  {
+    "id": 9,
+    "badgeText": "Top",
+    "imageUrl": "https://dummyimage.com/450x300/343a40/f8f9fa.jpg",
+    "imageAlt": "Imagem do Produto Top",
+    "productName": "Produto Top",
+    "reviews": 5,
+    "originalPrice": "R$70,00",
+    "discountedPrice": "R$65,00",
+    "buttonText": "Adicionar ao carrinho"
+  },
+  {
+    "id": 10,
+    "badgeText": "Destaque",
+    "imageUrl": "https://dummyimage.com/450x300/e9ecef/6c757d.jpg",
+    "imageAlt": "Imagem do Produto em Destaque",
+    "productName": "Produto em Destaque",
+    "reviews": 4,
+    "originalPrice": "R$100,00",
+    "discountedPrice": "R$90,00",
+    "buttonText": "Adicionar ao carrinho"
+  },
+  {
+    "id": 11,
+    "badgeText": "Imperdível",
+    "imageUrl": "https://dummyimage.com/450x300/6c757d/f8f9fa.jpg",
+    "imageAlt": "Imagem do Produto Imperdível",
+    "productName": "Produto Imperdível",
+    "reviews": 5,
+    "originalPrice": "R$35,00",
+    "discountedPrice": "R$30,00",
+    "buttonText": "Adicionar ao carrinho"
+  },
+  {
+    "id": 12,
+    "badgeText": "Inovação",
+    "imageUrl": "https://dummyimage.com/450x300/dee2e6/343a40.jpg",
+    "imageAlt": "Imagem do Produto Inovador",
+    "productName": "Produto Inovador",
+    "reviews": 4,
+    "originalPrice": "R$85,00",
+    "discountedPrice": "R$75,00",
+    "buttonText": "Adicionar ao carrinho"
+  },
+  {
+    "id": 13,
+    "badgeText": "Oferta Relâmpago",
+    "imageUrl": "https://dummyimage.com/450x300/ced4da/f8f9fa.jpg",
+    "imageAlt": "Imagem da Oferta Relâmpago",
+    "productName": "Oferta Relâmpago",
+    "reviews": 5,
+    "originalPrice": "R$120,00",
+    "discountedPrice": "R$100,00",
+    "buttonText": "Adicionar ao carrinho"
+  },
+  {
+    "id": 14,
+    "badgeText": "Especial",
+    "imageUrl": "https://dummyimage.com/450x300/adb5bd/343a40.jpg",
+    "imageAlt": "Imagem do Produto Especial",
+    "productName": "Produto Especial",
+    "reviews": 5,
+    "originalPrice": "R$40,00",
+    "discountedPrice": "R$35,00",
+    "buttonText": "Adicionar ao carrinho"
+  },
+  {
+    "id": 15,
+    "badgeText": "Único",
+    "imageUrl": "https://dummyimage.com/450x300/6c757d/e9ecef.jpg",
+    "imageAlt": "Imagem do Produto Único",
+    "productName": "Produto Único",
+    "reviews": 4,
+    "originalPrice": "R$55,00",
+    "discountedPrice": "R$50,00",
+    "buttonText": "Adicionar ao carrinho"
+  }
+]

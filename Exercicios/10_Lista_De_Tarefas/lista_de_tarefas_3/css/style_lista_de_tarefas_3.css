@@ -53,6 +53,12 @@ header a
     opacity: 0.7 !important;
 }
 
+
+.item-tarefa .aviso-campo-vazio::placeholder
+{
+    color:red
+}
+
 .item-tarefa .aviso-campo-vazio
 {
     border: 2px solid red;
@@ -68,3 +74,7 @@ header a
 {
     font-size:2rem;
 }
+
+
+
+

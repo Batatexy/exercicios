@@ -1,4 +1,4 @@
-import { getListaTarefas, setTarefa, getContador, setContador, } from "./gettersAndSetters.js";
+import { getListaTarefas, setListaTarefas, getContador, setContador, } from "./gettersAndSetters.js";
 import { getTemplateTarefa, getTemplateDescricao, getTemplateTitulo, getTemplateBotoes } from "./templates.js";
 
 //Quando um campo estiver com a classe de aviso-campo-vazio e for clicado, a classe é removida
@@ -23,6 +23,8 @@ export function salvarItem(objeto)
 
             //Mudar classe do input ou textarea, avisando que precisa ser preenchido
             campo.className += " aviso-campo-vazio"
+
+            return;
         }
     });
 
@@ -30,47 +32,31 @@ export function salvarItem(objeto)
     if (!camposVazios)
     {
         //Puxar valores digitados nos campos
-        let novoObjeto = 
-        {
-            id: objeto.id,
-
-            titulo: itemHTML.querySelector(".titulo input").value,
-            descricao: itemHTML.querySelector(".descricao textarea").value,
-
-            fluxo: objeto.fluxo,
-            isConcluido: objeto.isConcluido,
-        };
+        objeto.titulo = itemHTML.querySelector(".titulo input").value;
+        objeto.descricao = itemHTML.querySelector(".descricao textarea").value;
 
         let lista = getListaTarefas();
 
         //Se o objeto estiver sendo salvo pela primeira vez
-        if (novoObjeto.fluxo == "criar")
+        if (objeto.fluxo == "criar")
         {
             //Dar append em uma nova tarefa
-            novoObjeto.fluxo = "salvar";
-            lista.push(novoObjeto);
+            objeto.fluxo = "salvar";
+            lista.push(objeto);
 
             //Pegar o numero do contador anterior e somar 1
             setContador(getContador() + 1);
         }
         else
         {
-            novoObjeto.fluxo = "salvar";
-            lista[novoObjeto.id] = novoObjeto;
+            objeto.fluxo = "salvar";
+            lista[objeto.id] = objeto;
         }
 
         //Salvar alterações no local storage
-        setTarefa(lista);
+        setListaTarefas(lista);
 
-        //Excluir certos conteudos do item
-        itemHTML.querySelector(".titulo").remove();
-        itemHTML.querySelector(".descricao").remove();
-        itemHTML.querySelector(".botoes-acao").remove();
-
-        //Adicionar novo titulo, descrição e botoes
-        itemHTML.appendChild(getTemplateTitulo(novoObjeto));
-        itemHTML.appendChild(getTemplateDescricao(novoObjeto));
-        itemHTML.appendChild(getTemplateBotoes(novoObjeto));
+        recarregarConteudoItem(itemHTML, objeto)
     }
 }
 
@@ -81,6 +67,40 @@ export function editarItem(objeto)
     //Encontrar o item em especifico, baseado em seu id
     let itemHTML = document.getElementById(objeto.id);
 
+    recarregarConteudoItem(itemHTML, objeto)
+}
+
+export function confirmarExcluirItem(objeto)
+{
+    let botaoModalExcluir = document.getElementById("confirmar-excluir-item");
+    botaoModalExcluir.addEventListener("click", () => 
+    {
+        excluirItem(objeto)
+    });
+}
+
+export function excluirItem(objeto)
+{
+    let itemHTML = document.getElementById(objeto.id)
+    itemHTML.remove();
+    console.log(itemHTML.previousElementSibling)
+
+    let lista = getListaTarefas();
+    
+    //Alterar
+    lista[objeto.id].fluxo = "excluir";
+
+    setListaTarefas(lista);
+}
+
+
+
+
+
+
+function recarregarConteudoItem(itemHTML, objeto)
+{
+    //Excluir certos conteudos do item
     itemHTML.querySelector(".titulo").remove();
     itemHTML.querySelector(".descricao").remove();
     itemHTML.querySelector(".botoes-acao").remove();
@@ -90,14 +110,6 @@ export function editarItem(objeto)
     itemHTML.appendChild(getTemplateDescricao(objeto));
     itemHTML.appendChild(getTemplateBotoes(objeto));
 }
-
-export function excluirItem(objeto)
-{
-    
-}
-
-
-
 
 
 
@@ -140,40 +152,35 @@ export function moverCima(id)
 
 }
 
-export function moverBaixo(id)
+export function moverBaixo(objeto)
 {
-    console.log("Mover Baixo");
-
-    if (lista[id].status == "aplicado")
-    {
-        console.log("item clickado, status: aplicado")
-        for (let i = id+1; i < lista.length; i++)
+    let lista = getListaTarefas();
+    let indexObjetoLista;
+    lista.forEach((tarefa, index) => {
+        if (index)
         {
-            console.log(i)
-            if (lista[i] != null && lista[i].status == "aplicado")
-            {
-                let itemDeBaixo = lista[i];
-        
-                console.log("Antes da Troca")
-                console.log(itemDeBaixo)
-                console.log(lista[id])
-        
-                lista[i]=lista[id];
-                lista[id] = itemDeBaixo;
-                
-                let htmlDeCima = document.getElementById(i);
-                htmlDeCima.innerHTML = montarItem("aplicar", i );
-        
-                let itemHtml = document.getElementById(id);
-                itemHtml.innerHTML = montarItem("aplicar", id );
-        
-                console.clear();
-                console.log(lista);
+            console.log(index)
+        }
+    });
+
     
-                break;
-            }
+
+    for (let i = objeto.id + 1; i < lista.length; i++)
+    {
+        if (lista[i].fluxo == "aplicar" && lista[i] != null)
+        {
+            let itemDeBaixo = lista[objeto.id+1];
+
+        lista[objeto.id + 1] = lista[objeto.id];
+        lista[objeto.id] = itemDeBaixo;
+
+        setListaTarefas(lista);
+        
+        let itemHTML = document.getElementById(lista[objeto.id]);
+        let itemHTMLBaixo = document.getElementById(lista[objeto.id+1]);
+        
+        recarregarConteudoItem(itemHTML, lista[objeto.id])
+        recarregarConteudoItem(itemHTMLBaixo, lista[objeto.id+1])
         }
     }
-
-    console.log("item clickado, status: diferente de aplicado")
 }
