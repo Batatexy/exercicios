@@ -2,23 +2,16 @@
 <html lang="pt-br">
   <head>
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
     <title>SimplesTech</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
 
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
-      rel="stylesheet"
-    />
-    
     <link href="css/styles.css" rel="stylesheet" />
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light position-fixed w-100 border-bottom border-secondary">
       <div class="container px-4 px-lg-5">
         <a class="navbar-brand" href="index.html">SimplesTech</a>
 
@@ -35,45 +28,43 @@
         </button>
 
         <div class="d-flex justify-content-between" id="navbarSupportedContent">
-          <button class="btn btn-outline-dark" type="button" id="carrinho">
-            <i class="bi-cart-fill me-1" ></i>
-              Cart
-            <span class="badge bg-dark text-white ms-1 rounded-pill" id="numero-itens-carrinho"></span>
-          </button>
+            <button class="btn btn-outline-dark" type="button" id="carrinho">
+              <i class="bi-cart-fill me-1" ></i>
+                Cart
+              <span class="badge bg-dark text-white ms-1 rounded-pill" id="numero-itens-carrinho"></span>
+            </button>
         </div>
         
       </div>
     </nav>
 
-    <header class="bg-dark py-5">
-      <div class="container px-4 px-lg-5 my-5">
-        <div class="text-center text-white">
-          <h1 class="display-4 fw-bolder">Produtos de alta tecnologia</h1>
-          <p class="lead fw-normal text-white-50 mb-0">Feito com javascript</p>
-        </div>
-      </div>
-    </header>
-
     <section class="py-5">
-      <div class="container px-4 px-lg-5 mt-5">
+      <div class="container px-4 px-lg-5 py-5">
+        <h3 class="pb-3">
+          Carrinho
+        </h3>
+
         <div
           class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
           id="carrinho-container"
         >
-          <!-- CARDS DE PRODUTOS -->
-        </div>
 
-        
+          <!-- Produtos adicionados ao carrinho, sua quantidade e botões -->
+
+        </div>
+        <div id="area-pagamento">
+
+        </div>
       </div>
     </section>
+
+    
 
     <footer class="py-5 bg-dark">
       <div class="container">
         <p class="m-0 text-center text-white">Copyright &copy; Simples 2025</p>
       </div>
     </footer>
-
-    
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module" src="js/carrinho.js"></script>

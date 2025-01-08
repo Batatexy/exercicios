@@ -19,12 +19,14 @@ function createProductCard({
 		cardDiv.className = "card h-100";
 
       /* Quero adicionar um onclick na div pai de todos (a colDiv) um onClick para me redirecionar para a tela de produto */
-      //Se clicar em adicionar ao carrinho, também entra na pagina do produto
+      //Não adicionei esta função na divPai, pois apresenta um padding, coloquei em uma mais dentro
+      //Bug: Se clicar em adicionar ao carrinho, também entra na pagina do produto, já que a div toda é clickavel
       cardDiv.role = "button";
       cardDiv.addEventListener("click", () => 
       {
+         //Alterado a função de ir apenas para uma pagina, agora é dá pra inserir qualquer link na função
          //goToProduct(id) 
-         //goToPage(`product.html?id=${id}`)
+         goToPage(`product.html?id=${id}`)
       })
 
          const badgeDiv = document.createElement("div");
@@ -74,6 +76,7 @@ function createProductCard({
             button.className = "btn btn-outline-dark mt-auto";
             
             /* MÉTODO PARA ADICIONAR AO CARRINHO */
+            //Agora passa o id para a função
             button.onclick = () => addToCart(id);
             button.textContent = buttonText;
 
@@ -97,21 +100,27 @@ function createProductCard({
 	return colDiv;
 }
 
+//Clickar no carrinho te leva para sua página
 document.getElementById("carrinho").addEventListener("click", () => 
 {
    goToPage("carrinho.html")
 })
 
+//Função para atualizar o número de itens na lista ao lado do botão do carrinho
 mudarNumeroItensCarrinho();
 
+//Buscar no documento json os produtos
 fetch("products.json")
 .then((response) => response.json())
 .then((products) =>
 {
+   //Encontrar div onde será adicionado cada produto
    const container = document.getElementById("products-container");
    products.forEach((product) => 
    {
+      //Encontrar cada produto e enviar para a função de criar um card
       const productCard = createProductCard(product);
+      //Adiciona ao container
       container.appendChild(productCard);
    });
 })

@@ -1,4 +1,4 @@
-import { goToPage, getListaCarrinho, mudarNumeroItensCarrinho, removerItem } from "./utlis.js";
+import { goToPage, getListaCarrinho, mudarNumeroItensCarrinho, removerItem, removerUnidade, addToCart, multiplicarPrecos } from "./utlis.js";
 
 function createCartCard
 (
@@ -15,31 +15,27 @@ function createCartCard
    }
    ,
    quantidade
-) 
+)
 {
 	const colDiv = document.createElement("div");
-	colDiv.className = "col mb-5";
-   /* Quero adicionar um onclick na div pai de todos (a colDiv) um onClick para me redirecionar para a tela de produto */
-   //Se clicar em adicionar ao carrinho, também entra na pagina do produto
-   colDiv.addEventListener("click", () => 
-   {
-      //goToProduct(id) 
-      //goToPage(`product.html?id=${id}`)
-   })
+	colDiv.className = "w-100 ";
 
 		const cardDiv = document.createElement("div");
-		cardDiv.className = "card h-100";
+		cardDiv.className = "d-flex h-100";
 
          const badgeDiv = document.createElement("div");
-         badgeDiv.className = "badge bg-dark text-white position-absolute";
-         badgeDiv.style.top = "0.5rem";
-         badgeDiv.style.right = "0.5rem";
+         badgeDiv.className = "badge bg-dark text-white position-absolute border-black";
          badgeDiv.textContent = badgeText;
 
          const img = document.createElement("img");
-         img.className = "card-img-top";
+         img.className = "h-75";
          img.src = imageUrl;
          img.alt = imageAlt;
+         img.role = "button";
+         img.addEventListener("click", () => 
+         {
+            goToPage(`product.html?id=${id}`)
+         })
 
          const cardBodyDiv = document.createElement("div");
          cardBodyDiv.className = "card-body p-4";
@@ -67,27 +63,54 @@ function createCartCard
 
             const discountedPriceText = document.createTextNode(` ${discountedPrice}`);
 
+
+
+            //Exibir quantidade de itens e seu valor multiplicado
+            const quantity = document.createElement("h4");
+            quantity.className = "text-center pt-4"
+            quantity.textContent = "Quantidade: " + quantidade;
+
+            const quantityPrice = document.createElement("h4");
+            quantityPrice.className = "text-center"
+            quantityPrice.textContent = "Preço: R$" + multiplicarPrecos(id, discountedPrice);
+            
+
+
             const cardFooterDiv = document.createElement("div");
             cardFooterDiv.className = "card-footer p-4 pt-0 border-top-0 bg-transparent";
 
             const buttonContainerDiv = document.createElement("div");
             buttonContainerDiv.className = "text-center";
 
-            const button = document.createElement("button");
-            button.className = "btn btn-outline-dark mt-auto";
-            
-            /* MÉTODO PARA ADICIONAR AO CARRINHO */
-            button.onclick = () => removerItem(id);
-            button.textContent = quantidade;
+            //Botões de adicionar ou remover 1
+               const buttonAddUnity = document.createElement("button");
+               buttonAddUnity.className = "btn btn-outline-dark mt-auto m-1";
+               buttonAddUnity.onclick = () => addToCart(id);
+               buttonAddUnity.textContent = "+";
+
+               const buttonRemoveUnity = document.createElement("button");
+               buttonRemoveUnity.className = "btn btn-outline-dark mt-auto m-1";
+               buttonRemoveUnity.onclick = () => removerUnidade(id);
+               buttonRemoveUnity.textContent = "–";
+
+            //Botão de remover o item por completo
+               const buttonRemove = document.createElement("button");
+               buttonRemove.className = "btn btn-outline-dark mt-auto m-1 botao-remover";
+               buttonRemove.onclick = () => removerItem(id);
+               buttonRemove.textContent = "×";
 
             textCenterDiv.appendChild(productNameH5);
             textCenterDiv.appendChild(reviewsDiv);
             textCenterDiv.appendChild(originalPriceSpan);
             textCenterDiv.appendChild(discountedPriceText);
-
+            
          cardBodyDiv.appendChild(textCenterDiv);
-
-         buttonContainerDiv.appendChild(button);
+         cardBodyDiv.appendChild(quantity);
+         cardBodyDiv.appendChild(quantityPrice);
+         
+         buttonContainerDiv.appendChild(buttonAddUnity);
+         buttonContainerDiv.appendChild(buttonRemoveUnity);
+         buttonContainerDiv.appendChild(buttonRemove);
          cardFooterDiv.appendChild(buttonContainerDiv);
 
 		cardDiv.appendChild(badgeDiv);
@@ -101,26 +124,58 @@ function createCartCard
 }
 
 mudarNumeroItensCarrinho();
-carregarCarrinho()
 
+//Transformada em uma função, para poder ser recarregada a pagina ao atualizar ou remover itens
+carregarCarrinho()
 export function carregarCarrinho()
 {
    fetch("products.json")
    .then((response) => response.json())
    .then((products) => 
    {
-      const container = document.getElementById("carrinho-container");
-      
-      let carrinho = getListaCarrinho();
-
-      carrinho.forEach(item => 
+      //De alguma forma o script da página index carrega essa função, precisando ter essa condição
+      if (document.getElementById("carrinho-container"))
       {
-         const product = products.find((produto) => produto.id === parseInt(item.id));
-         const productCard = createCartCard(product, item.quantidade);
+         //Encontrar a div onde serão adicionados os itens
+         const container = document.getElementById("carrinho-container");
+      
+         //Puxa informações do localStorage sobre quais são os itens adicionados e suas respectivas unidades
+         let carrinho = getListaCarrinho();
 
-         //Por algum motivo isso aqui tá apitando erro
-         container.appendChild(productCard);
-      });
+         let precoTotal = 0;
+   
+         //Roda essa lista, criando os cards apenas dos IDs salvos nela
+         carrinho.forEach(item => 
+         {
+            //Já tem os IDs salvos, basta puxa-los e salvar seu respectivo objeto
+            const product = products.find((produto) => produto.id === parseInt(item.id));
+
+            //Criar seu card e adicionar à pagina
+            const productCard = createCartCard(product, item.quantidade);
+            container.appendChild(productCard);
+
+            precoTotal += multiplicarPrecos(item.id, product.discountedPrice);
+         });
+
+         const areaPagamento = document.getElementById("area-pagamento");
+         areaPagamento.textContent = "";
+         areaPagamento.classList = "d-flex justify-content-end ";
+
+            const divPrecoTotal = document.createElement("h3");
+            divPrecoTotal.className = "pb-5 pt-1";
+            divPrecoTotal.textContent = "Preço total: R$" + precoTotal;
+
+            const divBotaoAreaPagamento = document.createElement("div");
+
+               const botaoAreaPagamento = document.createElement("div");
+               botaoAreaPagamento.className = "continuar-pagamento btn btn-outline-dark flex-shrink-0 p-2 ms-3 me-4";
+               botaoAreaPagamento.textContent = "Continuar para o Pagamento";
+
+            divBotaoAreaPagamento.append(botaoAreaPagamento);
+
+         areaPagamento.appendChild(divPrecoTotal);
+         areaPagamento.appendChild(divBotaoAreaPagamento);
+      }
    })
    .catch((error) => console.error("Erro ao carregar produtos:", error));
 }

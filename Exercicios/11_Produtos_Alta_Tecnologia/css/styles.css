@@ -10807,3 +10807,19 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+
+/* Classes Adicionadas */
+.botao-remover:hover
+{
+  background-color: red;
+}
+
+.continuar-pagamento:hover
+{
+  background-color: blue;
+}
+
+.navbar
+{
+  z-index: 1000;
+}
