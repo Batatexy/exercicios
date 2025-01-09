@@ -9,36 +9,29 @@
 </head>
 
 <body>
+    <nav class="fixed">
+        <a href="#">
+            Criar um Projeto
+        </a>
+
+        <a href="#">
+            Fotos
+        </a>
+
+        <a href="#">
+            Sobre
+        </a>
+    </nav>
+
     <header class="cor-padrao">
-        <nav>
-            <a href="#">
-                Criar um Projeto
-            </a>
-
-            <a href="#">
-                Fotos
-            </a>
-
-            <a href="#">
-                Sobre
-            </a>
-        </nav>
-
         <a href="../index.html">
-            <h2>
+            <h2 class="text-center">
                     Meu Portfólio
             </h2>
         </a>
-
-        <div></div>
     </header>
 
-    <!-- Gambiarra pro header não invadir o main -->
-    <div class="mb-3 header-fix">
-        <br><br><br>
-    </div>
-
-    <main>
+    <main class="pt-4">
         <div class="container-fluid formulario-projeto flex-center">
             <div class="d-flex justify-content-center">
                 <form>
@@ -59,7 +52,7 @@
 
                     <div class="form-group mb-3">
                         <label for="imagem-projeto">Imagem do Projeto:</label>
-                        <input type="text" class="form-control" id="imagem-projeto" placeholder="Digite uma URL de uma Imagem">
+                        <input type="file" class="form-control" id="imagem-projeto" placeholder="Digite uma URL de uma Imagem">
                     </div>
 
                     <div class="form-group mb-3">
@@ -96,7 +89,7 @@
         </div>
     </main>
 
-    <footer class="cor-padrao">
+    <footer class="cor-padrao mt-auto">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12 text-center">

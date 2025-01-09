@@ -9,37 +9,30 @@
 </head>
 
 <body>
-    <header class="cor-padrao">
-        <nav>
-            <a href="pages/cadastro_projeto.html">
-                Criar um Projeto
-            </a>
-
-            <a href="#">
-                Fotos
-            </a>
-
-            <a href="#">
-                Sobre
-            </a>
-        </nav>
+    <nav class="fixed">
+        <a href="pages/cadastro_projeto.html">
+            Criar um Projeto
+        </a>
 
         <a href="#">
-            <h2>
+            Fotos
+        </a>
+
+        <a href="#">
+            Sobre
+        </a>
+    </nav>
+
+    <header class="cor-padrao">
+        <a href="#">
+            <h2 class="text-center">
                     Meu Portfólio
             </h2>
         </a>
-
-        <div></div>
     </header>
 
-    <!-- Gambiarra pro header não invadir o main -->
-    <div class="mb-3 header-fix">
-        <br><br><br>
-    </div>
-
-    <main>
-        <section class="container ">
+    <main class="pt-4">
+        <section class="container">
             <div class="row">
                 <article class="col col-12 col-lg-4 mb-2">
                     <div class="row">
@@ -77,19 +70,17 @@
 
                 <article class="col col-12 col-lg-8">
                     <div class="projetos">
+
                         <div class="card">
                             <img class="card-img-top" src="images/sites.png" alt="Site responsível em diversas telas">
                             <div class="card-body">
-                                <div class="d-flex flex-column justify-content-end">
-                                    <h5 class="card-title">Desenvolvimento de Sites Responsivos</h5>
-                                    <p class="card-text">Desenvolver sites responsivos não é uma tarefa fácil, pois requer adaptar o tamanho de suas páginas ao tamanho das 
-                                        telas que estão sendo exibidos, como as telas de celulares e tablets.</p>
-                                    <a href="#" class="btn btn-primary">Veja o Projeto</a>
-                                </div>
-                                
+                                <h5 class="card-title">Desenvolvimento de Sites Responsivos</h5>
+                                <p class="card-text">Desenvolver sites responsivos não é uma tarefa fácil, pois requer adaptar o tamanho de suas páginas ao tamanho das 
+                                    telas que estão sendo exibidos, como as telas de celulares e tablets.</p>
+                                <a href="#" class="btn btn-primary">Veja o Projeto</a>
                             </div>
                         </div>
-                        
+
                         <div class="card">
                             <img class="card-img-top" src="images/arquitetura.png" alt="Casa desenvolvida no Revit">
                             <div class="card-body">
@@ -138,7 +129,7 @@
         </section>
     </main>
 
-    <footer class="cor-padrao">
+    <footer class="cor-padrao mt-auto">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12 text-center">

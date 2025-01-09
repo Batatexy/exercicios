@@ -9,37 +9,47 @@ body
     color:white;
 }
 
-header
-{
-    position: fixed;
-    width: 100%;
-
-    display: flex;
-    justify-content:space-between;
-
-    padding: 10px;
-
-    z-index:2000;
-}
-
 nav
 {
+    position: fixed;
     display: flex;
     flex-direction: row;
     align-items: center;
+
+    background-color: aliceblue;
+    width:100%;
+    padding:0.5em;
+
+    z-index:1000;
+
+    border-bottom: 1px solid rgb(0, 122, 204);
+}
+
+nav a
+{
+    color:black;
+    text-decoration:none;
+    padding-right: 1em;
+}
+
+header
+{
+    width: 100%;
+
+    padding-top:5em;
+    padding-bottom:2.25em;
+
 }
 
 header a
 {
     color:white;
     text-decoration:none;
-    padding-right: 1em;
 }
 
-header h2
+main
 {
-    position: relative;
-    right:96px;
+    min-height: 100vh;
 }
 
 .foto-perfil img
