@@ -1,5 +1,3 @@
-import { carregarCarrinho } from "./carrinho.js";
-
 //Definir uma nova lista no localStorage
 function setListaCarrinho(carrinho)
 {
@@ -14,7 +12,7 @@ export function getListaCarrinho()
 
 /* IMPLEMENTAR MÉTODO DE ADICIONAR AO CARRINHO */
 //Adiciona um item, quando não existente na lista, ou soma 1 unidade
-export const addToCart = (id) => 
+export const addToCart = (id, discountedPrice) => 
 {
     //Remover o evento de ir para outro site da divPai
     event.stopPropagation();
@@ -25,11 +23,21 @@ export const addToCart = (id) =>
     //Condição para dar push ou apenas substituir a lista atual
     let aumentarQuantidade = false;
 
+    //Na página do produto, é possivel adicionar mais de 1 unidade por item 
+    let quantidadeSelecionada = 1;
+
+    //Somente na pagina do produto, em qualquer outro lugar, se adiciona apenas 1 unidade
+    if (document.getElementById("inputQuantity"))
+    {
+        //Pega do input o valor e transforma em int
+        quantidadeSelecionada = parseInt(document.getElementById("inputQuantity").value);
+    }
+    
     //Criar um objeto novo
     let item =
     {
         id: id,
-        quantidade: 1,
+        quantidade: quantidadeSelecionada,
     };
 
     //Verificar na lista puxada, se já existe um item
@@ -39,7 +47,7 @@ export const addToCart = (id) =>
         if (produto.id == id)
         {
             //Se existir, puxa a informação de quantidade e soma 1
-            item.quantidade = produto.quantidade + 1;
+            item.quantidade = produto.quantidade + quantidadeSelecionada;
 
             //Substitui o item na sua respectiva posição
             carrinho[index] = item;
@@ -65,8 +73,7 @@ export const addToCart = (id) =>
     //de unidades em cada item, evitando erro na página index, pois não existe o "carrinho-container" nela
     if (document.getElementById("carrinho-container"))
     {
-        apagarItensCarrinho()
-        carregarCarrinho();
+        atualizarCarrinho(id, discountedPrice);
     }
 };
 
@@ -84,14 +91,15 @@ export const removerItem = (id) =>
     });
 
     setListaCarrinho(carrinho);
-    mudarNumeroItensCarrinho()
+    mudarNumeroItensCarrinho();
 
-    apagarItensCarrinho()
-    carregarCarrinho();
+    document.getElementById("item-carrinho-" + id).remove();
+    
+    calcularPrecoTotal().then(retorno => document.querySelector(".preco-total").textContent = "Preço total: " + tratarPreco(retorno));
 }
 
 //Remover 1 unidade, acessivel apenas na pagina do carrinho
-export const removerUnidade = (id) => 
+export const removerUnidade = (id, discountedPrice) => 
 {
     let carrinho = getListaCarrinho();
     carrinho.forEach((produto, index) => 
@@ -104,21 +112,78 @@ export const removerUnidade = (id) =>
             carrinho[index].quantidade -= 1;
 
             setListaCarrinho(carrinho);
-            mudarNumeroItensCarrinho()
+            mudarNumeroItensCarrinho();
 
-            //Remove o conteudo da pagina
-            apagarItensCarrinho()
-            //e os recarrega
-            carregarCarrinho();
+            //Atualiza os valores na pagina
+            atualizarCarrinho(id, discountedPrice);
         }
     });
 }
 
 //Função para encontrar a div dos itens do carrinho e remover seu conteudo
-export function apagarItensCarrinho()
+export function atualizarCarrinho(id, discountedPrice)
 {
-    const container = document.getElementById("carrinho-container");
-    container.textContent = "";
+    const item = document.getElementById("item-carrinho-" + id);
+    let carrinho = getListaCarrinho();
+
+    carrinho.forEach((produto, index) =>
+    {
+        if (produto.id == id)
+        {
+            //Atualizar valores de quantidade e quantidaded*preço na pagina
+            item.querySelector(".quantidade").textContent = "Quantidade: " + produto.quantidade;
+            item.querySelector(".preco-multiplicado").textContent = "Preço: R$" + tratarPreco(multiplicarPrecos(id, discountedPrice));
+
+            //Atualizar valor do preço total, usando o retorno da promise sendo tratado (Não sei como funciona)
+            //calcularPrecoTotal().then(retorno =>)
+            calcularPrecoTotal().then(retorno => document.querySelector(".preco-total").textContent = "Preço total: " + tratarPreco(retorno));
+        }
+    });
+}
+
+//Retornar o valor total vindo de um fetch
+export function calcularPrecoTotal()
+{
+    let carrinho = getListaCarrinho();
+    let precoTotal = 0;
+
+    let precoTotalFinal = fetch("products.json")
+    .then((response) => response.json())
+    .then((products) => 
+    {
+        //Roda essa lista, criando os cards apenas dos IDs salvos nela
+        carrinho.forEach(item => 
+        {
+            //Já tem os IDs salvos, basta puxa-los e salvar seu respectivo objeto
+            const product = products.find((produto) => produto.id === parseInt(item.id));
+
+            if (product) 
+            {
+                precoTotal += multiplicarPrecos(product.id, product.discountedPrice);
+            }
+        });
+
+        return precoTotal;
+    })
+    .catch((error) => console.error("Erro ao carregar produtos:", error));
+
+    //Retorna uma promise, sendo tratado depois
+    return precoTotalFinal;
+}
+
+export function prosseguirPagamento()
+{
+    calcularPrecoTotal().then(retorno => 
+        {
+        if (retorno > 0)
+        {
+            //Ir para area de pagamento, como não tem, vai pro index
+            goToPage("index.html");
+
+            //Depois do pagamento seria resetado o carrinho
+            setListaCarrinho([]);
+        }
+    })
 }
 
 //Função para mudar a exibição da quantidade de itens adicionados ao carrinho
@@ -132,10 +197,10 @@ export function mudarNumeroItensCarrinho()
     //Definir um valor zerado, para somá-lo
     let quantidade = 0;
 
-    carrinho.forEach(item => 
+    carrinho.forEach(produto => 
     {
         //Somar para cada unidade de cada item
-        quantidade += item.quantidade;
+        quantidade += produto.quantidade;
     });
     //Antes eu usei lenght, mas fica melhor saber a unidade de cada item
     //NumeroItensHTML.textContent = carrinho.length;
@@ -154,12 +219,29 @@ export function multiplicarPrecos(id, discountedPrice)
         if (produto.id == id)
         {
             //Tratamento dos dados no json por estarem salvos como: "R$40,99"
-            let discountedPriceFloat = parseFloat(discountedPrice.replace(",", ".").replace("R$", ""));
-            multiplicacao = discountedPriceFloat * produto.quantidade
+            //let discountedPriceFloat = parseFloat(discountedPrice.replace(",", ".").replace("R$", ""));
+            //multiplicacao = discountedPriceFloat * produto.quantidade
+
+            multiplicacao = produto.quantidade * discountedPrice;
         }
     });
 
     return multiplicacao;
+}
+
+//Transformar números float em string e forçá-los a ter ,00 / 2 casas decimais, tambem troca os . por ,
+export function tratarPreco(precoFloat)
+{
+    if (precoFloat != null)
+    {
+        let precoString = precoFloat.toFixed(2);
+    
+        return precoString.replace("." , ",");
+    }
+    else
+    {
+        return;
+    }
 }
 
 //Função dinamica de redirecionamento de páginas

@@ -1,4 +1,5 @@
-import { goToPage, getListaCarrinho, mudarNumeroItensCarrinho, removerItem, removerUnidade, addToCart, multiplicarPrecos } from "./utlis.js";
+import { goToPage, getListaCarrinho, mudarNumeroItensCarrinho, removerItem, removerUnidade, addToCart, 
+         multiplicarPrecos, tratarPreco, prosseguirPagamento } from "./utlis.js";
 
 function createCartCard
 (
@@ -10,15 +11,15 @@ function createCartCard
       productName,
       reviews,
       originalPrice,
-      discountedPrice,
-      buttonText,
+      discountedPrice
    }
    ,
    quantidade
 )
 {
 	const colDiv = document.createElement("div");
-	colDiv.className = "w-100 ";
+	colDiv.className = "w-100";
+   colDiv.id = "item-carrinho-" + id;
 
 		const cardDiv = document.createElement("div");
 		cardDiv.className = "d-flex h-100";
@@ -59,20 +60,20 @@ function createCartCard
 
             const originalPriceSpan = document.createElement("span");
             originalPriceSpan.className = "text-muted text-decoration-line-through";
-            originalPriceSpan.textContent = originalPrice;
+            originalPriceSpan.textContent = "R$" + tratarPreco(originalPrice);
 
-            const discountedPriceText = document.createTextNode(` ${discountedPrice}`);
+            const discountedPriceText = document.createTextNode(`R$${tratarPreco(discountedPrice)}`);
 
 
 
             //Exibir quantidade de itens e seu valor multiplicado
             const quantity = document.createElement("h4");
-            quantity.className = "text-center pt-4"
+            quantity.className = "text-center pt-4 quantidade"
             quantity.textContent = "Quantidade: " + quantidade;
 
             const quantityPrice = document.createElement("h4");
-            quantityPrice.className = "text-center"
-            quantityPrice.textContent = "Preço: R$" + multiplicarPrecos(id, discountedPrice);
+            quantityPrice.className = "text-center preco-multiplicado"
+            quantityPrice.textContent = "Preço: R$" + tratarPreco(multiplicarPrecos(id, discountedPrice));
             
 
 
@@ -85,12 +86,12 @@ function createCartCard
             //Botões de adicionar ou remover 1
                const buttonAddUnity = document.createElement("button");
                buttonAddUnity.className = "btn btn-outline-dark mt-auto m-1";
-               buttonAddUnity.onclick = () => addToCart(id);
+               buttonAddUnity.onclick = () => addToCart(id, discountedPrice);
                buttonAddUnity.textContent = "+";
 
                const buttonRemoveUnity = document.createElement("button");
                buttonRemoveUnity.className = "btn btn-outline-dark mt-auto m-1";
-               buttonRemoveUnity.onclick = () => removerUnidade(id);
+               buttonRemoveUnity.onclick = () => removerUnidade(id, discountedPrice);
                buttonRemoveUnity.textContent = "–";
 
             //Botão de remover o item por completo
@@ -125,61 +126,61 @@ function createCartCard
 
 mudarNumeroItensCarrinho();
 
-//Transformada em uma função, para poder ser recarregada a pagina ao atualizar ou remover itens
-carregarCarrinho()
-export function carregarCarrinho()
+fetch("products.json")
+.then((response) => response.json())
+.then((products) => 
 {
-   fetch("products.json")
-   .then((response) => response.json())
-   .then((products) => 
+   //De alguma forma o script da página index carrega essa função, precisando ter essa condição
+   if (document.getElementById("carrinho-container"))
    {
-      //De alguma forma o script da página index carrega essa função, precisando ter essa condição
-      if (document.getElementById("carrinho-container"))
-      {
-         //Encontrar a div onde serão adicionados os itens
-         const container = document.getElementById("carrinho-container");
-      
-         //Puxa informações do localStorage sobre quais são os itens adicionados e suas respectivas unidades
-         let carrinho = getListaCarrinho();
-
-         let precoTotal = 0;
+      //Encontrar a div onde serão adicionados os itens
+      const container = document.getElementById("carrinho-container");
    
-         //Roda essa lista, criando os cards apenas dos IDs salvos nela
-         carrinho.forEach(item => 
-         {
-            //Já tem os IDs salvos, basta puxa-los e salvar seu respectivo objeto
-            const product = products.find((produto) => produto.id === parseInt(item.id));
+      //Puxa informações do localStorage sobre quais são os itens adicionados e suas respectivas unidades
+      let carrinho = getListaCarrinho();
 
+      let precoTotal = 0;
+
+      //Roda essa lista, criando os cards apenas dos IDs salvos nela
+      carrinho.forEach(item => 
+      {
+         //Já tem os IDs salvos, basta puxa-los e salvar seu respectivo objeto
+         const product = products.find((produto) => produto.id === parseInt(item.id));
+
+         if (product) 
+         {
             //Criar seu card e adicionar à pagina
             const productCard = createCartCard(product, item.quantidade);
             container.appendChild(productCard);
 
-            precoTotal += multiplicarPrecos(item.id, product.discountedPrice);
-         });
+            precoTotal += multiplicarPrecos(product.id, product.discountedPrice);
+         }
+      });
 
-         const areaPagamento = document.getElementById("area-pagamento");
-         areaPagamento.textContent = "";
-         areaPagamento.classList = "d-flex justify-content-end ";
+      const areaPagamento = document.getElementById("area-pagamento");
+      areaPagamento.textContent = "";
+      areaPagamento.classList = "d-flex justify-content-end ";
 
-            const divPrecoTotal = document.createElement("h3");
-            divPrecoTotal.className = "pb-5 pt-1";
-            divPrecoTotal.textContent = "Preço total: R$" + precoTotal;
+         const divPrecoTotal = document.createElement("h3");
+         divPrecoTotal.className = "pt-1 preco-total";
+         divPrecoTotal.textContent = "Preço total: R$" + tratarPreco(precoTotal);
 
-            const divBotaoAreaPagamento = document.createElement("div");
+         const divBotaoAreaPagamento = document.createElement("div");
 
-               const botaoAreaPagamento = document.createElement("div");
-               botaoAreaPagamento.className = "continuar-pagamento btn btn-outline-dark flex-shrink-0 p-2 ms-3 me-4";
-               botaoAreaPagamento.textContent = "Continuar para o Pagamento";
+            const botaoAreaPagamento = document.createElement("div");
+            botaoAreaPagamento.className = "continuar-pagamento btn btn-outline-dark flex-shrink-0 p-2 ms-3 me-4";
+            botaoAreaPagamento.textContent = "Continuar para o Pagamento";
+            botaoAreaPagamento.addEventListener("click", () => 
+            {
+               prosseguirPagamento();
+            })
 
-            divBotaoAreaPagamento.append(botaoAreaPagamento);
+         divBotaoAreaPagamento.append(botaoAreaPagamento);
 
-         areaPagamento.appendChild(divPrecoTotal);
-         areaPagamento.appendChild(divBotaoAreaPagamento);
-      }
-   })
-   .catch((error) => console.error("Erro ao carregar produtos:", error));
-}
-
-
+      areaPagamento.appendChild(divPrecoTotal);
+      areaPagamento.appendChild(divBotaoAreaPagamento);
+   }
+})
+.catch((error) => console.error("Erro ao carregar produtos:", error));
          
       

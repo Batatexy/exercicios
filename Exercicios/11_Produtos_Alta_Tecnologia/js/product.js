@@ -1,4 +1,4 @@
-import { addToCart, goToPage, mudarNumeroItensCarrinho } from "./utlis.js";
+import { addToCart, goToPage, mudarNumeroItensCarrinho, tratarPreco } from "./utlis.js";
 
 function createProductDetailsWithImage(product) 
 {
@@ -34,11 +34,11 @@ function createProductDetailsWithImage(product)
 
    const originalPrice = document.createElement("span");
    originalPrice.className = "text-decoration-line-through";
-   originalPrice.textContent = product.originalPrice;
+   originalPrice.textContent = "R$" + tratarPreco(product.originalPrice);
    priceDiv.appendChild(originalPrice);
 
    const discountedPrice = document.createElement("span");
-   discountedPrice.textContent = ` ${product.discountedPrice}`;
+   discountedPrice.textContent = `R$${tratarPreco(product.discountedPrice)}`;
    priceDiv.appendChild(discountedPrice);
 
    detailsColDiv.appendChild(priceDiv);
@@ -55,9 +55,10 @@ function createProductDetailsWithImage(product)
    const quantityInput = document.createElement("input");
    quantityInput.className = "form-control text-center me-3";
    quantityInput.id = "inputQuantity";
-   quantityInput.type = "num";
+   //Type number para impedir digitar numeros
+   quantityInput.type = "number";
    quantityInput.value = "1";
-   quantityInput.style.maxWidth = "3rem";
+   quantityInput.style.maxWidth = "5rem";
    actionDiv.appendChild(quantityInput);
 
    const addToCartButton = document.createElement("button");
@@ -65,13 +66,13 @@ function createProductDetailsWithImage(product)
    addToCartButton.type = "button";
 
    /* Implementar Metodo */
-   addToCartButton.onclick = () => addToCart(product.id);
+   addToCartButton.onclick = () => addToCart(product.id, product.discountedPrice);
 
    const cartIcon = document.createElement("i");
    cartIcon.className = "bi-cart-fill me-1";
    addToCartButton.appendChild(cartIcon);
 
-   const buttonText = document.createTextNode(product.buttonText);
+   const buttonText = document.createTextNode("Adicionar ao Carrinho");
    addToCartButton.appendChild(buttonText);
 
    actionDiv.appendChild(addToCartButton);
@@ -118,7 +119,7 @@ fetch("products.json")
    {
       //alert("Produto não encontrado!");
       //Retorna para a página inicial
-      goToPage("index.html") 
+      goToPage("index.html");
    }
 })
 .catch((error) => console.error("Erro ao carregar produto:", error));

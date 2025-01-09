@@ -1,4 +1,4 @@
-import { addToCart, goToPage, mudarNumeroItensCarrinho } from "./utlis.js";
+import { addToCart, goToPage, mudarNumeroItensCarrinho, tratarPreco } from "./utlis.js";
 
 function createProductCard({
   id,
@@ -8,8 +8,7 @@ function createProductCard({
   productName,
   reviews,
   originalPrice,
-  discountedPrice,
-  buttonText,
+  discountedPrice
 }) 
 {
 	const colDiv = document.createElement("div");
@@ -20,7 +19,6 @@ function createProductCard({
 
       /* Quero adicionar um onclick na div pai de todos (a colDiv) um onClick para me redirecionar para a tela de produto */
       //Não adicionei esta função na divPai, pois apresenta um padding, coloquei em uma mais dentro
-      //Bug: Se clicar em adicionar ao carrinho, também entra na pagina do produto, já que a div toda é clickavel
       cardDiv.role = "button";
       cardDiv.addEventListener("click", () => 
       {
@@ -51,8 +49,7 @@ function createProductCard({
             productNameH5.textContent = productName;
 
             const reviewsDiv = document.createElement("div");
-            reviewsDiv.className =
-               "d-flex justify-content-center small text-warning mb-2";
+            reviewsDiv.className = "d-flex justify-content-center small text-warning mb-2";
             for (let i = 0; i < reviews; i++) 
             {
                const starDiv = document.createElement("div");
@@ -62,9 +59,9 @@ function createProductCard({
 
             const originalPriceSpan = document.createElement("span");
             originalPriceSpan.className = "text-muted text-decoration-line-through";
-            originalPriceSpan.textContent = originalPrice;
+            originalPriceSpan.textContent = "R$" + tratarPreco(originalPrice);
 
-            const discountedPriceText = document.createTextNode(` ${discountedPrice}`);
+            const discountedPriceText = document.createTextNode(`R$${tratarPreco(discountedPrice)}`);
 
             const cardFooterDiv = document.createElement("div");
             cardFooterDiv.className = "card-footer p-4 pt-0 border-top-0 bg-transparent";
@@ -76,9 +73,9 @@ function createProductCard({
             button.className = "btn btn-outline-dark mt-auto";
             
             /* MÉTODO PARA ADICIONAR AO CARRINHO */
-            //Agora passa o id para a função
-            button.onclick = () => addToCart(id);
-            button.textContent = buttonText;
+            //Agora passa o id para a função e o preço de desconto para executar sua multiplicação mais pra frente
+            button.onclick = () => addToCart(id, discountedPrice);
+            button.textContent = "Adicionar ao Carrinho";
 
             textCenterDiv.appendChild(productNameH5);
             textCenterDiv.appendChild(reviewsDiv);
@@ -103,7 +100,7 @@ function createProductCard({
 //Clickar no carrinho te leva para sua página
 document.getElementById("carrinho").addEventListener("click", () => 
 {
-   goToPage("carrinho.html")
+   goToPage("carrinho.html");
 })
 
 //Função para atualizar o número de itens na lista ao lado do botão do carrinho
