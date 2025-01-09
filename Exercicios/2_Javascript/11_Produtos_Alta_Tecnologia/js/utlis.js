@@ -10,6 +10,35 @@ export function getListaCarrinho()
     return JSON.parse(localStorage.getItem("carrinho")) || [];
 }
 
+//Função dinamica de redirecionamento de páginas
+export function goToPage(page) 
+{
+   window.location.href = page;
+}
+
+//Função para mudar a exibição da quantidade de itens adicionados ao carrinho
+export function mudarNumeroItensCarrinho()
+{
+    //Encontrar o número contido no botão
+    let NumeroItensHTML = document.getElementById("numero-itens-carrinho");
+
+    let carrinho = getListaCarrinho();
+
+    //Definir um valor zerado, para somá-lo
+    let quantidade = 0;
+
+    carrinho.forEach(produto => 
+    {
+        //Somar para cada unidade de cada item
+        quantidade += produto.quantidade;
+    });
+    //Antes eu usei lenght, mas fica melhor saber a unidade de cada item
+    //NumeroItensHTML.textContent = carrinho.length;
+
+    //Mudar seu textcontent
+    NumeroItensHTML.textContent = quantidade;
+}
+
 /* IMPLEMENTAR MÉTODO DE ADICIONAR AO CARRINHO */
 //Adiciona um item, quando não existente na lista, ou soma 1 unidade
 export const addToCart = (id, discountedPrice) => 
@@ -29,8 +58,16 @@ export const addToCart = (id, discountedPrice) =>
     //Somente na pagina do produto, em qualquer outro lugar, se adiciona apenas 1 unidade
     if (document.getElementById("inputQuantity"))
     {
-        //Pega do input o valor e transforma em int
-        quantidadeSelecionada = parseInt(document.getElementById("inputQuantity").value);
+        //Verifica se o número é acima de 0
+        if (parseInt(document.getElementById("inputQuantity").value) > 0)
+        {
+            //Pega do input o valor e transforma em int
+            quantidadeSelecionada = parseInt(document.getElementById("inputQuantity").value);
+        }
+        else
+        {
+            quantidadeSelecionada = 0;
+        }
     }
     
     //Criar um objeto novo
@@ -120,95 +157,6 @@ export const removerUnidade = (id, discountedPrice) =>
     });
 }
 
-//Função para encontrar a div dos itens do carrinho e remover seu conteudo
-export function atualizarCarrinho(id, discountedPrice)
-{
-    const item = document.getElementById("item-carrinho-" + id);
-    let carrinho = getListaCarrinho();
-
-    carrinho.forEach((produto, index) =>
-    {
-        if (produto.id == id)
-        {
-            //Atualizar valores de quantidade e quantidaded*preço na pagina
-            item.querySelector(".quantidade").textContent = "Quantidade: " + produto.quantidade;
-            item.querySelector(".preco-multiplicado").textContent = "Preço: R$" + tratarPreco(multiplicarPrecos(id, discountedPrice));
-
-            //Atualizar valor do preço total, usando o retorno da promise sendo tratado (Não sei como funciona)
-            //calcularPrecoTotal().then(retorno =>)
-            calcularPrecoTotal().then(retorno => document.querySelector(".preco-total").textContent = "Preço total: " + tratarPreco(retorno));
-        }
-    });
-}
-
-//Retornar o valor total vindo de um fetch
-export function calcularPrecoTotal()
-{
-    let carrinho = getListaCarrinho();
-    let precoTotal = 0;
-
-    let precoTotalFinal = fetch("products.json")
-    .then((response) => response.json())
-    .then((products) => 
-    {
-        //Roda essa lista, criando os cards apenas dos IDs salvos nela
-        carrinho.forEach(item => 
-        {
-            //Já tem os IDs salvos, basta puxa-los e salvar seu respectivo objeto
-            const product = products.find((produto) => produto.id === parseInt(item.id));
-
-            if (product) 
-            {
-                precoTotal += multiplicarPrecos(product.id, product.discountedPrice);
-            }
-        });
-
-        return precoTotal;
-    })
-    .catch((error) => console.error("Erro ao carregar produtos:", error));
-
-    //Retorna uma promise, sendo tratado depois
-    return precoTotalFinal;
-}
-
-export function prosseguirPagamento()
-{
-    calcularPrecoTotal().then(retorno => 
-        {
-        if (retorno > 0)
-        {
-            //Ir para area de pagamento, como não tem, vai pro index
-            goToPage("index.html");
-
-            //Depois do pagamento seria resetado o carrinho
-            setListaCarrinho([]);
-        }
-    })
-}
-
-//Função para mudar a exibição da quantidade de itens adicionados ao carrinho
-export function mudarNumeroItensCarrinho()
-{
-    //Encontrar o número contido no botão
-    let NumeroItensHTML = document.getElementById("numero-itens-carrinho");
-
-    let carrinho = getListaCarrinho();
-
-    //Definir um valor zerado, para somá-lo
-    let quantidade = 0;
-
-    carrinho.forEach(produto => 
-    {
-        //Somar para cada unidade de cada item
-        quantidade += produto.quantidade;
-    });
-    //Antes eu usei lenght, mas fica melhor saber a unidade de cada item
-    //NumeroItensHTML.textContent = carrinho.length;
-
-    //Mudar seu textcontent
-    NumeroItensHTML.textContent = quantidade;
-}
-
 //Enviar id e o valor desejado para multiplicar com a quantidade de itens na lista
 export function multiplicarPrecos(id, discountedPrice)
 {
@@ -244,8 +192,69 @@ export function tratarPreco(precoFloat)
     }
 }
 
-//Função dinamica de redirecionamento de páginas
-export function goToPage(page) 
+//Função para encontrar a div dos itens do carrinho e remover seu conteudo
+export function atualizarCarrinho(id, discountedPrice)
 {
-   window.location.href = page;
+    const item = document.getElementById("item-carrinho-" + id);
+    let carrinho = getListaCarrinho();
+
+    carrinho.forEach((produto, index) =>
+    {
+        if (produto.id == id)
+        {
+            //Atualizar valores de quantidade e quantidaded*preço na pagina
+            item.querySelector(".quantidade").textContent = "Quantidade: " + produto.quantidade;
+            item.querySelector(".preco-multiplicado").textContent = "Preço: R$" + tratarPreco(multiplicarPrecos(id, discountedPrice));
+
+            //Atualizar valor do preço total, usando o retorno da promise sendo tratado (Não sei como funciona)
+            //calcularPrecoTotal().then(retorno =>)
+            calcularPrecoTotal().then(retorno => document.querySelector(".preco-total").textContent = "Preço total: " + tratarPreco(retorno));
+        }
+    });
+}
+
+//Retornar o valor total vindo de um fetch
+export function calcularPrecoTotal()
+{
+    let carrinho = getListaCarrinho();
+    let precoTotal = 0;
+
+    let precoTotalFinal = 
+    fetch("products.json")
+    .then((response) => response.json())
+    .then((products) => 
+    {
+        //Roda essa lista, criando os cards apenas dos IDs salvos nela
+        carrinho.forEach(item => 
+        {
+            //Já tem os IDs salvos, basta puxa-los e salvar seu respectivo objeto
+            const product = products.find((produto) => produto.id === parseInt(item.id));
+
+            if (product) 
+            {
+                precoTotal += multiplicarPrecos(product.id, product.discountedPrice);
+            }
+        });
+
+        return precoTotal;
+    })
+    .catch((error) => console.error("Erro ao carregar produtos:", error));
+
+    //Retorna uma promise, sendo tratado depois
+    return precoTotalFinal;
+}
+
+export function prosseguirPagamento()
+{
+    calcularPrecoTotal().then(retorno => 
+    {
+        if (retorno > 0)
+        {
+            //Ir para area de pagamento, como não tem, vai pro index
+            goToPage("index.html");
+
+            //Depois do pagamento seria resetado o carrinho
+            setListaCarrinho([]);
+        }
+    })
 }

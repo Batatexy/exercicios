@@ -12,9 +12,6 @@ body
 nav
 {
     position: fixed;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
 
     background-color: aliceblue;
     width:100%;
@@ -130,13 +127,6 @@ footer
 
 @media (max-width: 768px)
 {
-    nav
-    {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
     nav p
     {
         padding: 0;
