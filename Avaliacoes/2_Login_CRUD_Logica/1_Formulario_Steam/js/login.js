@@ -1,13 +1,11 @@
 const possivelUsuario = JSON.parse(sessionStorage.getItem("usuario")) || [];
-console.log(possivelUsuario)
-validarUsuario(true, possivelUsuario[0], possivelUsuario[1]);
+//validarUsuario(true, possivelUsuario[0], possivelUsuario[1]);
+
+document.getElementById("nome-usuario").focus();
 
 document.getElementById("botao-enviar").addEventListener("click", () => 
 {
-    const nomeUsuario = document.getElementById("nome-usuario").value;
-    const senhaUsuario = document.getElementById("senha-usuario").value;
-    
-    validarUsuario(false, nomeUsuario, senhaUsuario);
+    validarUsuario(false, document.getElementById("nome-usuario").value, document.getElementById("senha-usuario").value);
 });
 
 function validarUsuario (primeiroLogin, nomeUsuario,senhaUsuario)
@@ -39,3 +37,39 @@ function validarUsuario (primeiroLogin, nomeUsuario,senhaUsuario)
     })
     .catch((error) => console.error("Erro ao carregar usuario:", error));
 }
+
+//Chat GPT que fez:
+// Evento de pressionamento da tecla "Enter" no campo de email
+document.getElementById('nome-usuario').addEventListener('keydown', (e) => 
+{
+    if (e.key === 'Enter')
+    {
+        e.preventDefault();  // Impede o envio do formulário
+
+        if (document.getElementById("senha-usuario").value != "")
+        {
+            validarUsuario(false, document.getElementById("nome-usuario").value, document.getElementById("senha-usuario").value);
+        }
+        else
+        {
+            if ( document.getElementById("nome-usuario").value != "")
+            {
+                document.getElementById("senha-usuario").focus();  // Move o foco para o campo senha
+            }
+        }
+    } 
+});
+
+// Evento de pressionamento da tecla "Enter" no campo de senha
+document.getElementById("senha-usuario").addEventListener('keydown', (e) => 
+{
+    if (e.key === 'Enter') 
+    {
+        e.preventDefault();  // Impede o envio do formulário
+
+        if (document.getElementById("senha-usuario").value != "")
+        {
+            validarUsuario(false, document.getElementById("nome-usuario").value, document.getElementById("senha-usuario").value);
+        }
+    }
+});

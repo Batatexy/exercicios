@@ -1,6 +1,7 @@
 import { getProjetos, setProjetos, goToPage } from "./index.js";
 
 document.querySelector("main").appendChild(criarFormulario(pegarObjeto()));
+document.getElementById("nome-projeto").focus();
 
 function pegarObjeto()
 {
@@ -83,7 +84,53 @@ function criarFormulario(objeto)
                 botao.addEventListener("click", () => 
                 {
                     salvarItem(objeto);
-                })
+                });
+
+                inputNome.addEventListener('keydown', (e) => 
+                {
+                    if (e.key === 'Enter')
+                    {
+                        e.preventDefault();
+                
+                        if (inputNome.value != "")
+                        {
+                            salvarItem(objeto);
+                        }
+                        else
+                        {
+                            if (inputNome.value != "")
+                            {
+                                inputDescricao.focus();
+                            }
+                        }
+                    } 
+                });
+
+                inputDescricao.addEventListener('keydown', (e) => 
+                {
+                    if (e.key === 'Enter')
+                    {
+                        e.preventDefault();
+                
+                        if (inputDescricao.value == "")
+                        {
+                            salvarItem(objeto);
+                        }
+                        else
+                        {
+                            inputImagem.focus();
+                        }
+                    } 
+                });
+
+                inputImagem.addEventListener('keydown', (e) => 
+                {
+                    if (e.key === 'Enter')
+                    {
+                        e.preventDefault();
+                        salvarItem(objeto);
+                    } 
+                });
 
                 if (objeto)
                 {
@@ -111,8 +158,8 @@ function salvarItem(objeto)
 {
     if (verificarCampos())
     {
-        let contador = JSON.parse(localStorage.getItem("contador")) || 0;
         let projetos = getProjetos()
+        let contador = projetos.length;
 
         let novoItem = 
         {
@@ -137,8 +184,6 @@ function salvarItem(objeto)
         }
         else
         {
-            contador++;
-            localStorage.setItem("contador", JSON.stringify(contador));
             projetos.push(novoItem);
         }
         
@@ -188,3 +233,8 @@ function verificarCampos()
     
     return validacao;
 }
+
+
+
+
+
