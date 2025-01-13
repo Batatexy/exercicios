@@ -1,14 +1,5 @@
-//Definir uma nova lista no localStorage
-function setListaCarrinho(carrinho)
-{
-    localStorage.setItem("carrinho", JSON.stringify(carrinho));
-}
-
-//Se existir, puxar a lista do localStorage, senão puxa uma lista vazia
-export function getListaCarrinho()
-{
-    return JSON.parse(localStorage.getItem("carrinho")) || [];
-}
+import { getListaCarrinho, setListaCarrinho, setUsuario } from "./gettersAndSetters.js";
+import { createBotaoCarrinho, createLoginButton } from "./getTemplates.js";
 
 //Função dinamica de redirecionamento de páginas
 export function goToPage(page) 
@@ -244,17 +235,95 @@ export function calcularPrecoTotal()
     return precoTotalFinal;
 }
 
-export function prosseguirPagamento()
+//Verificar se os valores digitados nos campos, ou enviados quando reicinado o site estão corretos quanto ao JSON
+export function validarUsuario (primeiroLogin, nomeUsuario, senhaUsuario)
 {
-    calcularPrecoTotal().then(retorno => 
+    fetch("usuarios.json")
+    .then((response) => response.json())
+    .then((encontrar) => 
     {
-        if (retorno > 0)
+        if (validarCampos())
         {
-            //Ir para area de pagamento, como não tem, vai pro index
-            goToPage("index.html");
+            let validacao = false;
 
-            //Depois do pagamento seria resetado o carrinho
-            setListaCarrinho([]);
+            encontrar.usuarios.forEach((usuario) => 
+            {
+                if (nomeUsuario == usuario.username && senhaUsuario == usuario.password)
+                {
+                    validacao = true;
+                    
+                    setUsuario([usuario.nome, usuario.username, usuario.password]);
+                    
+                    window.location.href = "index.html";
+                }
+            });
+    
+            if (!primeiroLogin)
+            {
+                if (validacao === false)
+                {
+                    document.getElementById("erro-login").textContent = "Usuário Invalido"
+                }
+            }
         }
     })
+    .catch((error) => console.error("Erro ao carregar usuario:", error));
+}
+
+export function validarCampos()
+{
+    let obrigatorio = document.querySelectorAll(".campo-obrigatorio");
+    let validacao = true;
+    
+    obrigatorio.forEach(campo => 
+    {
+        if (campo.querySelector("input"))
+        {
+            if (campo.querySelector("input").value == "")
+            {
+                validacao = false;
+            }
+        }
+        else if (campo.querySelector("textarea"))
+        {
+            if (campo.querySelector("textarea").value == "")
+            {
+                validacao = false;
+                //Colocar esta classe na label que pertence ao input:
+                //campo.querySelector("textarea").classList.add("aviso-campo-obrigatorio")
+            }
+        }
+    });
+    
+    return validacao;
+}
+
+//Deslogar o usuario ao pressionar o botão
+export function logoutUsuario()
+{
+    if (confirm("Deseja Deslogar do Site?"))
+    {
+        setUsuario(0);
+        atualizarNavBar()
+    }
+}
+
+export function atualizarNavBar()
+{
+    if (document.getElementById("botao-logout"))
+    {
+        document.getElementById("botao-logout").remove();
+    }
+
+    document.getElementById("botao-login").remove();
+    document.getElementById("carrinho").remove();
+    
+    let login = document.createElement("button");
+    login = createLoginButton(login);
+
+    let botaoCarrinho = document.createElement("button");
+    botaoCarrinho = createBotaoCarrinho(botaoCarrinho);
+
+    document.getElementById("navbarSupportedContent").appendChild(login);
+    document.getElementById("navbarSupportedContent").appendChild(botaoCarrinho);
 }

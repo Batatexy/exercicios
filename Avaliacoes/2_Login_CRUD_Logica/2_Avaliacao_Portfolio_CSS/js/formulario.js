@@ -190,22 +190,6 @@ function salvarItem(objeto)
         setProjetos(projetos);
         goToPage("index.html") 
     }
-    else
-    {
-        let obrigatorio = document.querySelectorAll(".campo-obrigatorio")
-
-        obrigatorio.forEach(campo => 
-        {
-            if (campo.querySelector("input"))
-            {
-                campo.querySelector("input").classList.add("aviso")
-            }
-            else
-            {
-                campo.querySelector("textarea").classList.add("aviso")
-            }
-        });
-    }
 }
 
 function verificarCampos()
@@ -220,6 +204,7 @@ function verificarCampos()
             if (campo.querySelector("input").value == "")
             {
                 validacao = false;
+                campo.querySelector("input").classList.add("aviso")
             }
         }
         else
@@ -227,6 +212,7 @@ function verificarCampos()
             if (campo.querySelector("textarea").value == "")
             {
                 validacao = false;
+                campo.querySelector("textarea").classList.add("aviso")
             }
         }
     });
