@@ -86,11 +86,11 @@ function somarMatrizes(matrizUm: Array<Array<number>>, matrizDois: Array<Array<n
 {
     let matrizSomada: Array<Array<number>> = [];
 
-    for(let i = 0; i < matrizUm.length; i++)
+    for(let i: number = 0; i < matrizUm.length; i++)
     {
         matrizSomada.push([])
 
-        for(let j = 0; j < matrizUm.length; j++)
+        for(let j: number = 0; j < matrizUm.length; j++)
         {
             matrizSomada[i].push(matrizUm[i][j] + matrizDois[i][j])
         }
@@ -100,40 +100,65 @@ function somarMatrizes(matrizUm: Array<Array<number>>, matrizDois: Array<Array<n
 }
 console.log(somarMatrizes([[10,20,30],[40,50,60],[70,80,90]], [[90,80,70],[60,50,40],[30,20,10]]))
 
-function criarTriangulo()
+function criarTriangulo(largura: number, altura: number)
 {
-    for(let i = 0; i < 10; i++)
+    //console.log("*")
+
+    for(let i: number = 0; i < altura; i++)
     {
         let texto: string = "";
 
-        for(let j = 0; j <= i; j++)
+        
+        for(let j: number = 0; j <= i % largura ; j++)
         {
             texto += "*";
         }
 
         console.log(texto);
+        
+
+        
     }
 }
-criarTriangulo();
+criarTriangulo(3, 40);
 
-/* 
-function transformarNumeroEmLista(numero: number): Array<number>
+function numeroParaListaOrdenada(numero: number): Array<number>
 {
     let tamanho: number = String(numero).length;
     let lista: Array<number> = [];
 
-    for(let i = 1; i <= tamanho; i++)
+    for(let i: number = 1; i <= tamanho; i++)
     {
-        let numeroString: string = String(numero);
-        numeroString.split()
+        numero /= 10;
 
-        lista.push(numeroIntUm)
+        let numeroString: string = numero.toString();
+        let numeroSeparado: Array<string> = numeroString.split('.');
+
+        numero = parseInt(numeroSeparado[0]);
+        let decimal: number = parseInt(numeroSeparado[1]);
+
+        lista.push(decimal)
     }
+
+    console.log("Antes do Bubble Sort: " , lista);
+
+    lista.forEach(() => 
+    {
+        for(let j: number = 1; j < tamanho; j++)
+        {
+            if (lista[j-1] > lista[j])
+            {
+                let auxiliar: number = lista[j-1];
     
+                lista[j-1] = lista[j];
+                lista[j] = auxiliar;
+            }
+        }
+    });
+        
     return lista;
 }
 
-const numeroDois: number = 12342345;
-console.log(transformarNumeroEmLista(numeroDois))
- */
+const numeroDois: number = 789353;
+console.log("O Numero " , numeroDois , " na lista ordenada fica: " , numeroParaListaOrdenada(numeroDois))
 

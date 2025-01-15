@@ -62,33 +62,39 @@ function somarMatrizes(matrizUm, matrizDois) {
     return matrizSomada;
 }
 console.log(somarMatrizes([[10, 20, 30], [40, 50, 60], [70, 80, 90]], [[90, 80, 70], [60, 50, 40], [30, 20, 10]]));
-function criarTriangulo() {
-    for (var i = 0; i < 10; i++) {
+function criarTriangulo(largura, altura) {
+    //console.log("*")
+    for (var i = 0; i < altura; i++) {
         var texto = "";
-        for (var j = 0; j <= i; j++) {
+        for (var j = 0; j <= i % largura; j++) {
             texto += "*";
         }
         console.log(texto);
     }
 }
-criarTriangulo();
-/*
-function transformarNumeroEmLista(numero: number): Array<number>
-{
-    let tamanho: number = String(numero).length;
-    let lista: Array<number> = [];
-
-    for(let i = 1; i <= tamanho; i++)
-    {
-        let numeroString: string = String(numero);
-        numeroString.split()
-
-        lista.push(numeroIntUm)
+criarTriangulo(3, 40);
+function numeroParaListaOrdenada(numero) {
+    var tamanho = String(numero).length;
+    var lista = [];
+    for (var i = 1; i <= tamanho; i++) {
+        numero /= 10;
+        var numeroString = numero.toString();
+        var numeroSeparado = numeroString.split('.');
+        numero = parseInt(numeroSeparado[0]);
+        var decimal = parseInt(numeroSeparado[1]);
+        lista.push(decimal);
     }
-    
+    console.log("Antes do Bubble Sort: ", lista);
+    lista.forEach(function () {
+        for (var j = 1; j < tamanho; j++) {
+            if (lista[j - 1] > lista[j]) {
+                var auxiliar = lista[j - 1];
+                lista[j - 1] = lista[j];
+                lista[j] = auxiliar;
+            }
+        }
+    });
     return lista;
 }
-
-const numeroDois: number = 12342345;
-console.log(transformarNumeroEmLista(numeroDois))
- */
+var numeroDois = 789353;
+console.log("O Numero ", numeroDois, " na lista ordenada fica: ", numeroParaListaOrdenada(numeroDois));
