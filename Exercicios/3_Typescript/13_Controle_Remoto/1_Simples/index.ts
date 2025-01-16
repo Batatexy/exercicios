@@ -17,7 +17,7 @@ function exibirControle(controle:
 function exibirStatus(
 controle: 
 {
-    tv: 
+    tv:
     {
         estado:boolean,
         volume: number,
