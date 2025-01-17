@@ -203,3 +203,11 @@ let controle2 = new controle(tv2)
 
 controle1.getTV.exibirTV();
 controle2.getTV.exibirTV();
+
+controle1.ligarDesligarTV();
+
+controle1.aumentarVolume();
+controle1.getTV.exibirTV();
+
+controle1.escolherCanal(200);
+controle1.getTV.exibirTV();

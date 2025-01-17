@@ -2,11 +2,11 @@ function carregarTodosPokemons()
 {
     getAPI("https://pokeapi.co/api/v2/pokemon").then(pokemon =>
     {
-        for(let i = 1; i <= 1026; i++) //pokemon.count
+        for(let i = 1; i <= pokemon.count; i++) //pokemon.count
         {
-            criarCardPokemon(i)
+            criarCardPokemon(i);
         }
-    }
+    });
 }
 
 function criarCardPokemon(valor: string | number)
@@ -18,11 +18,11 @@ function criarCardPokemon(valor: string | number)
     getAPI(`https://pokeapi.co/api/v2/pokemon/${valor}`).then(pokemon =>
     {
         let escolha: number = 1;
-        if (pokemon.id == escolha) console.log(pokemon);
+        if (pokemon.id == escolha) console.log("Pokemon: ", pokemon);
         //Uma dessa informações é as formas dele, é preciso entrar em outra URL para pegar a imagem
         getAPI(pokemon.forms[0].url).then(forms => 
         {
-            if (pokemon.id == escolha) console.log(forms);
+            if (pokemon.id == escolha) console.log("Formas: ", forms);
 
             pokemonHTML = document.createElement("img");
             pokemonHTML.src =  forms.sprites.front_default;
@@ -69,7 +69,7 @@ let input = document.getElementById("pesquisar-pokemon");
 input?.addEventListener("keydown", (event) =>
 {
     if (event.key === "Enter") 
-    {   
+    {
         if (input.value)
         {
             pokemons.innerHTML = "";
@@ -84,3 +84,11 @@ input?.addEventListener("keydown", (event) =>
         }
     }
 })
+
+
+
+
+
+
+
+
