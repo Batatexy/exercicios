@@ -1,0 +1,54 @@
+
+.buttons button
+{
+  width:3rem;
+  height:3rem;
+
+  margin:2px;
+  border:1px solid gray;
+  border-radius: 3px;
+}
+
+.buttons
+{
+  width: 14rem;
+}
+
+#two-buttons-size
+{
+  width: 6.25rem;
+}
+
+#three-buttons-size
+{
+  width: 9.5rem;
+}
+
+.result
+{
+  width:12.75rem;
+  margin:2px;
+
+  border:1px solid gray;
+  border-radius: 3px;
+
+  background-color: rgb(238, 238, 238);
+}
+
+.saved-number
+{
+  color:blue;
+  height:1.5rem;
+}
+
+.actual-number
+{
+  color:darkblue;
+  height:1.5rem;
+}
+
+.result p
+{
+  margin:0;
+  padding: 0;
+}
