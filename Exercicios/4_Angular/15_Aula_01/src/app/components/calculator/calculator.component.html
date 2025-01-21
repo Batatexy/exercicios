@@ -1,0 +1,13 @@
+<div class="container mt-3 text-center">
+  <p class="">calculadora</p>
+
+  <app-result [actualNumber]="actualNumber" [savedNumber]="savedNumber"/>
+
+  <!-- [Nome que eu quero dar, no componente buttons, terá este nome] = "Variável que tem aqui" -->
+  <app-buttons [buttons]="buttons" (EventEmitterValue)="calculate($event)" [calculate]="calculate"/>
+
+
+</div>
+
+
+

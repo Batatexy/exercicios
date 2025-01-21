@@ -1,0 +1,21 @@
+<div class="d-flex justify-content-center">
+  <div class="buttons">
+      @for (buttonValue of buttons; track $index)
+      {
+        <button
+
+        class="btn"
+
+        (click)="sendValue(buttonValue)"
+        [ngClass]="{
+        'two-buttons-size': buttonValue === '0',
+        'btn-outline-primary': buttonValue == '+' || buttonValue == '-' || buttonValue == '/' || buttonValue == 'X'
+        || buttonValue === '%' || buttonValue == 'A' || buttonValue == 'C',
+        'btn-primary': buttonValue == '=',
+
+        }">
+          {{buttonValue}}
+        </button>
+      }
+  </div>
+</div>
