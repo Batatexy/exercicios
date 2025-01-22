@@ -1,13 +1,31 @@
-<div class="container mt-3 text-center">
-  <p class="">calculadora</p>
+<!-- @defer só nas versões novas -->
+@defer ()
+{
+  <div class="container mt-3 text-center">
+    <h4 class="pb-1">Calculadora</h4>
 
-  <app-result [actualNumber]="actualNumber" [savedNumber]="savedNumber"/>
+    <div class="saved-signal">
+      {{savedSignal}}
+    </div>
 
-  <!-- [Nome que eu quero dar, no componente buttons, terá este nome] = "Variável que tem aqui" -->
-  <app-buttons [buttons]="buttons" (EventEmitterValue)="calculate($event)" [calculate]="calculate"/>
+    <div class="d-flex justify-content-center">
+      <div class="result bg-light border border-secondary">
+        <p class="saved-number text-end pe-2">{{savedNumber}}</p>
+        <input class="text-end mb-2 " type="text" id="input-calculator" type="text" [(ngModel)]="actualNumber" >
+      </div>
+    </div>
+
+    <!-- [Componente Filho] = "Componente Pai" -->
+    <app-buttons [buttons]="buttons" (EventEmitterValue)="processButton($event)" [calculate]="calculate"/>
+
+    <div class="history pt-3 text-secondary"></div>
+  </div>
+}
+
+<!-- O que carrega antes de carregar o site -->
+@placeholder
+{
+  <!-- Tela de Loading -->
 
 
-</div>
-
-
-
+}
