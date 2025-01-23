@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, } from '@angular/core';
+import { Component, Input, Output, EventEmitter, viewChild, } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -13,12 +13,16 @@ export class ButtonsComponent
   //Importar os ícones de cada botão na Classe Calculadora
 	@Input() buttons: Array<string> = [];
 
-  //Errado:
-  @Input() calculate !: (value: string) => void;
-
   //Emitir o Valor alocado no botão
   @Output() EventEmitterValue: EventEmitter<string> = new EventEmitter();
   sendValue(value: string): void {
     this.EventEmitterValue.emit(value);
+  }
+
+  //@viewChild("id") id
+
+  ngAfterContentInit()
+  {
+
   }
 }

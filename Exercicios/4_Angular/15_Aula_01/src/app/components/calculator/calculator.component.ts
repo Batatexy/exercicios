@@ -1,11 +1,14 @@
-import { Component, SimpleChange } from '@angular/core';
-import { ButtonsComponent } from "../buttons/buttons.component";
+import { Component, SimpleChange, ViewChild } from '@angular/core';
+import { ButtonsComponent } from "./buttons/buttons.component";
 import { FormsModule } from '@angular/forms';
 import { Calculation } from '../../models/calculation';
+import { CommonModule } from '@angular/common';
+import { DisplayComponent } from "./display/display.component";
+import { HistoryComponent } from "./history/history.component";
 
 @Component({
   selector: 'app-calculator',
-  imports: [ButtonsComponent, FormsModule],
+  imports: [CommonModule, FormsModule, ButtonsComponent, DisplayComponent, HistoryComponent],
   templateUrl: './calculator.component.html',
   styleUrl: './calculator.component.scss'
 })
@@ -22,20 +25,32 @@ import { Calculation } from '../../models/calculation';
 // @Input() executaAlgo!: () => void;
 // (concluir)="marcarConcluida(&event)"
 
-
-
-
-
-
 export class CalculatorComponent
 {
-  //Hooks de ciclo de vida / lifecycle hook
-  classeEstilo: string;
+  buttons: Array<string>;
+  savedSignal: string = "";
+  savedNumber: string = "";
+  actualNumber: string = "";
+  arrayHistory: Array<Calculation> = [];
+
+  @ViewChild('history') history!: HistoryComponent;
 
   //Injetar dependencias
   constructor()
   {
-    this.classeEstilo = "";
+    this.buttons =
+    [
+      "C", "A", "%", "÷",
+      "7", "8", "9", "×",
+      "4", "5", "6", "−",
+      "1", "2", "3", "+",
+      "0", "," ,"=",
+    ];
+
+    this.savedSignal = "";
+    this.savedNumber = "";
+    this.actualNumber = "";
+    this.arrayHistory = [];
   }
 
   //Verifica mudanças em inputs em tempo real, exemplo: digitar na amazon já vai aparecendo produtos
@@ -47,24 +62,26 @@ export class CalculatorComponent
   //   }
   // }
 
+  //Hooks de ciclo de vida / lifecycle hook
   //Será executado antes de tudo, antes do renderizamento em tela
   ngOnInit()
   {
-    if(this.classeEstilo == "btn")
-    {
+    // if(this.classeEstilo == "btn")
+    // {
 
-    }
-    else
-    {
+    // }
+    // else
+    // {
 
-    }
+    // }
+
   }
 
   //Executa depois do ngInit, mas antes do renderizamento em tela
   //Exemplo: Depois de carregar os dados da API em ngOnInit, aqui a gente trata os dados
   ngAfterContentInit()
   {
-    //Timeout
+    console.log("1")
   }
 
   //Executa depois da renderização da tela, pra não mostrar eles carregando
@@ -78,39 +95,6 @@ export class CalculatorComponent
   {
 
   }
-
-
-
-
-
-
-
-
-  buttons: Array<string> =
-  [
-    "C", "A", "%", "÷",
-    "7", "8", "9", "×",
-    "4", "5", "6", "−",
-    "1", "2", "3", "+",
-    "0", "," ,"=",
-  ];
-
-  savedSignal: string = "";
-
-  savedNumber: string = "";
-  actualNumber: string = "";
-
-  arrayHistory: Array<Calculation> = [];
-
-  setSavedSignal(savedSignal: string): void
-  {
-    localStorage.setItem("savedSignal", JSON.stringify(savedSignal))
-  }
-
-  // getSavedSignal(): string
-  // {
-  //     return JSON.parse(localStorage.getItem("savedSignal")) || "";
-  // }
 
   //Processar o clique do botão, de forma respectiva à sua função
   processButton(buttonValue: string): void
@@ -252,15 +236,13 @@ export class CalculatorComponent
 
     let newCalculation = {numberOne: this.savedNumber, signal: buttonValue, numberTwo: this.actualNumber, result: resultString}
 
-    //Criar um bloco para marcar o histórico de contas
-    let history = document.createElement("p");
-    history.textContent = newCalculation.numberOne + newCalculation.signal + newCalculation.numberTwo + "=" + newCalculation.result;
-    document.querySelector(".history")?.appendChild(history);
+    //Usar função do elemento filho para criar um bloco na tela
+    this.history.createHistory(newCalculation)
 
     //Então alterar o valor antigo do numero salvo para este novo resultado
-    //Se for dinamico, fazer pegar do resultado do ultimo objeto adicionado
     this.savedNumber = resultString;
 
+    //Dar push na lista de elementos do tipo Calculation
     this.arrayHistory.push(newCalculation);
     console.log(this.arrayHistory);
   }

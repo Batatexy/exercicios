@@ -8,24 +8,39 @@
       {{savedSignal}}
     </div>
 
-    <div class="d-flex justify-content-center">
-      <div class="result bg-light border border-secondary">
+    <app-display>
+      <ng-container display>
         <p class="saved-number text-end pe-2">{{savedNumber}}</p>
         <input class="text-end mb-2 " type="text" id="input-calculator" type="text" [(ngModel)]="actualNumber" >
+      </ng-container>
+    </app-display>
+
+    <!-- [Componente Filho] = "Componente Pai" -->
+    <app-buttons [buttons]="buttons" (EventEmitterValue)="processButton($event)"/>
+
+    <!-- #nome para manipular as funções e atributos deste elemento -->
+    <app-history #history></app-history>
+  </div>
+}
+
+<!-- O que será mostrado antes de carregar o site -->
+@placeholder
+{
+  <div class="container mt-3 text-center">
+    <h4 class="placeholder pb-1">Calculadora</h4>
+
+    <div class="saved-signal">
+      {{savedSignal}}
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <div class="result bg-light border border-secondary">
+        <p class="saved-number text-end pe-2"></p>
+        <input class="placeholder text-end mb-2" />
       </div>
     </div>
 
     <!-- [Componente Filho] = "Componente Pai" -->
-    <app-buttons [buttons]="buttons" (EventEmitterValue)="processButton($event)" [calculate]="calculate"/>
-
-    <div class="history pt-3 text-secondary"></div>
+    <app-buttons [buttons]="buttons" (EventEmitterValue)="processButton($event)"/>
   </div>
-}
-
-<!-- O que carrega antes de carregar o site -->
-@placeholder
-{
-  <!-- Tela de Loading -->
-
-
 }
