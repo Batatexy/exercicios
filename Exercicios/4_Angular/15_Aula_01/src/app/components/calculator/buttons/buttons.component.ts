@@ -19,10 +19,15 @@ export class ButtonsComponent
     this.EventEmitterValue.emit(value);
   }
 
-  //@viewChild("id") id
+
+
+  ngOnInit()
+  {
+    console.log("Botões On Init")
+  }
 
   ngAfterContentInit()
   {
-
+    console.log("Botões After Content Init")
   }
 }

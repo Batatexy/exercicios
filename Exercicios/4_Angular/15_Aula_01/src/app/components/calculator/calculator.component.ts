@@ -25,6 +25,8 @@ import { HistoryComponent } from "./history/history.component";
 // @Input() executaAlgo!: () => void;
 // (concluir)="marcarConcluida(&event)"
 
+//@viewChild("id") id
+
 export class CalculatorComponent
 {
   buttons: Array<string>;
@@ -67,21 +69,14 @@ export class CalculatorComponent
   ngOnInit()
   {
     // if(this.classeEstilo == "btn")
-    // {
-
-    // }
-    // else
-    // {
-
-    // }
-
+    console.log("Calculadora On Init")
   }
 
   //Executa depois do ngInit, mas antes do renderizamento em tela
   //Exemplo: Depois de carregar os dados da API em ngOnInit, aqui a gente trata os dados
   ngAfterContentInit()
   {
-    console.log("1")
+    console.log("Calculadora After Content Init")
   }
 
   //Executa depois da renderização da tela, pra não mostrar eles carregando

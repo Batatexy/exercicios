@@ -1,0 +1,22 @@
+<div class="movie-card">
+    <img class="movie-image" src="{{movie.image}}">
+    <div class="row">
+        <div class="col-10">
+            <h5 class="pt-2">{{movie.name}}</h5>
+            <p>{{movie.date}}</p>
+        </div>
+        <div class="col-2 d-flex flex-column justify-content-center">
+            <button class="heart-button btn d-flex justify-content-center" (click)="sendLikedState(movie)">
+                @if(movie.liked)
+                {
+                    <i class="bi-heart-fill"></i>
+                }
+                @else
+                {
+                    <i class="bi-heart"></i>
+                }
+            </button>
+        </div>
+        
+    </div>
+</div>
