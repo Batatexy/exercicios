@@ -1,10 +1,4 @@
-<section>
-    <p>Inicio - Filmes</p>
+<i class="magnifier-icon bi bi-search"></i>
+<input id="search-movies" type="text" class="w-100 form-control" placeholder="Busque um filme..." [(ngModel)]="searchMovie" (input)="changeValue()">
 
-    <h4>Filmes</h4>
-
-    <i class="magnifier-icon bi bi-search"></i>
-    <input id="search-movies" type="text" class="w-100 form-control" placeholder="Busque um filme...">
-    
-    <p>{{movieCount}} Filmes Listados</p>
-</section>
+<p>{{this.GetSearchMoviesService.getMovieCount()}} Filmes Listados</p>

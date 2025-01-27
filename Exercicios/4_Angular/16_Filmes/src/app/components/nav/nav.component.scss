@@ -1,4 +1,20 @@
 .nav-menu{
     background-color: white;
-    width: 18rem;
+    width: 15rem;
+}
+
+.is-in-page{
+    background-color:#1D4ED8;
+    color:white;
+    width: 100%;
+}
+
+button{
+    position: relative;
+    
+}
+
+button div{
+    position: relative;
+    right:3.5rem;
 }

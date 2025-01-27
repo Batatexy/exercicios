@@ -1,3 +1,39 @@
+let resultadoHTML = document.getElementById("h4-resultado")
+
+let botaoSomar = document.getElementById("botao-somar");
+botaoSomar.addEventListener("click", () => 
+{
+    resultadoHTML.textContent = "Resultado: " + calcularDois(botaoSomar.textContent);
+})
+
+function calcularDois(sinal)
+{
+    console.log(sinal)
+    let resultadoValor;
+    let um = parseFloat(prompt("Digite o primeiro numero:"))
+    let dois = parseFloat(prompt("Digite o primeiro numero:"))
+
+    if (sinal == "+") {
+        resultadoValor = um + dois
+    }
+
+    if (sinal == "-") {
+        resultadoValor = dois - um
+    }
+
+    if (sinal == "X") {
+        resultadoValor = um * dois
+    }
+
+    if (sinal == "/") {
+        resultadoValor = um / dois
+    }
+
+    return resultadoValor;
+}
+
+
+
 //Função para calcular somas, subtração, etc... entre dois números
 function calcular(numeroUm, numeroDois, operacao) 
 {

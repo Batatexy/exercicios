@@ -1,0 +1,35 @@
+<app-header>
+    <ng-container headerIndex>
+        Inicio - Filmes - {{movie?.name}}
+    </ng-container>
+
+    <ng-container headerActualIndex>
+        {{movie?.name}}
+    </ng-container>
+</app-header>
+
+<div class="d-flex">
+    <app-white-card class="movie-detail-image">
+        <ng-container content>
+            <img src="{{movie?.image}}" class="image-border">
+        </ng-container>
+    </app-white-card>
+
+    <app-white-card class="movie-detail-cast">
+        <ng-container content>
+            <div class="d-flex flex-column">
+                <h4 class="">
+                    Elenco
+                </h4>
+
+                <app-actor-card></app-actor-card>
+                <app-actor-card></app-actor-card>
+                <app-actor-card></app-actor-card>
+            </div>
+
+            
+
+
+        </ng-container>
+    </app-white-card>
+</div>

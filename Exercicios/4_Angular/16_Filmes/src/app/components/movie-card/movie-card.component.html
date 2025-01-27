@@ -1,5 +1,7 @@
 <div class="movie-card">
-    <img class="movie-image" src="{{movie.image}}">
+    <a routerLink="/movie/{{movie.id}}">
+        <img class="movie-image image-border" src="{{movie.image}}">
+    </a>
     <div class="row">
         <div class="col-10">
             <h5 class="pt-2">{{movie.name}}</h5>

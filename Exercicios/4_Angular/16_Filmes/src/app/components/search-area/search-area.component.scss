@@ -1,20 +1,23 @@
 .magnifier-icon{
-    position: absolute;
-    top: 7.05rem;
-    left:20.35rem;
-
     font-size: 0.8rem;
 
-    //background-color: black;
+    position: relative;
+    display: block;
+    width: 0.1rem;
+
+    top: 1.45rem;
+    left: 1.25rem;
+    
+    //Remover o Gap que gera
+    margin: -0.5rem;
 }
 
 #search-movies{
+    font-size: 0.85rem;
+
     padding-left: 2.25rem;
     padding-bottom: 0.5rem;
 
     height: 2.75rem;
-
-    font-size: 0.85rem;
-
     vertical-align: middle;
 }

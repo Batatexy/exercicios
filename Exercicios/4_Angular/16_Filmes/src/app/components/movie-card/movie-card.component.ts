@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Movie } from '../../models/movie';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-movie-card',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './movie-card.component.html',
   styleUrl: './movie-card.component.scss'
 })

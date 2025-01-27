@@ -5,6 +5,8 @@ function getLista(): Array<number>
     return lista;
 }
 
+
+
 function setLista(novaLista:Array<number>)
 {
     lista = novaLista;
