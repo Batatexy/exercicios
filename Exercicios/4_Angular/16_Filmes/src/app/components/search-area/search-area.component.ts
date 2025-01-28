@@ -9,11 +9,12 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './search-area.component.scss'
 })
 export class SearchAreaComponent {
+  @Input() length: number = 0;
   searchMovie: string = "";
 
-  constructor(public GetSearchMoviesService: SearchMoviesService) {}
-  
-  changeValue(){
+  constructor(public GetSearchMoviesService: SearchMoviesService) { }
+
+  changeValue() {
     this.GetSearchMoviesService.setSearch(this.searchMovie);
   }
 }

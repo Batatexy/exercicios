@@ -1,23 +1,24 @@
-<nav class="nav-menu d-flex flex-column">
-    <div class="p-3 position-fixed">
+<nav>
+    <div class="nav-fixed p-sm-3 d-flex flex-sm-column p-2 pt-sm-0">
         <app-profile>
         </app-profile>
 
-        <div class="pt-4 ">
-            <button class="btn is-in-page"><div>Início</div></button>
-        </div>
-        
-        <div class="pt-3 ">
-            <p>Filmes</p>
-        </div>
-        
-
-        <div class="pt-4 ">
-            <a class="">Configurações</a>
-        </div>
-        
-        <div class="pt-3 ">
-            <p>Sair</p>
+        <div class="nav-buttons d-flex flex-sm-column p-sm-0">
+            <div class="pt-sm-4 ">
+                <button class="button-movie font-14 work-sans" [routerLink]="['']" [routerLinkActive]="'is-active'" [routerLinkActiveOptions]="{exact: true}">Início</button>
+            </div>
+    
+            <div class="pt-sm-2">
+                <button class="button-movie font-14 work-sans" [routerLink]="['/movie']" [routerLinkActive]="'is-active'">Filmes</button>
+            </div>
+            
+            <div class="pt-sm-4 ">
+                <button class="button-movie font-14 work-sans" [routerLink]="['/configurations']" [routerLinkActive]="'is-active'">Configurações</button>
+            </div>
+    
+            <div class="pt-sm-2 ">
+                <button class="button-movie font-14 work-sans" [routerLink]="['/logout']" [routerLinkActive]="'is-active'">Sair</button>
+            </div>
         </div>
     </div>
 </nav>

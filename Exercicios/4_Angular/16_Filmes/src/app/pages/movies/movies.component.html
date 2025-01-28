@@ -1,0 +1,31 @@
+<app-header>
+    <ng-container headerIndex>
+        Inicio - <b>Filmes</b>
+    </ng-container>
+
+    <ng-container headerActualIndex>
+        Filmes
+    </ng-container>
+</app-header>
+
+<app-search-area [length]="length">
+</app-search-area>
+
+<app-white-card>
+    <ng-container content>
+        <div class="movies d-flex flex-wrap w-100">
+            <!-- Limitar a lista, ao apertar ver mais, ir aumentando este limite -->
+            @for (movie of GetMoviesService.getMoviesByName(this.GetSearchMoviesService.getSearch()).slice(0,length); track $index) 
+            {
+                <app-movie-card [movie]="movie" (EventEmitterMovie)="this.GetMoviesService.updateMovie(movie)"></app-movie-card>
+            }
+        </div>
+    </ng-container>
+</app-white-card>
+
+<section class="text-center pt-4">
+    <button class="button-movie button-movie-blue" (click)="increaseMovieLength()">
+        Ver Mais
+        <i class="bi bi-arrow-down"></i>
+    </button>
+</section>

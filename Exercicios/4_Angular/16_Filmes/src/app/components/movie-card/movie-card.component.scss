@@ -5,8 +5,12 @@
 }
 
 .movie-image{
-    height: 21.75rem;
-    width: 14.44rem;
+    width: 100%;
+    transition: transform 0.15s ease-in-out;
+}
+
+.movie-image:hover{
+    transform: scale(1.05);
 }
 
 .heart-button:active{

@@ -3,9 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { SearchMoviesService } from '../../services/search-movies.service';
 import { Movie } from '../../models/movie';
 import { MoviesService } from '../../services/movies.service';
-import { HeaderComponent } from '../../header/header.component';
-import { WhiteCardComponent } from "../white-card/white-card.component";
-import { ActorCardComponent } from '../actor-card/actor-card.component';
+import { HeaderComponent } from '../../components/header/header.component';
+import { WhiteCardComponent } from "../../components/white-card/white-card.component";
+import { ActorCardComponent } from '../../components/actor-card/actor-card.component';
 
 @Component({
   selector: 'app-movie-details',

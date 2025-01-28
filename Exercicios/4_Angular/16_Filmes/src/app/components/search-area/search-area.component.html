@@ -1,4 +1,19 @@
-<i class="magnifier-icon bi bi-search"></i>
-<input id="search-movies" type="text" class="w-100 form-control" placeholder="Busque um filme..." [(ngModel)]="searchMovie" (input)="changeValue()">
+<i class="magnifier-icon bi bi-search font-14"></i>
+<input id="search-movies" type="text" class="w-100 form-control inter font-12" placeholder="Busque um filme..." [(ngModel)]="searchMovie" (input)="changeValue()">
 
-<p>{{this.GetSearchMoviesService.getMovieCount()}} Filmes Listados</p>
+<p class="listed-movies work-sans">
+    {{this.GetSearchMoviesService.getAllMoviesCount()}} Filmes Catalogados
+    
+    - 
+
+    @if(searchMovie == "")
+    {
+        {{length}} Filme@if(length != 1){s} Listado@if(length != 1){s}
+    }
+    @else 
+    {
+        {{this.GetSearchMoviesService.getMoviesCount()}} 
+        Filme@if(this.GetSearchMoviesService.getMoviesCount() != 1){s}
+        Listado@if(this.GetSearchMoviesService.getMoviesCount() != 1){s}
+    }
+</p>
