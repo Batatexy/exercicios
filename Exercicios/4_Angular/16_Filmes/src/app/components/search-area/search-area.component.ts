@@ -1,20 +1,19 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
-import { SearchMoviesService } from '../../services/search-movies.service';
+import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MoviesService } from '../../services/movies.service';
 
 @Component({
   selector: 'app-search-area',
-  imports: [FormsModule,],
+  imports: [FormsModule],
   templateUrl: './search-area.component.html',
   styleUrl: './search-area.component.scss'
 })
 export class SearchAreaComponent {
-  @Input() length: number = 0;
-  searchMovie: string = "";
+  search: string = "";
 
-  constructor(public GetSearchMoviesService: SearchMoviesService) { }
+  constructor(public GetMoviesService: MoviesService) { }
 
-  changeValue() {
-    this.GetSearchMoviesService.setSearch(this.searchMovie);
+  changeSearch() {
+    this.GetMoviesService.setSearch(this.search);
   }
 }

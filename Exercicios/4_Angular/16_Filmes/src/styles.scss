@@ -7,33 +7,6 @@ body{
     background-color: #EFEFEF;
 }
 
-.button-movie{
-    background-color:white;
-    border: 0;
-    border-radius: 0.25rem;
-    padding: 0.5rem;
-
-    transition: 
-        color 0.15s ease-in-out,
-        background-color 0.15s ease-in-out,
-    ;
-}
-
-//Azul Claro
-.is-active,
-.button-movie-blue,
-.button-movie:hover{
-    background-color:#1D4ED8;
-    color:white;
-}
-
-//Azul Escuro
-.is-active:hover,
-.button-movie-blue:hover,
-.button-movie:active{
-    background-color:#1843bb;
-}
-
 .work-sans{
     font-family: "Work Sans", serif;
     font-optical-sizing: auto;
@@ -51,9 +24,6 @@ body{
 .font-bold{
     font-weight: 600;
 }
-
-
-
 
 .font-12{
     font-size: 0.75rem;

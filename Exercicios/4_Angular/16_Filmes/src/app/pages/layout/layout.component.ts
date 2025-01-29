@@ -3,11 +3,11 @@ import { RouterOutlet } from '@angular/router';
 import { NavComponent } from '../../components/nav/nav.component';
 
 @Component({
-  selector: 'app-design',
+  selector: 'app-layout',
   imports: [RouterOutlet, NavComponent],
-  templateUrl: './design.component.html',
-  styleUrl: './design.component.scss'
+  templateUrl: './layout.component.html',
+  styleUrl: './layout.component.scss'
 })
-export class DesignComponent {
+export class LayoutComponent {
 
 }

@@ -1,33 +1,42 @@
-<app-header>
-    <ng-container headerIndex>
-        Inicio - Filmes - <b>Detalhes do Filme</b>
+<app-bread-crumb>
+    <ng-container breadCrumb>
+        Filmes - <b>{{movie?.name}}</b>
     </ng-container>
+</app-bread-crumb>
 
-    <ng-container headerActualIndex>
+<app-title>
+    <ng-container title>
         {{movie?.name}}
     </ng-container>
-</app-header>
+</app-title>
 
-<div class="d-flex flex-sm-row flex-column">
+<section class="d-flex flex-sm-row flex-column">
     <!-- Imagem -->
     <app-white-card class="movie-detail-image">
         <ng-container content>
             <div class="d-flex flex-column">
                 <img src="{{movie?.image}}" class="image-border">
 
-                <div class="d-flex">
-                    <button class="button-movie button-movie-blue"><i class="bi bi-star-fill text-warning"></i> 9.4</button>
-                    <div>
-                        <p>Dirigido por <b>Ben Wheatley</b></p>
-                        <p>Lançado em 3 de agosto de 2023</p>
+                <div class="d-flex mt-3">
+                    <app-badge class="font-bold font-24">
+                        <ng-container content >
+                            <i class="bi bi-star-fill text-warning"></i> 9.4
+                        </ng-container>
+                    </app-badge>
+
+                    <div class="ps-4 d-flex flex-column justify-content-center">
+                        <p class="m-0 inter">Dirigido por <b>Ben Wheatley</b></p>
+                        <p class="inter">Lançado em 3 de agosto de 2023</p>
                     </div>
                 </div>
                 
-                <div class="d-flex justify-content-around">
+                <div class="d-flex justify-content-around w-100 flex-wrap">
                     <!-- @for (item of items; track $index) {} -->
-                    <button class="button-movie button-movie-blue">Ação</button>
-                    <button class="button-movie button-movie-blue">Ação</button>
-                    <button class="button-movie button-movie-blue">Ação</button>
+                    <app-badge class="font-24 me-1 ms-1">
+                        <ng-container content >
+                            Ação
+                        </ng-container>
+                    </app-badge>
                 </div>
             </div>
             
@@ -36,30 +45,44 @@
     <!-- Imagem -->
 
     <!-- Atores e Sinopse -->
-    <div class="d-flex flex-column">
+    <div class="movie-detail-actors d-flex flex-column">
 
         <!-- Atores -->
-        <app-white-card class="ps-3 pb-4">
+        <app-white-card class="pb-4 pt-4 pt-sm-0">
             <ng-container content>
-                <div class="d-flex flex-column p-2">
+                <div class="d-flex flex-column p-2 w-100">
                     <h4 class="work-sans font-24 font-bold pb-3">
                         Elenco
                     </h4>
     
                     <!-- @for (item of items; track $index) {} -->
-                    <app-actor-card></app-actor-card>
-                    <app-actor-card></app-actor-card>
-                    <app-actor-card></app-actor-card>
+                    <app-avatar class="pt-0 pt-sm-4" [image]="'../../images/profile-picture.png'" [nameClassName]="'font-bold'" [imageClassName]="'height-4'">
+                        <ng-container name>
+                            Jack Thomeson
+                        </ng-container>
+                            
+                        <ng-container subName>
+                            Jack Thomeson
+                        </ng-container>
+                    </app-avatar>
+
+                    <div class="d-flex justify-content-end">
+                        <app-common-button [className]="'blue border-6 see-more-actors'">
+                            <ng-container content>
+                                Ver Mais +
+                            </ng-container>
+                        </app-common-button>
+                    </div>
                 </div>
             </ng-container>
         </app-white-card>
         <!-- Atores -->
 
         <!-- Sinopse -->
-        <app-white-card class="ps-3">
+        <app-white-card class="">
             <ng-container content>
                 <h3 class="work-sans font-24 font-bold">Sinopse</h3>
-                <p>
+                <p class="work-sans">
                     
                     Um mergulho exploratório nas profundezas do oceano de uma ousada equipe de pesquisa se transforma em caos quando uma operação de mineração malévola ameaça sua missão e os força a uma batalha de alto risco pela sobrevivência.
 
@@ -68,4 +91,4 @@
         </app-white-card>
         <!-- Sinopse -->
     </div>
-</div>
+</section>

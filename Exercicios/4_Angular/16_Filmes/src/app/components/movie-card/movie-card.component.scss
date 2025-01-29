@@ -13,6 +13,19 @@
     transform: scale(1.05);
 }
 
+.movie-image:active{
+    transform: scale(1);
+}
+
+.heart-button{
+    transition: transform 0.15s ease-in-out;
+}
+
+.heart-button:hover{
+    transform: scale(1.3);
+}
+
 .heart-button:active{
     border:1px solid transparent;
+    transform: scale(1);
 }

@@ -5,9 +5,17 @@ import { Movie } from '../models/movie';
   providedIn: 'root'
 })
 export class MoviesService {
+  private search: string = "";
+  //private likedMovies: Array<Movie> = [];
+
+  //Sumir
+  private movies: Array<Movie> = this.getMoviesAPI();
+  private length: number = 2;
+  private allMoviesCount: number = 0;
+
   constructor() { }
 
-  getMoviesAPI(): Array<Movie> {
+  public getMoviesAPI(): Array<Movie> {
     return [
       {
         id: 0,
@@ -61,14 +69,13 @@ export class MoviesService {
     ];
   }
 
-  movies: Array<Movie> = this.getMoviesAPI();
-  likedMovies: Array<Movie> = [];
 
-  getMoviesByName(search: string): Array<Movie> {
+
+  public getMoviesByName(search: string): Array<Movie> {
     if (search != "") {
       let searchMovies: Array<Movie> = [];
       this.movies.forEach(movie => {
-        if (movie.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())) {
+        if (movie.name.toLowerCase().includes(search.toLowerCase())) {
           searchMovies.push(movie);
         }
       });
@@ -80,7 +87,7 @@ export class MoviesService {
     }
   }
 
-  getMovieByID(id: number): Movie | null {
+  public getMovieByID(id: number): Movie | null {
     let returnMovie: Movie | null = null;
     this.movies.forEach(movie => {
       if (movie.id == id) {
@@ -91,11 +98,58 @@ export class MoviesService {
     return returnMovie;
   }
 
-  updateMovie(movie: Movie): void {
+  //Sumir
+  public updateMovie(movie: Movie): void {
     this.movies.forEach((item, index) => {
       if (movie.id == item.id) {
         this.movies[index] = movie;
       }
     });
+  }
+
+
+
+
+  //Pegar o total de filmes da api
+  public getAllMoviesCount(): number {
+    this.allMoviesCount = this.movies.length;
+    return this.allMoviesCount;
+  }
+
+  public setAllMovieCount(allMoviesCount: number): void {
+    this.allMoviesCount = allMoviesCount;
+  }
+
+  public getSearch(): string {
+    return this.search;
+  }
+
+  public setSearch(search: string): void {
+    this.search = search;
+  }
+
+  public getMoviesCount(): number {
+    this.allMoviesCount = this.getMoviesByName(this.search).length;
+    return this.allMoviesCount;
+  }
+
+
+
+  public increaseMovieLength(): void {
+    console.log("aaa");
+    this.length += 2;
+
+    if (this.length > this.getMoviesCount()) {
+      this.length = this.getMoviesCount();
+    }
+    console.log(this.length);
+  }
+
+  public getLength(): number {
+    return this.length;
+  }
+
+  public setLength(length: number) {
+    this.length = length;
   }
 }

@@ -1,21 +1,40 @@
-<app-header>
-    <ng-container headerIndex>
-        Inicio - <b>Filmes</b>
-    </ng-container>
-
-    <ng-container headerActualIndex>
+<app-bread-crumb>
+    <ng-container breadCrumb>
         Filmes
     </ng-container>
-</app-header>
+</app-bread-crumb>
 
-<app-search-area [length]="length">
+<app-title>
+    <ng-container title>
+        Filmes
+    </ng-container>
+</app-title>
+
+<app-search-area>
 </app-search-area>
+
+<p class="listed-movies work-sans pt-2">
+    {{this.GetMoviesService.getAllMoviesCount()}} Filmes Catalogados
+    
+    - 
+
+    @if(GetMoviesService.getSearch() == "")
+    {
+        {{GetMoviesService.getLength()}} Filme@if(GetMoviesService.getLength() != 1){s} Listado@if(GetMoviesService.getLength() != 1){s}
+    }
+    @else 
+    {
+        {{this.GetMoviesService.getMoviesCount()}} 
+        Filme@if(this.GetMoviesService.getMoviesCount() != 1){s}
+        Listado@if(this.GetMoviesService.getMoviesCount() != 1){s}
+    }
+</p>
 
 <app-white-card>
     <ng-container content>
         <div class="movies d-flex flex-wrap w-100">
             <!-- Limitar a lista, ao apertar ver mais, ir aumentando este limite -->
-            @for (movie of GetMoviesService.getMoviesByName(this.GetSearchMoviesService.getSearch()).slice(0,length); track $index) 
+            @for (movie of GetMoviesService.getMoviesByName(this.GetMoviesService.getSearch()).slice(0,GetMoviesService.getLength()); track $index) 
             {
                 <app-movie-card [movie]="movie" (EventEmitterMovie)="this.GetMoviesService.updateMovie(movie)"></app-movie-card>
             }
@@ -23,9 +42,11 @@
     </ng-container>
 </app-white-card>
 
-<section class="text-center pt-4">
-    <button class="button-movie button-movie-blue" (click)="increaseMovieLength()">
-        Ver Mais
-        <i class="bi bi-arrow-down"></i>
-    </button>
+<section class="see-more d-flex justify-content-center pt-4 w-100">
+    <app-common-button [className]="'blue border-6 see-more-movies'" >
+        <ng-container content>
+            Ver Mais
+            <i class="bi bi-arrow-down"></i>
+        </ng-container>
+    </app-common-button>
 </section>

@@ -1,24 +1,36 @@
 <nav>
     <div class="nav-fixed p-sm-3 d-flex flex-sm-column p-2 pt-sm-0">
-        <app-profile>
-        </app-profile>
+        
+        <app-avatar class="pt-0 pt-sm-4" [image]="'../../images/profile-picture.png'">
+            <ng-container name>
+                Jack Thomeson
+            </ng-container>
+        </app-avatar>
 
         <div class="nav-buttons d-flex flex-sm-column p-sm-0">
-            <div class="pt-sm-4 ">
-                <button class="button-movie font-14 work-sans" [routerLink]="['']" [routerLinkActive]="'is-active'" [routerLinkActiveOptions]="{exact: true}">Início</button>
-            </div>
+            <app-common-button [className]="'hover-blue text-start'" class="pt-sm-4" [route]="'/'" [active]="'blue'" [exact]="true">
+                <ng-container content>
+                    Home
+                </ng-container>
+            </app-common-button>
     
-            <div class="pt-sm-2">
-                <button class="button-movie font-14 work-sans" [routerLink]="['/movie']" [routerLinkActive]="'is-active'">Filmes</button>
-            </div>
+            <app-common-button [className]="'hover-blue text-start'" class="pt-sm-2" [route]="'/movies'" [active]="'blue'">
+                <ng-container content>
+                    Filmes
+                </ng-container>
+            </app-common-button>
             
-            <div class="pt-sm-4 ">
-                <button class="button-movie font-14 work-sans" [routerLink]="['/configurations']" [routerLinkActive]="'is-active'">Configurações</button>
-            </div>
+            <app-common-button [className]="'hover-blue text-start'" class="pt-sm-4" [route]="'/configurations'" [active]="'blue'">
+                <ng-container content>
+                    Configurações
+                </ng-container>
+            </app-common-button>
     
-            <div class="pt-sm-2 ">
-                <button class="button-movie font-14 work-sans" [routerLink]="['/logout']" [routerLinkActive]="'is-active'">Sair</button>
-            </div>
+            <app-common-button [className]="'hover-blue text-start'" class="pt-sm-2" [route]="'/logout'" [active]="'blue'">
+                <ng-container content>
+                    Sair
+                </ng-container>
+            </app-common-button>
         </div>
     </div>
 </nav>
