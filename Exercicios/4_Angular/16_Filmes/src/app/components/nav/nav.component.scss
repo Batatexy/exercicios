@@ -5,10 +5,20 @@ nav{
 }
 
 .nav-fixed{
+    flex-direction: column;
     position: fixed;
-    background-color: white;
+    background-color: var(--foreground-default-color);
+    color:var(--text-default-color);
     height: 100vh;
     width: var(--size);
+
+    transition: background-color var(--transition-theme-time) ease-in-out,
+                color 0.15s ease-in-out;
+}
+
+.nav-buttons{
+  display: flex;
+  flex-direction: column;
 }
 
 .button-movie{
@@ -17,7 +27,7 @@ nav{
   padding-left: 0.75rem;
 }
 
-@media (max-width:575px)
+@media (max-width:576px)
 {
   nav{
     padding-bottom: 2.25rem;
@@ -25,11 +35,15 @@ nav{
 
   .nav-fixed
   {
+    flex-direction: row;
     height: auto;
     width: 100vw;
+    border-bottom: 2px solid var(--background-default-color);
+    
   }
 
   .nav-buttons{
+    flex-direction: row;
     padding: 0.3rem;
   }
 

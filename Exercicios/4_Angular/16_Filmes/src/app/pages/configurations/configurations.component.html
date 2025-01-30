@@ -1,0 +1,43 @@
+<section class="configurations-component">
+
+    <app-bread-crumb>
+        <ng-container breadCrumb>
+            Configurações
+        </ng-container>
+    </app-bread-crumb>
+
+    <app-title>
+        <ng-container title>
+            Configurações
+        </ng-container>
+    </app-title>
+
+    <app-white-card>
+        <ng-container content>
+            <div class="form-check form-switch">
+                <input class="form-check-input " type="checkbox" id="switch-theme" 
+                [checked]="GetConfigurationsService.getTheme()" (click)="GetConfigurationsService.switchTheme()">
+
+                <label class="form-check-label" for="switch-theme">
+                    Tema
+                    @if(GetConfigurationsService.getTheme())
+                    {
+                        Escuro
+                    }
+                    @else
+                    {
+                        Claro
+                    }
+                    
+                </label>
+            </div>
+
+
+
+            
+
+
+        </ng-container>
+    </app-white-card>
+
+</section>

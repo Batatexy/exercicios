@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { AvatarComponent } from '../avatar/avatar.component';
-import { RouterLink, RouterLinkActive } from '@angular/router';
-import { CommonButtonComponent } from "../common-button/common-button.component";
+import { CommonRouterButtonComponent } from "../common-router-button/common-router-button.component";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-nav',
-  imports: [AvatarComponent, RouterLink, RouterLinkActive, CommonButtonComponent],
+  imports: [AvatarComponent, CommonRouterButtonComponent, CommonModule],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.scss'
 })

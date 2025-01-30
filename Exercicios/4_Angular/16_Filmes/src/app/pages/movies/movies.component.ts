@@ -6,12 +6,18 @@ import { MoviesService } from '../../services/movies.service';
 import { BreadCrumbComponent } from '../../components/bread-crumb/bread-crumb.component';
 import { WhiteCardComponent } from "../../components/white-card/white-card.component";
 import { TitleComponent } from "../../components/title/title.component";
-import { CommonButtonComponent } from "../../components/common-button/common-button.component";
+import { CommonRouterButtonComponent } from "../../components/common-router-button/common-router-button.component";
 import { SearchAreaComponent } from "../../components/search-area/search-area.component";
+import { CommonActionButtonComponent } from '../../components/common-action-button/common-action-button.component';
 
 @Component({
   selector: 'app-movies',
-  imports: [MovieCardComponent, BreadCrumbComponent, WhiteCardComponent, CommonModule, TitleComponent, CommonButtonComponent, SearchAreaComponent],
+  imports:
+    [
+      MovieCardComponent, BreadCrumbComponent, WhiteCardComponent, CommonModule, TitleComponent,
+      CommonRouterButtonComponent, CommonActionButtonComponent, SearchAreaComponent
+
+    ],
   templateUrl: './movies.component.html',
   styleUrl: './movies.component.scss'
 })
@@ -19,4 +25,7 @@ export class MoviesComponent {
   //Injeção de dependências: importar a classe GetMoviesService
   constructor(public GetMoviesService: MoviesService) { }
 
+  increaseMovieLength() {
+    this.GetMoviesService.increaseMovieLength();
+  }
 }

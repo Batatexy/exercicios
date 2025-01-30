@@ -10,8 +10,10 @@ export class MoviesService {
 
   //Sumir
   private movies: Array<Movie> = this.getMoviesAPI();
-  private length: number = 2;
-  private allMoviesCount: number = 0;
+
+  //Variavel ajustda pelo usuario
+  private lengthIncrease: number = 2;
+  private length: number = this.lengthIncrease;
 
   constructor() { }
 
@@ -69,8 +71,7 @@ export class MoviesService {
     ];
   }
 
-
-
+  //Filtrar um NOME no array de Filmes // Se "" retorna todos o array de Filmes inteiro
   public getMoviesByName(search: string): Array<Movie> {
     if (search != "") {
       let searchMovies: Array<Movie> = [];
@@ -87,6 +88,7 @@ export class MoviesService {
     }
   }
 
+  //Filtrar um ID no array de Filmes
   public getMovieByID(id: number): Movie | null {
     let returnMovie: Movie | null = null;
     this.movies.forEach(movie => {
@@ -107,49 +109,55 @@ export class MoviesService {
     });
   }
 
-
-
-
   //Pegar o total de filmes da api
   public getAllMoviesCount(): number {
-    this.allMoviesCount = this.movies.length;
-    return this.allMoviesCount;
+    return this.movies.length;
   }
 
-  public setAllMovieCount(allMoviesCount: number): void {
-    this.allMoviesCount = allMoviesCount;
+  //Pegar o que foi digitado pelo usuário e buscar o número total de filmes
+  public getMoviesCount(): number {
+    return this.getMoviesByName(this.search).length;
   }
 
+  //Pegar o que foi digitado pelo usuário
   public getSearch(): string {
     return this.search;
   }
 
+  //Definir o que foi digitado pelo usuário
   public setSearch(search: string): void {
     this.search = search;
   }
 
-  public getMoviesCount(): number {
-    this.allMoviesCount = this.getMoviesByName(this.search).length;
-    return this.allMoviesCount;
-  }
-
-
-
+  //Aumentar o range de filmes exibidos na tela // Clickar no botão Ver Mais
   public increaseMovieLength(): void {
-    console.log("aaa");
-    this.length += 2;
+    let length = this.getLength() + this.getLengthIncrease();
 
-    if (this.length > this.getMoviesCount()) {
-      this.length = this.getMoviesCount();
+    if (length > this.getMoviesCount()) {
+      this.setLength(this.getMoviesCount());
     }
-    console.log(this.length);
+    else {
+      this.setLength(length);
+    }
   }
 
+  //Pegar o range de filmes exibidos
   public getLength(): number {
     return this.length;
   }
 
+  //Definir o range de filmes exibidos
   public setLength(length: number) {
     this.length = length;
+  }
+
+  //Pegar o range que se é adicionado a cada clique no ver mais
+  public getLengthIncrease(): number {
+    return this.lengthIncrease;
+  }
+
+  //Definir o range que se é adicionado a cada clique no ver mais
+  public setLengthIncrease(lengthIncrease: number) {
+    this.lengthIncrease = lengthIncrease;
   }
 }

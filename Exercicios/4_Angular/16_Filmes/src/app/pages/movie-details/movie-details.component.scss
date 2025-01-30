@@ -1,4 +1,6 @@
-
+.movie-details-component{
+    color:var(--text-default-color);
+}
 
 .movie-detail-image{
     padding-right:1rem;
@@ -14,24 +16,23 @@
     width: 100%;
 }
 
-.button-stars{
-    width: 5.5rem;
+.star-badge{
+    width: 8rem;
+    height: 4.25rem;
+}
+
+.badges-genres{
+    margin-left:-0.1rem;
+    margin-right:-0.1rem;
+}
+
+.gender-badge{
     height: 3rem;
+    margin-left:0.1rem;
+    margin-right:0.1rem;
 }
 
-.gender-button{
-    margin:0.2rem;
-}
-
-.button-movie{
-    padding-left: 0.9rem;
-    padding-right: 0.9rem;
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
-    border-radius: 0.375rem;
-}
-
-@media (max-width:575px)
+@media (max-width:576px)
 {
     .movie-detail-image{
         padding-right:0;

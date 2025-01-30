@@ -1,3 +1,5 @@
+<section class="movies-component">
+
 <app-bread-crumb>
     <ng-container breadCrumb>
         Filmes
@@ -22,7 +24,7 @@
     {
         {{GetMoviesService.getLength()}} Filme@if(GetMoviesService.getLength() != 1){s} Listado@if(GetMoviesService.getLength() != 1){s}
     }
-    @else 
+    @else
     {
         {{this.GetMoviesService.getMoviesCount()}} 
         Filme@if(this.GetMoviesService.getMoviesCount() != 1){s}
@@ -32,21 +34,40 @@
 
 <app-white-card>
     <ng-container content>
-        <div class="movies d-flex flex-wrap w-100">
+        <div class="movies d-flex flex-wrap justify-content-center">
             <!-- Limitar a lista, ao apertar ver mais, ir aumentando este limite -->
-            @for (movie of GetMoviesService.getMoviesByName(this.GetMoviesService.getSearch()).slice(0,GetMoviesService.getLength()); track $index) 
+            @if (GetMoviesService.getSearch() == "") 
             {
-                <app-movie-card [movie]="movie" (EventEmitterMovie)="this.GetMoviesService.updateMovie(movie)"></app-movie-card>
+                @for (movie of GetMoviesService.getMoviesByName(this.GetMoviesService.getSearch()).slice(0,GetMoviesService.getLength()); track $index) 
+                {
+                    <app-movie-card [movie]="movie" (EventEmitterMovie)="this.GetMoviesService.updateMovie(movie)"></app-movie-card>
+                }
             }
+            @else 
+            {
+                @for (movie of GetMoviesService.getMoviesByName(this.GetMoviesService.getSearch()); track $index) 
+                {
+                    <app-movie-card [movie]="movie" (EventEmitterMovie)="this.GetMoviesService.updateMovie(movie)"></app-movie-card>
+                }
+            }
+
+
+
+            
         </div>
     </ng-container>
 </app-white-card>
 
 <section class="see-more d-flex justify-content-center pt-4 w-100">
-    <app-common-button [className]="'blue border-6 see-more-movies'" >
+    <app-common-action-button [className]="'blue border-6 see-more-movies'" [function]="increaseMovieLength">
         <ng-container content>
             Ver Mais
             <i class="bi bi-arrow-down"></i>
         </ng-container>
-    </app-common-button>
+    </app-common-action-button>
+</section>
+
+
+
+
 </section>
