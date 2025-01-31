@@ -4,11 +4,11 @@ import { CommonRouterButtonComponent } from "../common-router-button/common-rout
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-nav',
+  selector: 'app-side-nav',
   imports: [AvatarComponent, CommonRouterButtonComponent, CommonModule],
-  templateUrl: './nav.component.html',
-  styleUrl: './nav.component.scss'
+  templateUrl: './side-nav.component.html',
+  styleUrl: './side-nav.component.scss'
 })
-export class NavComponent {
+export class SideNavComponent {
 
 }

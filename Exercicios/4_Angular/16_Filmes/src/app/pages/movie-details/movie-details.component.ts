@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Movie } from '../../models/movie';
 import { MoviesService } from '../../services/movies.service';
 import { BreadCrumbComponent } from '../../components/bread-crumb/bread-crumb.component';
@@ -14,7 +14,8 @@ import { BadgeComponent } from '../../components/badge/badge.component';
   selector: 'app-movie-details',
   imports:
     [
-      BreadCrumbComponent, WhiteCardComponent, TitleComponent, CommonRouterButtonComponent, CommonModule, AvatarComponent, BadgeComponent, RouterLink
+      BreadCrumbComponent, WhiteCardComponent, TitleComponent, CommonRouterButtonComponent, CommonModule,
+      AvatarComponent, BadgeComponent, RouterLink
 
     ],
   templateUrl: './movie-details.component.html',
@@ -24,13 +25,14 @@ export class MovieDetailsComponent {
 
   movie: Movie | null;
 
-  constructor(private route: ActivatedRoute, public GetMoviesService: MoviesService) {
+  constructor(private route: ActivatedRoute, public GetMoviesService: MoviesService, private getRouter: Router) {
     this.movie = GetMoviesService.getMovieByID(Number(this.route.snapshot.paramMap.get("id")));
   }
 
+  //Caso o ID do filme não exista, redireciona para a página de filmes
   ngOnInit(): void {
     if (this.movie == null) {
-
+      this.getRouter.navigate(['/movies']);
     }
   }
 }

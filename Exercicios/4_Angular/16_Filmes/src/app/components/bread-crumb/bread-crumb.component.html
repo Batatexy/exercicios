@@ -1,5 +1,18 @@
-<p class="bread-crumb font-14 work-sans">
-    <ng-content select="[breadCrumb]">
-
-    </ng-content>
-</p>
+@for (path of pathArray; track $index) 
+{
+    <a class="bread-crumb font-14 work-sans" [routerLink]="path">
+        @switch (path) 
+        {
+            @case ("/") {Home}
+            @case ("/movies") {Filmes}
+            @default
+            {
+                @if (path.includes("movie"))
+                {
+                    <!-- -1 pois o pathArray tem 1 posição a mais, por conta do "/" -->
+                    {{GetMoviesService.getMovieByID(parseInt(pathArraySplit[$index - 1]))?.name}}
+                }
+            }
+        }
+    </a>
+}

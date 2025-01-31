@@ -2,11 +2,7 @@
 
 
 
-<app-bread-crumb>
-    <ng-container breadCrumb>
-        <a class="remove-link-style" routerLink="/movies">Filmes</a> - <b>{{movie?.name}}</b>
-    </ng-container>
-</app-bread-crumb>
+    <app-bread-crumb />
 
 <app-title>
     <ng-container title>
@@ -15,12 +11,13 @@
 </app-title>
 
 <section class="d-flex flex-sm-row flex-column">
-    <!-- Imagem -->
+    <!-- Card da Imagem, Nome do Diretor e Data do Filme -->
     <app-white-card class="movie-detail-image">
         <ng-container content>
             <div class="d-flex flex-column p-3">
                 <img src="{{movie?.image}}" class="image-border">
 
+                <!-- Note Badge / Nome do Autor e Data do Filme -->
                 <div class="d-flex mt-3 align-items-center">
                     <!-- Alguma bruxaria faz com que, quando ponho a classe de bold, ele remove o Bold -->
                     <app-badge class="star-badge work-sans font-36" >
@@ -35,7 +32,9 @@
                         <p class="m-0 inter">Lançado em 3 de agosto de 2023</p>
                     </div>
                 </div>
+                <!-- Note Badge / Nome do Autor e Data do Filme -->
                 
+                <!-- Genre Badges -->
                 <div class="badges-genres d-flex justify-content-between flex-wrap">
                     <!-- @for (item of items; track $index) {} -->
                     <app-badge class="gender-badge inter font-20 mt-3">
@@ -44,24 +43,25 @@
                         </ng-container>
                     </app-badge>
                 </div>
+                <!-- Genre Badges -->
             </div>
             
         </ng-container>
     </app-white-card>
-    <!-- Imagem -->
+    <!-- Card da Imagem, Nome do Diretor e Data do Filme -->
 
     <!-- Atores e Sinopse -->
     <div class="movie-detail-actors d-flex flex-column">
         <app-white-card class="pb-4 pt-4 pt-sm-0">
-            <!-- Atores -->
             <ng-container content>
                 <div class="d-flex flex-column p-3 w-100">
                     <h4 class="work-sans font-24 font-bold">
                         Elenco
                     </h4>
     
+                    <!-- Atores -->
                     <!-- @for (item of items; track $index) {} -->
-                    <app-avatar class="pt-0 pt-3" [image]="'../../images/profile-picture.png'" [nameClassName]="'font-bold'" [imageClassName]="'height-4'">
+                    <app-avatar class="pt-0 pt-3" image="../../images/profile-picture.png" nameClassName="font-bold" imageClassName="height-4">
                         <ng-container name>
                             Jack Thomeson
                         </ng-container>
@@ -70,9 +70,10 @@
                             Jack Thomeson
                         </ng-container>
                     </app-avatar>
-
+                    <!-- Atores -->
+                     
                     <div class="d-flex justify-content-end">
-                        <app-common-router-button [className]="'blue border-6 see-more-actors'">
+                        <app-common-router-button className="blue border-6 see-more-actors">
                             <ng-container content>
                                 Ver Mais +
                             </ng-container>
@@ -80,7 +81,7 @@
                     </div>
                 </div>
             </ng-container>
-            <!-- Atores -->
+            
         </app-white-card>
         
 
@@ -99,6 +100,7 @@
         </app-white-card>
         <!-- Sinopse -->
     </div>
+    <!-- Atores e Sinopse -->
 </section>
 
 

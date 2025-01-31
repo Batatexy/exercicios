@@ -1,10 +1,6 @@
 <section class="movies-component">
 
-<app-bread-crumb>
-    <ng-container breadCrumb>
-        Filmes
-    </ng-container>
-</app-bread-crumb>
+    <app-bread-crumb />
 
 <app-title>
     <ng-container title>
@@ -13,22 +9,25 @@
 </app-title>
 
 <app-search-area>
+    
 </app-search-area>
 
 <p class="listed-movies work-sans pt-2">
-    {{this.GetMoviesService.getAllMoviesCount()}} Filmes Catalogados
+    {{GetMoviesService.createZeroBeforeNumbers(this.GetMoviesService.getAllMoviesCount())}} 
+    Filmes Catalogados
     
     - 
 
     @if(GetMoviesService.getSearch() == "")
     {
-        {{GetMoviesService.getLength()}} Filme@if(GetMoviesService.getLength() != 1){s} Listado@if(GetMoviesService.getLength() != 1){s}
+        {{this.GetMoviesService.createZeroBeforeNumbers(this.GetMoviesService.getSearchedMoviesCount(this.GetMoviesService.getLength()))}} 
+        Filme@if(GetMoviesService.getLength() != 1){s} Listado@if(GetMoviesService.getLength() != 1){s}
     }
     @else
     {
-        {{this.GetMoviesService.getMoviesCount()}} 
-        Filme@if(this.GetMoviesService.getMoviesCount() != 1){s}
-        Listado@if(this.GetMoviesService.getMoviesCount() != 1){s}
+        {{this.GetMoviesService.createZeroBeforeNumbers(this.GetMoviesService.getSearchedMoviesCount(this.GetMoviesService.getLength()))}} 
+        Filme@if(this.GetMoviesService.getSearchedMoviesCount() != 1){s}
+        Listado@if(this.GetMoviesService.getSearchedMoviesCount() != 1){s}
     }
 </p>
 
@@ -38,6 +37,7 @@
             <!-- Limitar a lista, ao apertar ver mais, ir aumentando este limite -->
             @if (GetMoviesService.getSearch() == "") 
             {
+                <!-- Não pesquisar, mostrar todos os filmes limitando pelo breakpoint do length dos filmes já exibidos -->
                 @for (movie of GetMoviesService.getMoviesByName(this.GetMoviesService.getSearch()).slice(0,GetMoviesService.getLength()); track $index) 
                 {
                     <app-movie-card [movie]="movie" (EventEmitterMovie)="this.GetMoviesService.updateMovie(movie)"></app-movie-card>
@@ -45,29 +45,27 @@
             }
             @else 
             {
-                @for (movie of GetMoviesService.getMoviesByName(this.GetMoviesService.getSearch()); track $index) 
+                <!-- Quando pesquisar, mostrar somente os que já estavam em tela, enviado um breakpoint, que é o length dos filmes já exibidos -->
+                @for (movie of GetMoviesService.getMoviesByName(this.GetMoviesService.getSearch(), this.GetMoviesService.getLength()); track $index) 
                 {
                     <app-movie-card [movie]="movie" (EventEmitterMovie)="this.GetMoviesService.updateMovie(movie)"></app-movie-card>
                 }
             }
-
-
-
-            
         </div>
     </ng-container>
 </app-white-card>
 
-<section class="see-more d-flex justify-content-center pt-4 w-100">
-    <app-common-action-button [className]="'blue border-6 see-more-movies'" [function]="increaseMovieLength">
-        <ng-container content>
-            Ver Mais
-            <i class="bi bi-arrow-down"></i>
-        </ng-container>
-    </app-common-action-button>
-</section>
-
-
-
+@if(this.GetMoviesService.getLength() < this.GetMoviesService.getSearchedMoviesCount())
+{
+    <section class="see-more d-flex justify-content-center pt-4 w-100">
+        <app-common-action-button className="blue border-6 see-more-movies" [function]="increaseMovieLength">
+            <ng-container content>
+                
+                Ver Mais <i class="bi bi-arrow-down"></i>
+                
+            </ng-container>
+        </app-common-action-button>
+    </section>
+}
 
 </section>

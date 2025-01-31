@@ -8,9 +8,8 @@ import { RouterLink } from '@angular/router';
   templateUrl: './movie-card.component.html',
   styleUrl: './movie-card.component.scss'
 })
-export class MovieCardComponent 
-{
-  @Input() movie: Movie = {id: 0, name: "", image: "", date: "", liked: false}
+export class MovieCardComponent {
+  @Input() movie: Movie = { id: 0, name: "", image: "", date: "", liked: false };
 
   @Output() EventEmitterMovie: EventEmitter<Movie> = new EventEmitter();
   sendLikedState(movie: Movie): void {

@@ -1,32 +1,32 @@
 <nav class="">
     <div class="nav-fixed  d-flex p-sm-3 p-2 pt-sm-0 z-3">
         
-        <app-avatar class="pt-0 pt-sm-4" [image]="'../../images/profile-picture.png'">
+        <app-avatar class="pt-0 pt-sm-4" image="../../images/profile-picture.png">
             <ng-container name>
                 Jack Thomeson
             </ng-container>
         </app-avatar>
 
         <div class="nav-buttons d-flex p-sm-0">
-            <app-common-router-button [className]="'hover-blue text-start'" class="pt-sm-4" [route]="'/'" [active]="'blue'" [exact]="true">
+            <app-common-router-button className="hover-blue text-start" class="pt-sm-4" route="/" active="blue" [exact]="true">
                 <ng-container content>
                     Home
                 </ng-container>
             </app-common-router-button>
     
-            <app-common-router-button [className]="'hover-blue text-start'" class="pt-sm-2" [route]="'/movies'" [active]="'blue'">
+            <app-common-router-button className="hover-blue text-start" class="pt-sm-2" route="/movies" active="blue">
                 <ng-container content>
                     Filmes
                 </ng-container>
             </app-common-router-button>
             
-            <app-common-router-button [className]="'hover-blue text-start'" class="pt-sm-4" [route]="'/configurations'" [active]="'blue'">
+            <app-common-router-button className="hover-blue text-start" class="pt-sm-4" route="/configurations" active="blue">
                 <ng-container content>
                     Configurações
                 </ng-container>
             </app-common-router-button>
     
-            <app-common-router-button [className]="'hover-blue text-start'" class="pt-sm-2" [route]="'/logout'" [active]="'blue'">
+            <app-common-router-button className="hover-blue text-start" class="pt-sm-2" route="/logout" active="blue">
                 <ng-container content>
                     Sair
                 </ng-container>

@@ -3,8 +3,11 @@ ng s --open
 ng g c
 ng g s
 
-- [ ] Filtrar pelos itens que estão em tela
 - [ ] URL sem mostrar somente o ID
+- [ ] Estar nos detalhes do filme, tambem destacar a aba filmes
+- [x] Crumbs serem dinamicos
+- [x] Quando pesquisar, aparecer os que já estavam em tela
+- [x] mostrar 08
 
 - [x] Implementar busca de filmes filtrados por título. 
 - [x]  link para breadcrumbs (migalhas). 
