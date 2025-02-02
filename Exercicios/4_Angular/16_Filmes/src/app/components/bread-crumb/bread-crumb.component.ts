@@ -11,38 +11,40 @@ import { CommonModule } from '@angular/common';
 })
 export class BreadCrumbComponent {
 
-  pathArraySplit: Array<string> = []
+  pathArrayFromURL: Array<string> = ["/"]
   pathArray: Array<string> = ["/"]
 
   constructor(private route: ActivatedRoute, public GetMoviesService: MoviesService) { }
 
   ngOnInit()
   {
-    console.clear()
+    this.pathArrayFromURL = this.route.snapshot.url.join().split(",");
 
-    this.pathArraySplit = this.route.snapshot.url.join().split(",")
-    console.log("PathArraySplit" , this.pathArraySplit)
-
-    for(let i:number = 0; i < this.pathArraySplit.length; i++)
+    for(let i:number = 0; i < this.pathArrayFromURL.length; i++)
     {
       let pathString: string = "";
 
       for(let j:number = 0; j <= i; j++)
       {
         //Verificar se existe algo neste proximo elemento, senão em home fica : "Home - Home"
-        if (this.pathArraySplit[j])
+        if (this.pathArrayFromURL[j])
         {
-          pathString += "/" + this.pathArraySplit[j]
+          pathString += "/" + this.pathArrayFromURL[j]
         }
         
       }
 
+      //Definir rotas
       if (pathString == "/movie") pathString = "/movies"
 
-      this.pathArray.push(pathString)
+
+
+
+      if (pathString != "") this.pathArray.push(pathString)
     }
 
-      console.log("Final:" , this.pathArray);
+      // console.log("pathArray:" , this.pathArray);
+      // console.log("pathArraySplit:" , this.pathArrayFromURL);
     }
 
   parseInt(string: string): number{

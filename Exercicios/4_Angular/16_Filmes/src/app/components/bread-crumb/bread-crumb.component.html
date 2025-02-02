@@ -1,18 +1,24 @@
 @for (path of pathArray; track $index) 
 {
-    <a class="bread-crumb font-14 work-sans" [routerLink]="path">
-        @switch (path) 
+    <a class="bread-crumb font-14 work-sans" [ngClass]="{'font-bold' : $index == pathArray.length-1}"  [routerLink]="path">
+        @switch (path)
         {
             @case ("/") {Home}
             @case ("/movies") {Filmes}
+            <!-- Qualquer Número -->
             @default
             {
                 @if (path.includes("movie"))
-                {
-                    <!-- -1 pois o pathArray tem 1 posição a mais, por conta do "/" -->
-                    {{GetMoviesService.getMovieByID(parseInt(pathArraySplit[$index - 1]))?.name}}
-                }
+                {{{GetMoviesService.getMovieByID(parseInt(pathArrayFromURL[$index - 1]))?.name}}}
+
+
+
             }
         }
     </a>
+
+    @if($index < pathArray.length-1)
+    {
+        -
+    }
 }

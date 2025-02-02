@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import { MoviesService } from '../../services/movies.service';
 
 @Component({
@@ -10,12 +10,13 @@ import { MoviesService } from '../../services/movies.service';
   styleUrl: './common-router-button.component.scss'
 })
 export class CommonRouterButtonComponent {
-  constructor(public GetMoviesService: MoviesService) { }
+
+  constructor(public GetMoviesService: MoviesService, private route: ActivatedRoute) { }
 
   @Input() className: string = "";
-  @Input() route: string = "";
+  @Input() router: string = "";
   @Input() active: string = "";
-  @Input() exact: boolean = false;
+  @Input() exact: boolean = false;  
 
 
 }
