@@ -1,5 +1,5 @@
-<button [ngClass]="className" [routerLink]="router" [routerLinkActive]="active" [routerLinkActiveOptions]="{exact}" >
+<button [class]="className" [routerLink]="router" [ngClass]="{'blue': isActive()}">
     <ng-content select="[content]">
-
+        
     </ng-content>
 </button>

@@ -8,25 +8,25 @@
         </app-avatar>
 
         <div class="nav-buttons d-flex p-sm-0">
-            <app-common-router-button className="hover-blue text-start" class="pt-sm-4" router="/" active="blue" [exact]="true">
+            <app-common-router-button className="hover-blue text-start" class="pt-sm-4" router="/" [routes]="['/']" activeClass="blue">
                 <ng-container content>
                     Home
                 </ng-container>
             </app-common-router-button>
     
-            <app-common-router-button className="hover-blue text-start" class="pt-sm-2" router="/movies">
+            <app-common-router-button className="hover-blue text-start" class="pt-sm-2" router="/movies" [routes]="['/movie', '/movies']" activeClass="blue">
                 <ng-container content>
                     Filmes
                 </ng-container>
             </app-common-router-button>
             
-            <app-common-router-button className="hover-blue text-start" class="pt-sm-4" router="/configurations" active="blue">
+            <app-common-router-button className="hover-blue text-start" class="pt-sm-4" router="/configurations" [routes]="['/configurations']" activeClass="blue">
                 <ng-container content>
                     Configurações
                 </ng-container>
             </app-common-router-button>
     
-            <app-common-router-button className="hover-blue text-start" class="pt-sm-2" router="/logout" active="blue">
+            <app-common-router-button className="hover-blue text-start" class="pt-sm-2" router="/logout" [routes]="['/logout']" activeClass="blue">
                 <ng-container content>
                     Sair
                 </ng-container>

@@ -1,6 +1,6 @@
 <section class="movies-component">
 
-    <app-bread-crumb />
+<app-bread-crumb />
 
 <app-title>
     <ng-container title>
@@ -8,54 +8,28 @@
     </ng-container>
 </app-title>
 
-<app-search-area>
-    
-</app-search-area>
+<app-search-area />
 
 <p class="listed-movies work-sans pt-2">
-    {{GetMoviesService.createZeroBeforeNumbers(this.GetMoviesService.getAllMoviesCount())}} 
-    Filmes Catalogados
-    
-    - 
-
-    @if(GetMoviesService.getSearch() == "")
-    {
-        {{this.GetMoviesService.createZeroBeforeNumbers(this.GetMoviesService.getSearchedMoviesCount(this.GetMoviesService.getLength()))}} 
-        Filme@if(GetMoviesService.getLength() != 1){s} Listado@if(GetMoviesService.getLength() != 1){s}
-    }
-    @else
-    {
-        {{this.GetMoviesService.createZeroBeforeNumbers(this.GetMoviesService.getSearchedMoviesCount(this.GetMoviesService.getLength()))}} 
-        Filme@if(this.GetMoviesService.getSearchedMoviesCount() != 1){s}
-        Listado@if(this.GetMoviesService.getSearchedMoviesCount() != 1){s}
-    }
+    {{getAllMoviesCount()}} Filmes Catalogados - 
+    {{getMoviesOnScreen()}} Filme{{moreThanOneMovieFounded()}} Exibido{{moreThanOneMovieFounded()}}
 </p>
 
 <app-white-card>
     <ng-container content>
         <div class="movies d-flex flex-wrap justify-content-center">
             <!-- Limitar a lista, ao apertar ver mais, ir aumentando este limite -->
-            @if (GetMoviesService.getSearch() == "") 
+            
+            @for (movie of getMoviesByName(); track $index) 
             {
-                <!-- Não pesquisar, mostrar todos os filmes limitando pelo breakpoint do length dos filmes já exibidos -->
-                @for (movie of GetMoviesService.getMoviesByName(this.GetMoviesService.getSearch()).slice(0,GetMoviesService.getLength()); track $index) 
-                {
-                    <app-movie-card [movie]="movie" (EventEmitterMovie)="this.GetMoviesService.updateMovie(movie)"></app-movie-card>
-                }
+                <app-movie-card [movie]="movie" (eventEmitterMovie)="setLikedMovies($event)"></app-movie-card>
             }
-            @else 
-            {
-                <!-- Quando pesquisar, mostrar somente os que já estavam em tela, enviado um breakpoint, que é o length dos filmes já exibidos -->
-                @for (movie of GetMoviesService.getMoviesByName(this.GetMoviesService.getSearch(), this.GetMoviesService.getLength()); track $index) 
-                {
-                    <app-movie-card [movie]="movie" (EventEmitterMovie)="this.GetMoviesService.updateMovie(movie)"></app-movie-card>
-                }
-            }
+            
         </div>
     </ng-container>
 </app-white-card>
 
-@if(this.GetMoviesService.getLength() < this.GetMoviesService.getSearchedMoviesCount())
+@if(haveMoviesToGet())
 {
     <section class="see-more d-flex justify-content-center pt-4 w-100">
         <app-common-action-button className="blue border-6 see-more-movies" [function]="increaseMovieLength">

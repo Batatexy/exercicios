@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { MoviesService } from '../../services/movies.service';
 import { CommonModule } from '@angular/common';
+import { MoviesService } from '../../services/movies.service';
 
 @Component({
   selector: 'app-common-action-button',
@@ -9,7 +9,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './common-action-button.component.scss'
 })
 export class CommonActionButtonComponent {
-  constructor(public GetMoviesService: MoviesService) { }
+  //É chamado por funções enviadas para este botão
+   constructor(private getMoviesService: MoviesService) { }
 
   @Input() className: string = "";
   @Input() function!: () => void;

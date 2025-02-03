@@ -16,7 +16,6 @@ export class ConfigurationsService {
     if (this.theme) {
 
       this.theme = false;
-
       body.setProperty("--background-default-color", "#EFEFEF");
       body.setProperty("--foreground-default-color", "white");
       body.setProperty("--text-default-color", "black");
@@ -24,7 +23,6 @@ export class ConfigurationsService {
     }
     else {
       this.theme = true;
-
       body.setProperty("--background-default-color", "rgb(41, 41, 41)");
       body.setProperty("--foreground-default-color", "rgb(57, 57, 57)");
       body.setProperty("--text-default-color", "white");

@@ -1,23 +1,24 @@
-@for (path of pathArray; track $index) 
+@for (path of getPathArray(); track $index) 
 {
-    <a class="bread-crumb font-14 work-sans" [ngClass]="{'font-bold' : $index == pathArray.length-1}"  [routerLink]="path">
+    <a class="bread-crumb font-14 work-sans" [ngClass]="{'font-bold' : $index == getPathArray().length-1}"  [routerLink]="path">
         @switch (path)
         {
             @case ("/") {Home}
             @case ("/movies") {Filmes}
+            @case ("/configurations") {Configurações}
             <!-- Qualquer Número -->
             @default
             {
-                @if (path.includes("movie"))
-                {{{GetMoviesService.getMovieByID(parseInt(pathArrayFromURL[$index - 1]))?.name}}}
+                @if (path.includes("/movie/")){
+                    {{getMovieName(getPathArray()[$index].replace("/movie/", ""))}}
+                }
 
-
-
+                
             }
         }
     </a>
 
-    @if($index < pathArray.length-1)
+    @if($index < getPathArray().length-1)
     {
         -
     }

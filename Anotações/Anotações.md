@@ -3,8 +3,17 @@ ng s --open
 ng g c
 ng g s
 
+Pick<>
+Omit<>
+window.screen.width
+
 - [ ] URL sem mostrar somente o ID
-- [ ] Estar nos detalhes do filme, tambem destacar a aba filmes
+
+- [x] Ter listas do elenco
+- [ ] Fazer caber na mesma pagina details
+- [x] Mudar de Public para private e criar funções
+- [ ] Arrumar botão router
+- [x] Estar nos detalhes do filme, tambem destacar a aba filmes
 - [x] Crumbs serem dinamicos
 - [x] Quando pesquisar, aparecer os que já estavam em tela
 - [x] mostrar 08

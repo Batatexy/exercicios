@@ -11,9 +11,9 @@ import { MoviesService } from '../../services/movies.service';
 export class SearchAreaComponent {
   search: string = "";
 
-  constructor(public GetMoviesService: MoviesService) { }
+  constructor(private getMoviesService: MoviesService) { }
 
   changeSearch() {
-    this.GetMoviesService.setSearch(this.search);
+    this.getMoviesService.setSearch(this.search);
   }
 }

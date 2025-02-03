@@ -10,4 +10,5 @@ import { CommonModule } from '@angular/common';
   styleUrl: './side-nav.component.scss'
 })
 export class SideNavComponent {
+  
 }
