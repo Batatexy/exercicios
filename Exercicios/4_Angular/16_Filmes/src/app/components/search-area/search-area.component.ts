@@ -16,4 +16,9 @@ export class SearchAreaComponent {
   changeSearch() {
     this.getMoviesService.setSearch(this.search);
   }
+
+  ngOnInit() {
+    document.getElementById("search-movies")?.focus();
+  }
+
 }

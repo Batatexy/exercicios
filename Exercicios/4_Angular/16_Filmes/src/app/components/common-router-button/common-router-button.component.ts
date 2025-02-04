@@ -12,19 +12,17 @@ export class CommonRouterButtonComponent {
 
   @Input() className: string = "";
   @Input() router: string = "";
-  @Input() routes: Array<string> = []
+  @Input() routes: Array<string> = [];
   @Input() activeClass: string = "";
+
 
   constructor(private GetRouter: Router) { }
 
-  isActive(): boolean{
-
-    let returnActive: boolean = false;
-    this.routes.forEach(route => 
-    {
-      if ((route != "/" && this.GetRouter.url.startsWith(route)) || route == this.GetRouter.url) 
-      {
-        returnActive = true
+  public isActive(): string {
+    let returnActive: string = "";
+    this.routes.forEach(route => {
+      if ((route != "/" && this.GetRouter.url.startsWith(route)) || route == this.GetRouter.url) {
+        returnActive = this.activeClass;
       }
     });
 

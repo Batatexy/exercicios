@@ -98,3 +98,20 @@ function numeroParaListaOrdenada(numero) {
 }
 var numeroDois = 789353;
 console.log("O Numero ", numeroDois, " na lista ordenada fica: ", numeroParaListaOrdenada(numeroDois));
+function encontrarIndex(texto, subTexto) {
+    return texto.split(subTexto)[0];
+}
+console.log(encontrarIndex("O cria beijou a sua mãe", "a sua mãe"));
+function transformarSegundos(horario) {
+    var horarioArray = horario.split(":");
+    var horarioArrayNumber = [];
+    horarioArray.forEach(function (item, index) {
+        horarioArrayNumber.push(parseInt(item));
+        if (horarioArrayNumber[index] == 0) {
+            horarioArrayNumber[index] = 1;
+        }
+    });
+    console.log(horarioArrayNumber);
+    return horarioArrayNumber[2] * (horarioArrayNumber[1] * 60) * (horarioArrayNumber[0] * 360);
+}
+console.log(transformarSegundos("00:10:1"));

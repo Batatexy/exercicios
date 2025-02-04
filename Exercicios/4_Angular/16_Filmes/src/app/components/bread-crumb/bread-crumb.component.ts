@@ -14,19 +14,15 @@ export class BreadCrumbComponent {
   private pathArray: Array<string> = [];
   constructor(private route: ActivatedRoute, private getMoviesService: MoviesService) { }
 
-  ngOnInit()
-  {
+  ngOnInit() {
     let urlArray: Array<string> = this.route.snapshot.url.join().split(",");
 
-    for(let i:number = 0; i < urlArray.length; i++)
-    {
+    for (let i: number = 0; i < urlArray.length; i++) {
       let pathString: string = "";
 
-      for(let j:number = 0; j <= i; j++)
-      {
+      for (let j: number = 0; j <= i; j++) {
         //Verificar se existe algo neste proximo elemento, senão em home fica : "Home - Home"
-        if (urlArray[j])
-        {
+        if (urlArray[j]) {
           pathString += "/" + urlArray[j];
         }
 
@@ -34,23 +30,23 @@ export class BreadCrumbComponent {
       }
 
       //Alterar rotas se necessário:
-      if (this.pathArray[i] == "/movie") this.pathArray[i] = "/movies"
-      
+      if (this.pathArray[i] == "/movie") this.pathArray[i] = "/movies";
+
     }
-    
+
     //Caso não precise existir o Home, remover:
-    let finalPath = ["/"]
-    finalPath = finalPath.concat(this.pathArray)
+    let finalPath = ["/"];
+    finalPath = finalPath.concat(this.pathArray);
     this.pathArray = finalPath;
 
-    console.log(this.pathArray);
+    //console.log(this.pathArray);
   }
 
-  public getMovieName(id: string): string{
+  public getMovieName(id: string): string {
     return this.getMoviesService.getMovieByID(parseInt(id))!.name;
   }
 
-  public getPathArray(): Array<string>{
+  public getPathArray(): Array<string> {
     return this.pathArray;
   }
 }
