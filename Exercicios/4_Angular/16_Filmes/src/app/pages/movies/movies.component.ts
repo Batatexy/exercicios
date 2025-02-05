@@ -11,8 +11,6 @@ import { CommonActionButtonComponent } from '../../components/common-action-butt
 import { Movie } from '../../models/movie';
 import { ObservablesService } from '../../services/observables.service';
 
-
-
 @Component({
   selector: 'app-movies',
   imports:
@@ -26,35 +24,31 @@ import { ObservablesService } from '../../services/observables.service';
 })
 export class MoviesComponent implements OnInit {
 
-
-
-
-
-  movies!: Array<Movie>;
-
   //Injeção de dependências: importar a classe GetMoviesService
   constructor(private getMoviesService: MoviesService, private getObservables: ObservablesService) { }
 
   ngOnInit(): void {
-    this.movies = this.getMoviesService.getMoviesByName(this.getMoviesService.getSearch());
+    //this.movies = this.getMoviesService.getMoviesByName(this.getMoviesService.getSearch());
 
+    this.getMoviesService.getPopularMovies(1).subscribe({
+      next: (res) => {
+        this.getMoviesService.setMovies(res.results);
+      },
+      error: (err) => {
+        console.error(err);
+      },
+      complete: () => {
+        console.log(this.getMoviesService.getMovies());
+      }
+    });
   }
 
   ngAfterContentInit() {
-    this.getObservables.counter.subscribe({
-      next: (count) => {
-        this.increaseMovieLength();
-        console.log(count);
-      },
-      error: (erro) => console.error('Erro: ', erro),
-      //Complete não recebe parâmetros
-      complete: () => {
 
-        console.log('Concluído');
-      },
+  }
 
-    });
-
+  ngOnDestroy() {
+    //this.getMoviesService.getPopularMovies(1).u;
   }
 
 
@@ -64,40 +58,20 @@ export class MoviesComponent implements OnInit {
 
 
 
+  public getMoviesByName() {
 
+    return this.getMoviesService.getMoviesByName();
 
-
-
-
-
-
-
-
-
-  //Pegar o que foi digitado na serchBar, e pegar o tamanho de filmes que estão sendo exibidos, envialos como parametros para a função do service
-  //de buscar o filme pelo nome, pegar seu retorno, e retornar para a criação dos blocos na página
-  public getMoviesByName(): Array<Movie> {
-    return this.getMoviesService.getMoviesByName(this.getMoviesService.getSearch(), this.getMoviesService.getLength());
   }
 
-  public getMoviesOnScreen() {
-    return (this.getMoviesService.createZeroBeforeNumbers(this.getMoviesByName().length));
-  }
 
-  public moreThanOneMovieFounded() {
-    if (this.getMoviesByName().length != 1) {
-      return "s";
-    }
-
-    return "";
-  }
-
-  public getAllMoviesCount() {
-    return (this.getMoviesService.createZeroBeforeNumbers(this.getMoviesService.getAllMoviesCount()));
-  }
 
   public increaseMovieLength() {
     this.getMoviesService.increaseMovieLength();
+  }
+
+  public getLength() {
+    return this.getMoviesService.getLength();
   }
 
   public getSearch(): string {
@@ -109,7 +83,7 @@ export class MoviesComponent implements OnInit {
   }
 
   public haveMoviesToGet() {
-    if (this.getMoviesService.getLength() < this.getMoviesService.getAllMoviesCount()) {
+    if (this.getMoviesService.getLength() < this.getMoviesService.getMovies().length) {
       return true;
     }
 

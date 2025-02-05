@@ -18,7 +18,6 @@ export class ObservablesService {
       count += 1;
       let maxCount = 7;
 
-
       //Se cair nesta condição, nem cai no erro, já encerra o processo
       if (count >= maxCount) {
         observer.complete();

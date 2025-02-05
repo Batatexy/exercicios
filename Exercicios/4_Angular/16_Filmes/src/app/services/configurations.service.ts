@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class ConfigurationsService {
   //Falso = Claro
   private theme: boolean = false;
+  private language = "pt-BR";
 
   constructor() { }
 
@@ -32,5 +33,9 @@ export class ConfigurationsService {
 
   public getTheme(): boolean {
     return this.theme;
+  }
+
+  public getLanguage(): string {
+    return this.language;
   }
 }

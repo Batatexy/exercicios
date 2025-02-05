@@ -42,10 +42,6 @@ export class BreadCrumbComponent {
     //console.log(this.pathArray);
   }
 
-  public getMovieName(id: string): string {
-    return this.getMoviesService.getMovieByID(parseInt(id))!.name;
-  }
-
   public getPathArray(): Array<string> {
     return this.pathArray;
   }

@@ -1,65 +1,77 @@
 <section class="movie-details-component">
 
-
-
-    <app-bread-crumb />
+<app-bread-crumb />
 
 <app-title>
     <ng-container title>
-        {{movie?.name}}
+        {{movie?.title}}
     </ng-container>
+
+    <ng-container icon>
+        <app-badge class="star-badge work-sans font-36" >
+            <ng-container content >
+                <i class="pe-3 bi bi-star-fill text-warning"></i>
+                <p class="m-0 font-bold" >{{movie?.vote_average?.toFixed(1)}}</p>
+            </ng-container>
+        </app-badge>
+    </ng-container>
+
 </app-title>
 
-<section class="d-flex flex-sm-row flex-column">
+<section class="d-flex flex-sm-row flex-column ">
     <!-- Card da Imagem, Nome do Diretor e Data do Filme -->
     <app-white-card class="movie-detail-image">
         <ng-container content>
-            <div class="d-flex flex-column p-3">
-                <div class="d-flex justify-content-center">
-                    <img src="{{movie?.image}}" class="image-border">
-                </div>
+            <div class="d-flex">
 
-                <!-- Note Badge / Nome do Autor e Data do Filme -->
-                <div class="d-flex mt-3 align-items-center">
-                    <!-- Alguma bruxaria faz com que, quando ponho a classe de bold, ele remove o Bold -->
-                    <app-badge class="star-badge work-sans font-36" >
-                        <ng-container content >
-                            <i class="pe-3 bi bi-star-fill text-warning"></i>
-                            <p class="m-0 font-bold" >9.4</p>
-                        </ng-container>
-                    </app-badge>
-
-                    <div class="ps-4 d-flex flex-column justify-content-center">
-                        <p class="m-0 inter">Dirigido por <b>Ben Wheatley</b></p>
-                        <p class="m-0 inter">Lançado em 3 de agosto de 2023</p>
+                <div class="d-flex flex-column p-3">
+                    <img src="{{getPostPathUrl()}}{{movie?.poster_path}}" class="image-border ">
+                   
+                    <!-- Note Badge / Nome do Autor e Data do Filme -->
+                    <div class="d-flex mt-3 align-items-center">
+                        <!-- Alguma bruxaria faz com que, quando ponho a classe de bold, ele remove o Bold -->
+                        
+    
+                        <div class="d-flex flex-column justify-content-center">
+                            <p class="m-0 inter">Dirigido por <b>Ben Wheatley</b></p>
+                            <p class="m-0 inter">Lançado em {{ movie?.release_date| date:'longDate'}}</p>
+                        </div>
                     </div>
+                    <!-- Note Badge / Nome do Autor e Data do Filme -->
+                    
+                    
                 </div>
-                <!-- Note Badge / Nome do Autor e Data do Filme -->
+
                 
+
+
                 <!-- Genre Badges -->
-                <div class="badges-genres d-flex justify-content-between flex-wrap">
-                    <!-- @for (item of items; track $index) {} -->
-
-
-
-                    <app-badge class="gender-badge inter font-20 mt-3">
-                        <ng-container content >
-                            <p class="m-0 font-bold">Ação</p>
-                        </ng-container>
-                    </app-badge>
-
+                <div class="badges-genres d-flex flex-wrap align-content-start">
+                    
+                        @for (genres of movie?.genres; track $index)
+                        {
+                            <app-badge class="gender-badge inter font-20 mt-3">
+                                <ng-container content >
+                                    <p class="m-0 font-bold">{{genres.name}}</p>
+                                </ng-container>
+                            </app-badge>
+                        }
                     
                     
                 </div>
                 <!-- Genre Badges -->
             </div>
+
+
+
+            
             
         </ng-container>
     </app-white-card>
     <!-- Card da Imagem, Nome do Diretor e Data do Filme -->
 
     <!-- Atores e Sinopse -->
-    <div class="movie-detail-actors d-flex flex-column">
+    <div class="movie-detail-actors d-flex flex-column w-75">
         <app-white-card class="pb-4 pt-4 pt-sm-0">
             <ng-container content>
                 <div class="d-flex flex-column p-3 w-100">
@@ -68,15 +80,15 @@
                     </h4>
     
                     <!-- Atores -->
-                    @for (actor of cast?.actors; track $index)
+                    @for (actor of credits?.cast; track $index)
                     {
-                        <app-avatar class="pt-0 pt-3" [image]="actor.image" nameClassName="font-bold" imageClassName="height-4">
+                        <app-avatar class="pt-0 pt-3" [image]="actor.profile_path" nameClassName="font-bold" imageClassName="height-4">
                             <ng-container name>
-                                {{actor.characterName}}
+                                {{actor.character}}
                             </ng-container>
                                 
                             <ng-container subName>
-                                {{actor.actorName}}
+                                {{actor.name}}
                             </ng-container>
                         </app-avatar>
                     }
@@ -101,9 +113,7 @@
                 <div class="p-3">
                     <h3 class="work-sans font-24 font-bold">Sinopse</h3>
                     <p class="work-sans">
-                        
-                        Um mergulho exploratório nas profundezas do oceano de uma ousada equipe de pesquisa se transforma em caos quando uma operação de mineração malévola ameaça sua missão e os força a uma batalha de alto risco pela sobrevivência.
-    
+                        {{movie?.overview}}
                     </p>
                 </div>
             </ng-container>
@@ -112,7 +122,5 @@
     </div>
     <!-- Atores e Sinopse -->
 </section>
-
-
 
 </section>

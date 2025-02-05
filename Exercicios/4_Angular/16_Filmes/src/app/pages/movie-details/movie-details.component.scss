@@ -4,11 +4,11 @@
 
 .movie-detail-image{
     padding-right:1rem;
-    width: 100%;
+    width: 40%;
 }
 
 .movie-detail-image img{
-    width: 40%;
+    width: 100%;
 }
 
 .movie-detail-actors{
@@ -22,6 +22,7 @@
 }
 
 .badges-genres{
+    padding-top:0.75rem;
     margin-left:-0.1rem;
     margin-right:-0.1rem;
 }

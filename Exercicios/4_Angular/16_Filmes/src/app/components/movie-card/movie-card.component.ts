@@ -3,10 +3,11 @@ import { Movie } from '../../models/movie';
 import { RouterLink } from '@angular/router';
 import { MoviesService } from '../../services/movies.service';
 import { LikedMovie } from '../../models/likedMovie';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-movie-card',
-  imports: [RouterLink],
+  imports: [RouterLink, DatePipe],
   templateUrl: './movie-card.component.html',
   styleUrl: './movie-card.component.scss'
 })
@@ -16,17 +17,24 @@ export class MovieCardComponent {
 
   constructor(private getMoviesService: MoviesService) { }
 
-  sendLikedState(movie: Movie): void {
+  public getPostPathUrl() {
+    return this.getMoviesService.getPostPathUrl();
+  }
+
+  public getApiUrl(): string {
+    return this.getMoviesService.getApiUrl();
+  }
+
+  public sendLikedState(movie: Movie): void {
     this.eventEmitterMovie.emit(movie);
   }
 
-  getLikedState(){
-    let likedMovies: Array<LikedMovie> =  this.getMoviesService.getLikedMovies()
+  public getLikedState() {
+    let likedMovies: Array<LikedMovie> = this.getMoviesService.getLikedMovies();
     let likedState = false;
 
-    likedMovies.forEach((likedMovie, index) => 
-    {
-      if (likedMovie.movieID == this.movie.id){
+    likedMovies.forEach((likedMovie, index) => {
+      if (likedMovie.movieID == this.movie.id) {
         likedState = likedMovie.liked;
       }
     });
