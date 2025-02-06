@@ -3,23 +3,21 @@
     <a class="bread-crumb font-14 work-sans" [ngClass]="{'font-bold' : $index == getPathArray().length-1}"  [routerLink]="path">
         @switch (path)
         {
-            @case ("/") {Home}
-            @case ("/movies") {Filmes}
-            @case ("/configurations") {Configurações}
+            @case ("/") { Home }
+            @case ("/movies") { Filmes }
+            @case ("/configurations") { Configurações }
             <!-- Qualquer Número -->
             @default
             {
                 @if (path.includes("/movie/")){
-                    
+                    <ng-content select="[movieName]"></ng-content>
                 }
-
-                
             }
         }
     </a>
 
     @if($index < getPathArray().length-1)
     {
-        -
+        <label>-</label>
     }
 }

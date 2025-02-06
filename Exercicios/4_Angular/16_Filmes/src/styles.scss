@@ -1,13 +1,10 @@
 body{
-    
     //Azul Claro
     --default-color: #0044ff;
     //Azul Escuro
     --default-dark-color: #1843bb;
     //Azul Transparente da Search Bar
     --transparent-searchbar-color: #0044ff63;
-
-
 
     //Fundo Cinza
     --background-default-color: #EFEFEF;
@@ -18,18 +15,19 @@ body{
     //Azul Transparente da Search Bar
     --searchbar-text-color: #4B5563;
 
-
-    --transition-theme-time: 0.3s;
+    --transition-theme-time: 0;
     
     background-color: var(--background-default-color);
     transition: background-color var(--transition-theme-time) ease-in-out;
 }
+
 
 .image-border{
     width: 100%;
     border-radius: 0.625rem;
 }
 
+//Fontes
 .work-sans{
     font-family: "Work Sans", serif;
     font-optical-sizing: auto;
@@ -83,6 +81,8 @@ body{
 
 
 
+//Botões
+.custom-movies-button,
 app-common-action-button button,
 app-common-router-button button{
     width: 100%;
@@ -99,6 +99,10 @@ app-common-router-button button{
     ;
 }
 
+.border-6{
+    border-radius: 0.375rem;
+}
+
 .see-more-movies{
     width: 8rem;
     padding-top:0.75rem;
@@ -109,10 +113,6 @@ app-common-router-button button{
     width:7rem;
     padding-top:0.75rem;
     padding-bottom:0.75rem;
-}
-
-.border-6{
-    border-radius: 0.375rem;
 }
 
 //Azul Claro

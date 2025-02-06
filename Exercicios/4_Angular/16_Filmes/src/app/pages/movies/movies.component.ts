@@ -15,8 +15,7 @@ import { ObservablesService } from '../../services/observables.service';
   selector: 'app-movies',
   imports:
     [
-      MovieCardComponent, BreadCrumbComponent, WhiteCardComponent, CommonModule, TitleComponent,
-      CommonActionButtonComponent, SearchAreaComponent
+      MovieCardComponent, BreadCrumbComponent, WhiteCardComponent, CommonModule, TitleComponent, CommonActionButtonComponent, SearchAreaComponent,
 
     ],
   templateUrl: './movies.component.html',
@@ -28,49 +27,60 @@ export class MoviesComponent implements OnInit {
   constructor(private getMoviesService: MoviesService, private getObservables: ObservablesService) { }
 
   ngOnInit(): void {
-    //this.movies = this.getMoviesService.getMoviesByName(this.getMoviesService.getSearch());
+    console.clear();
 
-    this.getMoviesService.getPopularMovies(1).subscribe({
-      next: (res) => {
-        this.getMoviesService.setMovies(res.results);
-      },
-      error: (err) => {
-        console.error(err);
-      },
-      complete: () => {
-        console.log(this.getMoviesService.getMovies());
-      }
-    });
+    if (this.getMoviesService.getLength() == this.getMoviesService.getLengthIncrease()) {
+      this.getMoviesService.getPopularMovies(1).subscribe({
+        next: (res) => {
+          this.getMoviesService.setMovies(res.results);
+        },
+        error: (err) => {
+          console.error(err);
+        },
+        complete: () => {
+          console.log("Filmes:", this.getMoviesService.getMovies());
+        }
+      });
+    }
   }
 
-  ngAfterContentInit() {
-
+  ngAfterContentInit(): void {
+    let scrollY: number = Number(localStorage.getItem('scrollY')) || 0;
+    //Provavelmente o Angular tem seu própria forma de manipular scroll, já que parece que a pagina é inteira fixa
+    window.scrollTo(0, scrollY);
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     //this.getMoviesService.getPopularMovies(1).u;
+    localStorage.setItem('scrollY', String(window.scrollY));
   }
 
 
 
+  public pluralizeMovies(): boolean {
+    if (this.getMoviesService.getMoviesByName().length == 1) {
+      return false;
+    }
+
+    return true;
+  }
+
+  public haveMoviesToGet(): boolean {
+    //Se bater no final do array dos filmes da API
+    return true;
+  }
 
 
 
-
-
-  public getMoviesByName() {
-
+  public getMoviesByName(): Array<Movie> {
     return this.getMoviesService.getMoviesByName();
-
   }
 
-
-
-  public increaseMovieLength() {
+  public increaseMovieLength(): void {
     this.getMoviesService.increaseMovieLength();
   }
 
-  public getLength() {
+  public getLength(): number {
     return this.getMoviesService.getLength();
   }
 
@@ -78,15 +88,11 @@ export class MoviesComponent implements OnInit {
     return this.getMoviesService.getSearch();
   }
 
-  public setLikedMovies(movie: Movie) {
+  public setLikedMovies(movie: Movie): void {
     this.getMoviesService.addLikedMovies(movie);
   }
 
-  public haveMoviesToGet() {
-    if (this.getMoviesService.getLength() < this.getMoviesService.getMovies().length) {
-      return true;
-    }
-
-    return false;
+  public createZeroBeforeNumbers(number: number,): string {
+    return this.getMoviesService.createZeroBeforeNumbers(number);
   }
 }

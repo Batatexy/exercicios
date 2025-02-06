@@ -17,8 +17,8 @@ export class MovieCardComponent {
 
   constructor(private getMoviesService: MoviesService) { }
 
-  public getPostPathUrl() {
-    return this.getMoviesService.getPostPathUrl();
+  public getImagesUrl(): string {
+    return this.getMoviesService.getImagesUrl();
   }
 
   public getApiUrl(): string {
@@ -29,7 +29,7 @@ export class MovieCardComponent {
     this.eventEmitterMovie.emit(movie);
   }
 
-  public getLikedState() {
+  public getLikedState(): boolean {
     let likedMovies: Array<LikedMovie> = this.getMoviesService.getLikedMovies();
     let likedState = false;
 

@@ -13,11 +13,11 @@ export class SearchAreaComponent {
 
   constructor(private getMoviesService: MoviesService) { }
 
-  changeSearch() {
+  changeSearch(): void {
     this.getMoviesService.setSearch(this.search);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     document.getElementById("search-movies")?.focus();
   }
 

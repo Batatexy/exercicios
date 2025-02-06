@@ -10,9 +10,9 @@ export class ConfigurationsService {
 
   constructor() { }
 
-  public switchTheme(): void {
+  public switchTheme(seconds: string): void {
     let body = document.body.style;
-    console.log(body);
+    body.setProperty("--transition-theme-time", seconds);
 
     if (this.theme) {
 
@@ -29,6 +29,8 @@ export class ConfigurationsService {
       body.setProperty("--text-default-color", "white");
       body.setProperty("--searchbar-text-color", "white");
     }
+
+    this.setThemeLocalStorage(this.theme);
   }
 
   public getTheme(): boolean {
@@ -38,4 +40,18 @@ export class ConfigurationsService {
   public getLanguage(): string {
     return this.language;
   }
+
+  public setThemeLocalStorage(theme: boolean): void {
+    localStorage.setItem("userTheme", JSON.stringify(theme));
+  }
+
+  public getThemeLocalStorage(): boolean | null {
+    let theme = localStorage.getItem("userTheme");
+    if (theme == null) {
+      return false;
+    }
+    return JSON.parse(theme);
+  }
+
+
 }

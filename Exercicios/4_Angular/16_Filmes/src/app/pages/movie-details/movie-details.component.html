@@ -1,6 +1,10 @@
 <section class="movie-details-component">
 
-<app-bread-crumb />
+<app-bread-crumb>
+    <ng-container movieName>
+        {{movie?.title}}
+    </ng-container>
+</app-bread-crumb>
 
 <app-title>
     <ng-container title>
@@ -25,15 +29,24 @@
             <div class="d-flex">
 
                 <div class="d-flex flex-column p-3">
-                    <img src="{{getPostPathUrl()}}{{movie?.poster_path}}" class="image-border ">
+                    <img src="{{getImagesUrl()}}{{movie?.poster_path}}" class="image-border ">
                    
                     <!-- Note Badge / Nome do Autor e Data do Filme -->
                     <div class="d-flex mt-3 align-items-center">
                         <!-- Alguma bruxaria faz com que, quando ponho a classe de bold, ele remove o Bold -->
                         
-    
+                        
                         <div class="d-flex flex-column justify-content-center">
-                            <p class="m-0 inter">Dirigido por <b>Ben Wheatley</b></p>
+                            <p class="m-0 inter">Dirigido por <b>{{director}}
+
+                                @for (director of credits?.crew; track $index) 
+                                {
+                                    @if(director.job == "Director"){
+                                        {{director.name}}
+                                    }
+                                }
+
+                            </b></p>
                             <p class="m-0 inter">Lançado em {{ movie?.release_date| date:'longDate'}}</p>
                         </div>
                     </div>
@@ -80,9 +93,9 @@
                     </h4>
     
                     <!-- Atores -->
-                    @for (actor of credits?.cast; track $index)
+                    @for (actor of creditsSlice(); track $index)
                     {
-                        <app-avatar class="pt-0 pt-3" [image]="actor.profile_path" nameClassName="font-bold" imageClassName="height-4">
+                        <app-avatar class="pt-0 pt-3" [image]="getImagesUrl() + actor.profile_path" nameClassName="font-bold" imageClassName="height-4">
                             <ng-container name>
                                 {{actor.character}}
                             </ng-container>
@@ -92,18 +105,16 @@
                             </ng-container>
                         </app-avatar>
                     }
+                    
                     <!-- Atores -->
                      
                     <div class="d-flex justify-content-end">
-                        <app-common-action-button className="blue border-6 see-more-actors">
-                            <ng-container content>
-                                Ver Mais +
-                            </ng-container>
-                        </app-common-action-button>
+                        <button type="button" class="custom-movies-button see-more-actors blue" data-bs-toggle="modal" data-bs-target="#actorsModal">
+                            Ver Mais +
+                        </button>
                     </div>
                 </div>
             </ng-container>
-            
         </app-white-card>
         
 
@@ -124,3 +135,29 @@
 </section>
 
 </section>
+
+
+<app-modal [id]="'actorsModal'">
+    <ng-container modalTitle>
+        <b>Elenco</b>
+    </ng-container>
+
+    <ng-container modalContent>
+        <div class="row">
+            @for (actor of getCredits(); track $index)
+            {
+                <div class="col-sm-4 p-1">
+                    <app-avatar class="pt-0 pt-3" [image]="getImagesUrl() + actor.profile_path" nameClassName="font-bold" imageClassName="height-4">
+                        <ng-container name>
+                            {{actor.character.substring(0, nameLength)}}
+                        </ng-container>
+                            
+                        <ng-container subName>
+                            {{actor.name.substring(0, nameLength)}}
+                        </ng-container>
+                    </app-avatar>
+                </div>
+            }
+        </div>
+    </ng-container>
+</app-modal>

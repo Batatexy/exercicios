@@ -1,4 +1,4 @@
-export type Cast = {
+export type Crew = {
     id: number;
     adult: boolean;
     gender: number;
@@ -7,8 +7,7 @@ export type Cast = {
     original_name: string;
     popularity: number;
     profile_path: string;
-    cast_id: number;
-    character: string;
     credit_id: string;
-    order: number;
+    department: string;
+    job: string;
 };

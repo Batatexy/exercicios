@@ -19,8 +19,12 @@ export class MoviesService {
   // } else {
   // // Código específico para desenvolvimento
   // } 
-  private movies: Array<Movie> = [];
 
+  //Filmes
+  private movies: Array<Movie> = [];
+  private page: number = 1;
+
+  //SearchBar
   private search: string = "";
   private likedMovies: Array<LikedMovie> = [];
 
@@ -30,20 +34,14 @@ export class MoviesService {
 
   //API De Filmes
   private apiUrl = 'https://api.themoviedb.org/3/movie';
-  private posterPathUrl = "https://image.tmdb.org/t/p/w500/";
+  private imagesUrl = "https://image.tmdb.org/t/p/w500/";
   private defaultHeaders = {
     Authorization: 'Bearer ' + environment.apiKey,
   };
 
-  getApiUrl(): string {
-    return this.apiUrl;
-  }
 
-  getPostPathUrl(): string {
-    return this.posterPathUrl;
-  }
 
-  public getPopularMovies(page: number): Observable<{ results: Movie[]; }> {
+  public getPopularMovies(page: number): Observable<{ results: Array<Movie>; }> {
     // tipar o retorno
 
     let params = new HttpParams(); // query params
@@ -61,7 +59,6 @@ export class MoviesService {
 
     let params = new HttpParams(); // query params
     params = params.set('language', this.getConfigurations.getLanguage());
-    params = params.set('movie_id', id);
 
     return this.http.get<Movie>(`${this.apiUrl}/${id}`, {
       params: params,
@@ -78,7 +75,6 @@ export class MoviesService {
         if (movie.title.toLowerCase().includes(this.search.toLowerCase())) {
           searchMovies.push(movie);
         }
-
       });
 
       return searchMovies;
@@ -86,13 +82,6 @@ export class MoviesService {
 
     return this.movies.slice(0, this.length);
   }
-
-
-
-
-
-
-
 
 
   public getCredits(id: number): Observable<Credits> {
@@ -107,27 +96,29 @@ export class MoviesService {
     });
   }
 
-
-
-
-
-
-
-
-
-
   //Aumentar o range de filmes exibidos na tela // Clickar no botão Ver Mais
   public increaseMovieLength(): void {
     let length = this.getLength() + this.getLengthIncrease();
+    this.setLength(length);
 
-    if (length > this.movies.length) {
-      this.setLength(this.movies.length);
-    }
-    else {
-      this.setLength(length);
+    if (length >= this.movies.length) {
+      this.page++;
+
+      this.getPopularMovies(this.page).subscribe({
+        next: (res) => {
+          this.movies = this.movies.concat(res.results);
+          console.log("Filmes:", this.movies);
+        },
+        error: (err) => {
+          console.error(err);
+        }
+      });
     }
   }
 
+
+
+  //Service mais Geral
   public createZeroBeforeNumbers(number: number,): string {
     let numberToString: string = String(number);
 
@@ -140,8 +131,11 @@ export class MoviesService {
 
 
 
+
+
+
   //Getters and Setters
-  public addLikedMovies(movie: Movie) {
+  public addLikedMovies(movie: Movie): void {
     let likedMovies: Array<LikedMovie> = this.getLikedMovies();
     let toPush: boolean = true;
 
@@ -159,7 +153,7 @@ export class MoviesService {
     this.setLikedMovies(likedMovies);
   }
 
-  public setLikedMovies(likedMovies: Array<LikedMovie>) {
+  public setLikedMovies(likedMovies: Array<LikedMovie>): void {
     this.likedMovies = likedMovies;
   }
 
@@ -183,7 +177,7 @@ export class MoviesService {
   }
 
   //Definir o range de filmes exibidos
-  public setLength(length: number) {
+  public setLength(length: number): void {
     this.length = length;
   }
 
@@ -193,7 +187,7 @@ export class MoviesService {
   }
 
   //Definir o range que se é adicionado a cada clique no ver mais
-  public setLengthIncrease(lengthIncrease: number) {
+  public setLengthIncrease(lengthIncrease: number): void {
     this.lengthIncrease = lengthIncrease;
   }
 
@@ -205,4 +199,11 @@ export class MoviesService {
     this.movies = movies;
   }
 
+  getApiUrl(): string {
+    return this.apiUrl;
+  }
+
+  getImagesUrl(): string {
+    return this.imagesUrl;
+  }
 }

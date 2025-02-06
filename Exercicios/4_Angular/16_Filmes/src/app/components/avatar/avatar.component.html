@@ -1,5 +1,3 @@
-@defer()
-{
 <div class="d-flex">
     <img class="profile-image rounded-circle" src="{{image}}" [class]="imageClassName">
     <div class="ps-2 d-flex flex-column justify-content-center">
@@ -12,35 +10,8 @@
         
         <label class="work-sans sub-name" [class]="subNameClassName">
             <ng-content select="[subName]">
-
-            </ng-content>
-        </label>
-    </div>
-</div>
-}
-        
-@placeholder 
-{
-<div class="d-flex placeholder-glow">
-    <img class="profile-image placeholder rounded-circle" src="../../../images/profile-placeholder.png" [class]="imageClassName">
-    <div class="ps-2 d-flex flex-column justify-content-center">
-        
-        <label class="work-sans placeholder" [class]="nameClassName">
-            <ng-content select="[name]">
-
-            </ng-content>
-        </label>
-        
-        <label class="work-sans sub-name placeholder" [class]="subNameClassName">
-            <ng-content select="[subName]">
                 
             </ng-content>
         </label>
     </div>
 </div>
-}
-    
-
-    
-
-

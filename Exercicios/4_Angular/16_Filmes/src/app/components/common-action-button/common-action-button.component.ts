@@ -10,7 +10,7 @@ import { MoviesService } from '../../services/movies.service';
 })
 export class CommonActionButtonComponent {
   //É chamado por funções enviadas para este botão
-   constructor(private getMoviesService: MoviesService) { }
+  constructor(private getMoviesService: MoviesService) { }
 
   @Input() className: string = "";
   @Input() function!: () => void;

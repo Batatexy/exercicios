@@ -12,4 +12,8 @@ import { ConfigurationsService } from '../../services/configurations.service';
 })
 export class ConfigurationsComponent {
   constructor(public GetConfigurationsService: ConfigurationsService) { }
+
+  public switchTheme() {
+    this.GetConfigurationsService.switchTheme("0.3s");
+  }
 }

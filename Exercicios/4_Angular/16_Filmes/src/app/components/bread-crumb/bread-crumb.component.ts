@@ -14,7 +14,7 @@ export class BreadCrumbComponent {
   private pathArray: Array<string> = [];
   constructor(private route: ActivatedRoute, private getMoviesService: MoviesService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     let urlArray: Array<string> = this.route.snapshot.url.join().split(",");
 
     for (let i: number = 0; i < urlArray.length; i++) {
@@ -31,7 +31,6 @@ export class BreadCrumbComponent {
 
       //Alterar rotas se necessário:
       if (this.pathArray[i] == "/movie") this.pathArray[i] = "/movies";
-
     }
 
     //Caso não precise existir o Home, remover:
