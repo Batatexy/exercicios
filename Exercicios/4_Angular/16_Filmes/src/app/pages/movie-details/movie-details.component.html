@@ -1,12 +1,6 @@
 <section class="movie-details-component">
 
-<app-bread-crumb>
-    <ng-container movieName>
-        {{movie?.title}}
-    </ng-container>
-</app-bread-crumb>
-
-<app-title>
+<app-header [movie]="movie">
     <ng-container title>
         {{movie?.title}}
     </ng-container>
@@ -19,8 +13,9 @@
             </ng-container>
         </app-badge>
     </ng-container>
+</app-header>
 
-</app-title>
+
 
 <section class="d-flex flex-sm-row flex-column ">
     <!-- Card da Imagem, Nome do Diretor e Data do Filme -->
@@ -60,17 +55,14 @@
 
                 <!-- Genre Badges -->
                 <div class="badges-genres d-flex flex-wrap align-content-start">
-                    
-                        @for (genres of movie?.genres; track $index)
-                        {
-                            <app-badge class="gender-badge inter font-20 mt-3">
-                                <ng-container content >
-                                    <p class="m-0 font-bold">{{genres.name}}</p>
-                                </ng-container>
-                            </app-badge>
-                        }
-                    
-                    
+                    @for (genres of movie?.genres; track $index)
+                    {
+                        <app-badge class="gender-badge inter font-20 mt-3">
+                            <ng-container content >
+                                <p class="m-0 font-bold">{{genres.name}}</p>
+                            </ng-container>
+                        </app-badge>
+                    }
                 </div>
                 <!-- Genre Badges -->
             </div>
@@ -95,7 +87,7 @@
                     <!-- Atores -->
                     @for (actor of creditsSlice(); track $index)
                     {
-                        <app-avatar class="pt-0 pt-3" [image]="getImagesUrl() + actor.profile_path" nameClassName="font-bold" imageClassName="height-4">
+                        <app-avatar class="pt-0 pt-3" [actor]="actor" nameClassName="font-bold" imageClassName="height-4">
                             <ng-container name>
                                 {{actor.character}}
                             </ng-container>
@@ -144,16 +136,35 @@
 
     <ng-container modalContent>
         <div class="row">
-            @for (actor of getCredits(); track $index)
+            @for (actor of getCast(); track $index)
             {
                 <div class="col-sm-4 p-1">
-                    <app-avatar class="pt-0 pt-3" [image]="getImagesUrl() + actor.profile_path" nameClassName="font-bold" imageClassName="height-4">
+                    <app-avatar class="pt-0 pt-3" [actor]="actor" nameClassName="font-bold" imageClassName="height-4">
                         <ng-container name>
                             {{actor.character.substring(0, nameLength)}}
                         </ng-container>
                             
                         <ng-container subName>
                             {{actor.name.substring(0, nameLength)}}
+                        </ng-container>
+                    </app-avatar>
+                </div>
+            }
+        </div>
+
+
+        <h5 class="mt-5"><b>Equipe de Produção</b></h5>
+
+        <div class="modal-footer mt-4">
+        </div>
+
+        <div class="row">
+            @for (crew of getCrew(); track $index)
+            {
+                <div class="col-sm-4 p-1">
+                    <app-avatar class="pt-0 pt-3" [crew]="crew" nameClassName="font-bold" imageClassName="height-4">
+                        <ng-container name>
+                            {{crew.name}}
                         </ng-container>
                     </app-avatar>
                 </div>

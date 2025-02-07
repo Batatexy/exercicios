@@ -10,7 +10,9 @@
             @default
             {
                 @if (path.includes("/movie/")){
-                    <ng-content select="[movieName]"></ng-content>
+                    <ng-content select="[movieName]">
+                        
+                    </ng-content>
                 }
             }
         }

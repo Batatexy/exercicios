@@ -1,0 +1,42 @@
+
+<a class="nav-link configurations-button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <div class="gear-icon" role="button">
+        <i class="bi bi-gear"></i>
+    </div>
+
+    <div class="dropdown-menu">
+        
+        <h6 class="dropdown-header" >Tema</h6>
+
+        <div class="form-check form-switch" (click)="switchTheme()" role="button" >
+            <input class="form-check-input " type="checkbox" id="switch-theme" role="button"
+            [checked]="getTheme()" >
+
+            <label class="form-check-label" for="switch-theme" role="button">
+                @if(getTheme())
+                {
+                    Escuro
+                }
+                @else
+                {
+                    Claro
+                }
+                
+            </label>
+        </div>
+
+        <div class="dropdown-divider"></div>
+
+        <h6 class="dropdown-header">Linguagem</h6>
+        
+        @for (language of getAllLanguages(); track $index) 
+        {
+            <button class="dropdown-item" [ngClass]="{'blue' : getSelectedLanguage() === language.language_id}" 
+            (click)="setSelectedLanguage(language.language_id)"
+            
+            > <span class="fi" [class]="language.flag"></span>{{language.language_name}}</button>
+        }
+
+    </div>
+
+</a>

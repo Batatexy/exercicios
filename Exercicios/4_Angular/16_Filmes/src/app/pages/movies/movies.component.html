@@ -1,12 +1,10 @@
 <section class="movies-component">
 
-<app-bread-crumb />
-
-<app-title>
+<app-header>
     <ng-container title>
         Filmes
     </ng-container>
-</app-title>
+</app-header>
 
 <app-search-area />
 
@@ -43,7 +41,7 @@
 @if(haveMoviesToGet() && getMoviesByName().length > 0)
 {
     <section class="see-more d-flex justify-content-center pt-4 w-100">
-        <app-common-action-button className="blue border-6 see-more-movies" [function]="increaseMovieLength">
+        <app-common-action-button className="blue border-6 see-more-movies" [actionFunction]="increaseMovieRange">
             <ng-container content>
                 
                 Ver Mais <i class="bi bi-arrow-down"></i>

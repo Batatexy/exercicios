@@ -1,14 +1,47 @@
 import { Injectable } from '@angular/core';
+import { Language } from '../models/language';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConfigurationsService {
-  //Falso = Claro
-  private theme: boolean = false;
-  private language = "pt-BR";
 
   constructor() { }
+
+  //Falso = Claro
+  private theme: boolean = false;
+  private allLanguages: Array<Language> =
+    [
+      {
+        flag: "fi-br",
+        language_id: "pt-BR",
+        language_name: "Português (Brasil)"
+      },
+      {
+        flag: "fi-us",
+        language_id: "en-US",
+        language_name: "English (United States)"
+      },
+      {
+        flag: "fi-cn",
+        language_id: "zh-Hans",
+        language_name: "中国 (中国)"
+      },
+    ];
+
+  private selectedLanguage: string = this.allLanguages[0].language_id;
+  private lastLanguage: string = this.selectedLanguage;
+
+  public selectedLanguage$ = new Observable<string>((observer) => {
+    setInterval(() => {
+
+      if (this.getSelectedLanguage() != this.lastLanguage) {
+        observer.next(this.getSelectedLanguage());
+        this.lastLanguage = this.getSelectedLanguage();
+      }
+    });
+  });
 
   public switchTheme(seconds: string): void {
     let body = document.body.style;
@@ -37,8 +70,12 @@ export class ConfigurationsService {
     return this.theme;
   }
 
-  public getLanguage(): string {
-    return this.language;
+  public getSelectedLanguage(): string {
+    return this.selectedLanguage;
+  }
+
+  public setSelectedLanguage(selectedLanguage: string): void {
+    this.selectedLanguage = selectedLanguage;
   }
 
   public setThemeLocalStorage(theme: boolean): void {
@@ -53,5 +90,8 @@ export class ConfigurationsService {
     return JSON.parse(theme);
   }
 
+  public getAllLanguages(): Array<Language> {
+    return this.allLanguages;
+  }
 
 }

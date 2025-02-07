@@ -13,6 +13,6 @@ export class CommonActionButtonComponent {
   constructor(private getMoviesService: MoviesService) { }
 
   @Input() className: string = "";
-  @Input() function!: () => void;
+  @Input() actionFunction!: () => void;
 
 }

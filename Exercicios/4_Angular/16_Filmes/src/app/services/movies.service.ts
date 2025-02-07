@@ -12,7 +12,7 @@ import { Credits } from '../models/credits';
 })
 export class MoviesService {
 
-  constructor(private http: HttpClient, private getConfigurations: ConfigurationsService) { }
+  constructor(private http: HttpClient, private getConfigurationsService: ConfigurationsService) { }
 
   // if(environment.production) {
   //   // Código específico para produção
@@ -29,8 +29,8 @@ export class MoviesService {
   private likedMovies: Array<LikedMovie> = [];
 
   //Variavel ajustda pelo usuario
-  private lengthIncrease: number = 8;
-  private length: number = this.lengthIncrease;
+  private rangeIncrease: number = 8;
+  private range: number = this.rangeIncrease;
 
   //API De Filmes
   private apiUrl = 'https://api.themoviedb.org/3/movie';
@@ -39,13 +39,11 @@ export class MoviesService {
     Authorization: 'Bearer ' + environment.apiKey,
   };
 
-
-
-  public getPopularMovies(page: number): Observable<{ results: Array<Movie>; }> {
+  public getPopularMovies(page: number, language: string): Observable<{ results: Array<Movie>; }> {
     // tipar o retorno
 
     let params = new HttpParams(); // query params
-    params = params.set('language', this.getConfigurations.getLanguage());
+    params = params.set('language', language);
     params = params.set('page', page);
 
     return this.http.get<{ results: []; }>(`${this.apiUrl}/popular`, {
@@ -54,11 +52,11 @@ export class MoviesService {
     });
   }
 
-  public getMovieById(id: number): Observable<Movie> {
+  public getMovieById(id: number, language: string): Observable<Movie> {
     // tipar o retorno
 
     let params = new HttpParams(); // query params
-    params = params.set('language', this.getConfigurations.getLanguage());
+    params = params.set('language', language);
 
     return this.http.get<Movie>(`${this.apiUrl}/${id}`, {
       params: params,
@@ -66,12 +64,13 @@ export class MoviesService {
     });
   }
 
+
+
   public getMoviesByName(): Array<Movie> {
     if (this.search != "") {
       let searchMovies: Array<Movie> = [];
 
-      this.movies.slice(0, this.length).forEach((movie, index) => {
-
+      this.movies.slice(0, this.range).forEach((movie) => {
         if (movie.title.toLowerCase().includes(this.search.toLowerCase())) {
           searchMovies.push(movie);
         }
@@ -80,15 +79,15 @@ export class MoviesService {
       return searchMovies;
     }
 
-    return this.movies.slice(0, this.length);
+    return this.movies.slice(0, this.range);
   }
 
 
-  public getCredits(id: number): Observable<Credits> {
+  public getCredits(id: number, language: string): Observable<Credits> {
     // tipar o retorno
 
     let params = new HttpParams(); // query params
-    params = params.set('language', this.getConfigurations.getLanguage());
+    params = params.set('language', language);
 
     return this.http.get<Credits>(`${this.apiUrl}/${id}/credits`, {
       params: params,
@@ -97,16 +96,16 @@ export class MoviesService {
   }
 
   //Aumentar o range de filmes exibidos na tela // Clickar no botão Ver Mais
-  public increaseMovieLength(): void {
-    let length = this.getLength() + this.getLengthIncrease();
-    this.setLength(length);
+  public increaseMovieRange(): void {
 
-    if (length >= this.movies.length) {
+    this.addRange();
+
+    if (this.range >= this.movies.length) {
       this.page++;
 
-      this.getPopularMovies(this.page).subscribe({
+      this.getPopularMovies(this.page, this.getConfigurationsService.getSelectedLanguage()).subscribe({
         next: (res) => {
-          this.movies = this.movies.concat(res.results);
+          this.addMovies(res.results);
           console.log("Filmes:", this.movies);
         },
         error: (err) => {
@@ -115,6 +114,11 @@ export class MoviesService {
       });
     }
   }
+
+
+
+
+
 
 
 
@@ -128,6 +132,15 @@ export class MoviesService {
 
     return numberToString;
   }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -172,23 +185,23 @@ export class MoviesService {
   };
 
   //Pegar o range de filmes exibidos
-  public getLength(): number {
-    return this.length;
+  public getRange(): number {
+    return this.range;
   }
 
   //Definir o range de filmes exibidos
-  public setLength(length: number): void {
-    this.length = length;
+  public addRange(): void {
+    this.range += this.rangeIncrease;
   }
 
   //Pegar o range que se é adicionado a cada clique no ver mais
-  public getLengthIncrease(): number {
-    return this.lengthIncrease;
+  public getRangeIncrease(): number {
+    return this.rangeIncrease;
   }
 
   //Definir o range que se é adicionado a cada clique no ver mais
-  public setLengthIncrease(lengthIncrease: number): void {
-    this.lengthIncrease = lengthIncrease;
+  public setRangeIncrease(rangeIncrease: number): void {
+    this.rangeIncrease = rangeIncrease;
   }
 
   public getMovies(): Array<Movie> {
@@ -199,11 +212,23 @@ export class MoviesService {
     this.movies = movies;
   }
 
-  getApiUrl(): string {
+  public addMovies(newMovies: Array<Movie>): void {
+    this.movies = this.movies.concat(newMovies);
+  }
+
+  public getApiUrl(): string {
     return this.apiUrl;
   }
 
-  getImagesUrl(): string {
+  public getImagesUrl(): string {
     return this.imagesUrl;
+  }
+
+  public getPage(): number {
+    return this.page;
+  }
+
+  public setPage(page: number): void {
+    this.page = page;
   }
 }

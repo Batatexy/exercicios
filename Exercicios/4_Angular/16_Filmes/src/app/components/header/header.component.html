@@ -1,0 +1,25 @@
+<div class="d-flex justify-content-between">
+    <div>
+        <app-bread-crumb>
+            <ng-container movieName>
+                {{movie?.title}}
+            </ng-container>
+        </app-bread-crumb>
+        
+        <h1 class="font-36 work-sans d-flex">
+            <b>
+                <ng-content select="[title]">
+        
+                </ng-content>
+            </b>
+        
+            <div class="ps-3">
+                <ng-content select="[icon]">
+        
+                </ng-content>
+            </div>
+        </h1>
+    </div>
+
+    <app-language-selector />
+</div>

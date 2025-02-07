@@ -2,23 +2,22 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Movie } from '../../models/movie';
 import { MoviesService } from '../../services/movies.service';
-import { BreadCrumbComponent } from '../../components/bread-crumb/bread-crumb.component';
 import { WhiteCardComponent } from "../../components/white-card/white-card.component";
-import { TitleComponent } from '../../components/title/title.component';
+import { HeaderComponent } from '../../components/header/header.component';
 import { CommonModule } from '@angular/common';
 import { AvatarComponent } from '../../components/avatar/avatar.component';
 import { BadgeComponent } from '../../components/badge/badge.component';
-import { CommonActionButtonComponent } from "../../components/common-action-button/common-action-button.component";
 import { Credits } from '../../models/credits';
 import { Cast } from '../../models/cast';
 import { ModalComponent } from "../../components/modal/modal.component";
+import { Crew } from '../../models/crew';
+import { ConfigurationsService } from '../../services/configurations.service';
 
 @Component({
   selector: 'app-movie-details',
   imports: [
-    BreadCrumbComponent, WhiteCardComponent, TitleComponent, CommonModule,
+    WhiteCardComponent, HeaderComponent, CommonModule,
     AvatarComponent, BadgeComponent,
-    CommonActionButtonComponent,
     ModalComponent
   ],
   templateUrl: './movie-details.component.html',
@@ -37,7 +36,7 @@ export class MovieDetailsComponent {
   director?: string;
 
   constructor(private route: ActivatedRoute, private getMoviesService: MoviesService,
-    private getRouter: Router) { }
+    private getRouter: Router, private getConfigurationsService: ConfigurationsService) { }
   private slice: number = 4;
 
   //Caso o ID do filme não exista, redireciona para a página de filmes
@@ -48,7 +47,7 @@ export class MovieDetailsComponent {
     let id: number = Number(this.route.snapshot.paramMap.get("id"));
 
     //Detalhes do Filme
-    this.getMoviesService.getMovieById(id).subscribe({
+    this.getMoviesService.getMovieById(id, this.getConfigurationsService.getSelectedLanguage()).subscribe({
       next: (res) => {
         console.log("Movie:", res);
         this.movie = res;
@@ -58,8 +57,8 @@ export class MovieDetailsComponent {
       }
     });
 
-    //Créditos: Elenco e Equipe de Produção
-    this.getMoviesService.getCredits(id).subscribe({
+    //Pegar da API, Créditos: Elenco e Equipe de Produção
+    this.getMoviesService.getCredits(id, this.getConfigurationsService.getSelectedLanguage()).subscribe({
       next: (res) => {
         console.log("Credits:", res);
         this.credits = res;
@@ -68,7 +67,9 @@ export class MovieDetailsComponent {
         console.error("Erro");
       }
     });
+  }
 
+  ngAfterContentInit(): void {
     //this.director = this.credits?.crew.filter((member) => member.job == "Director")
 
     this.credits?.crew.forEach(member => {
@@ -76,10 +77,6 @@ export class MovieDetailsComponent {
         this.director = member.name;
       }
     });
-  }
-
-  ngAfterContentInit(): void {
-
   }
 
   public getImagesUrl(): string {
@@ -91,8 +88,13 @@ export class MovieDetailsComponent {
     return this.credits?.cast?.slice(0, this.slice);
   }
 
-  public getCredits(): Array<Cast> | undefined {
+  public getCast(): Array<Cast> | undefined {
     return this.credits?.cast;
+    //.slice(this.slice)
+  }
+
+  public getCrew(): Array<Crew> | undefined {
+    return this.credits?.crew;
     //.slice(this.slice)
   }
 
