@@ -1,0 +1,144 @@
+{
+  "reviews": [
+    {
+      "id": 1,
+      "movieID": 1,
+      "userID": 1,
+      "rating": 9,
+      "reviewContent": "Um filme incrível com reviravoltas inesperadas!",
+      "reviewDate": "2025-02-10T14:30:00Z",
+      "watchedDate": "2025-02-05T20:00:00Z"
+    },
+    {
+      "id": 2,
+      "userID": 2,
+      "movieID": 939243,
+      "reviewContent": "asd",
+      "watchedDate": "fedt345",
+      "rating": "3453453453",
+      "reviewDate": "hora atual"
+    },
+    {
+      "id": 2,
+      "userID": 2,
+      "movieID": 939243,
+      "reviewContent": "111",
+      "watchedDate": "111",
+      "rating": "111",
+      "reviewDate": "hora atual"
+    },
+    {
+      "id": 2,
+      "userID": 2,
+      "movieID": 939243,
+      "reviewContent": "222",
+      "watchedDate": "222",
+      "rating": "222",
+      "reviewDate": "hora atual"
+    },
+    {
+      "id": 2,
+      "userID": 2,
+      "movieID": 939243,
+      "reviewContent": "asd",
+      "watchedDate": "asd",
+      "rating": "asdasdsad",
+      "reviewDate": "hora atual"
+    },
+    {
+      "id": 2,
+      "userID": 2,
+      "movieID": 939243,
+      "reviewContent": "asda",
+      "watchedDate": "asdas",
+      "rating": "dasdasd",
+      "reviewDate": "hora atual"
+    },
+    {
+      "id": 2,
+      "userID": 2,
+      "movieID": 939243,
+      "reviewContent": "adasd",
+      "watchedDate": "asd",
+      "rating": "asdasdasd",
+      "reviewDate": "hora atual"
+    },
+    {
+      "id": 2,
+      "userID": 2,
+      "movieID": 939243,
+      "reviewContent": "adasd",
+      "watchedDate": "asd",
+      "rating": "asdasdasd",
+      "reviewDate": "hora atual"
+    },
+    {
+      "id": 2,
+      "userID": 2,
+      "movieID": 539972,
+      "reviewContent": "asdasd",
+      "watchedDate": "asdasdas",
+      "rating": "asdasd",
+      "reviewDate": "hora atual"
+    },
+    {
+      "id": 2,
+      "userID": 2,
+      "movieID": 539972,
+      "reviewContent": "35345",
+      "watchedDate": "543453453",
+      "rating": "3453453454",
+      "reviewDate": "hora atual"
+    },
+    {
+      "id": 2,
+      "userID": 2,
+      "movieID": 939243,
+      "reviewContent": "xdf",
+      "watchedDate": "dfgdfg",
+      "rating": "dfg",
+      "reviewDate": "hora atual"
+    },
+    {
+      "id": 2,
+      "userID": 2,
+      "movieID": 1241982,
+      "reviewContent": "123",
+      "watchedDate": "12313",
+      "rating": "123123123",
+      "reviewDate": "hora atual"
+    },
+    {
+      "id": 2,
+      "userID": 2,
+      "movieID": 1241982,
+      "reviewContent": "sdfsdf",
+      "watchedDate": "dsfsdf",
+      "rating": "dsfsdfsdf",
+      "reviewDate": "hora atual"
+    },
+    {
+      "id": 2,
+      "userID": 2,
+      "movieID": 993710,
+      "reviewContent": "xcsdfs",
+      "watchedDate": "dsfdsf",
+      "rating": "sdfdsf",
+      "reviewDate": "hora atual"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "JONAS",
+      "email": "judson@lontano.jonas",
+      "profileImage": "../../images/profile-picture.png"
+    },
+    {
+      "id": 2,
+      "name": "Roberto",
+      "email": "judson@lontano.jonas",
+      "profileImage": "../../images/profile-picture.png"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+<section class="review"> 
+    <app-white-card >
+        <ng-container content>
+            <app-avatar class="pb-2" nameClassName="font-bold" image="../../images/profile-picture.png">
+                    <ng-container name>
+                        {{user.name}}
+                    </ng-container>
+                        
+                    <ng-container subName>
+                        {{review.reviewDate}} - {{review.watchedDate}}
+                    </ng-container>
+            </app-avatar>
+    
+            <p class="mb-1">
+                {{review.reviewContent}}
+            </p>
+    
+        </ng-container>
+    </app-white-card>
+</section>
