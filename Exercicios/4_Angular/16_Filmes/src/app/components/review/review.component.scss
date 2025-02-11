@@ -1,9 +1,20 @@
 .review{
-    width: 30rem;
-    padding-left: 1rem;
     padding-right: 1rem;
+    padding-top: 1rem;
+    overflow-wrap: break-word;
 }
 
-.review:first-child{
-    padding-left: 0rem;
+.star-badge{
+    position: relative;
+    bottom:0.45rem;
+    left:0.15rem;
+    
+}
+
+@media (max-width:992px)
+{
+    .review{
+        padding-right: 0;
+        width: 100%;
+    }
 }

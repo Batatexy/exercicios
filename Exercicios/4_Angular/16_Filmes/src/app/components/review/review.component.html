@@ -1,20 +1,29 @@
-<section class="review"> 
-    <app-white-card >
+<section class="review ">
+    <app-white-card>
         <ng-container content>
-            <app-avatar class="pb-2" nameClassName="font-bold" image="../../images/profile-picture.png">
+            <div class="d-flex flex-column">
+                <app-avatar class="pb-2" nameClassName="font-bold" image="{{user?.profileImage}}">
                     <ng-container name>
-                        {{user.name}}
-                    </ng-container>
+                        <div class="d-flex">
+                            <div class="pe-1">
+                                {{user?.name}} 
+                            </div>
+                            <app-badge class="star-badge work-sans">
+                                <ng-container content >
+                                    <i class="pe-1 bi bi-star-fill text-warning"></i>
+                                    <p class="m-0 font-bold font-20 p-1" >{{(review?.rating?.toFixed(1))}}</p>
+                                </ng-container>
+                            </app-badge>
+                        </div>
                         
-                    <ng-container subName>
-                        {{review.reviewDate}} - {{review.watchedDate}}
                     </ng-container>
-            </app-avatar>
+                </app-avatar>
+
+                <p class="m-0">Publicado em {{review?.reviewDate}}</p>
+                <p>ssistiu em {{review?.watchedDate}}</p>
     
-            <p class="mb-1">
-                {{review.reviewContent}}
-            </p>
-    
+                <p>{{review?.reviewContent}}</p>
+            </div>
         </ng-container>
     </app-white-card>
 </section>

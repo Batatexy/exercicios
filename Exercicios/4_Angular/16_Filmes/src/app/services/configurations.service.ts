@@ -35,7 +35,6 @@ export class ConfigurationsService {
 
   public selectedLanguage$ = new Observable<string>((observer) => {
     setInterval(() => {
-
       if (this.getSelectedLanguage() != this.lastLanguage) {
         observer.next(this.getSelectedLanguage());
         this.lastLanguage = this.getSelectedLanguage();

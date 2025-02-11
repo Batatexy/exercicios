@@ -40,6 +40,35 @@
 
 
 
+
+
+.stars button{
+    border: 1px solid transparent;
+    background-color: transparent;
+    margin: 0;
+    padding:0;
+
+    position: relative;
+    width: 0.75rem;
+    height: 1.75rem;
+
+
+}
+
+.star-buttons{
+    margin-bottom:-2.5rem;
+}
+
+
+.review-card{
+    width: 50%;
+}
+
+.review-field {
+    width: 70%;
+    height: 10rem;
+}
+
 //Mobile
 @media (max-width:576px)
 {
@@ -77,10 +106,18 @@
 
 @media (max-width:991.5px)
 {
-
     .movie-detail-actors{
         width: 100%;
         padding-left:0;
+    }
+
+    .review-card{
+        width: 100%;
+    }
+
+    .review-field {
+        width: 100%;
+        height: 10rem;
     }
 }
 
