@@ -9,6 +9,7 @@ import { SearchAreaComponent } from "../../components/search-area/search-area.co
 import { CommonActionButtonComponent } from '../../components/common-action-button/common-action-button.component';
 import { Movie } from '../../models/movie';
 import { ConfigurationsService } from '../../services/configurations.service';
+import { GeneralService } from '../../services/general.service';
 
 @Component({
   selector: 'app-movies',
@@ -22,10 +23,11 @@ import { ConfigurationsService } from '../../services/configurations.service';
 })
 export class MoviesComponent implements OnInit {
 
-  lastLanguage: string = "";
-
   //Injeção de dependências: importar a classe GetMoviesService
-  constructor(private getMoviesService: MoviesService, private getConfigurationsService: ConfigurationsService) { }
+  constructor(
+    private getMoviesService: MoviesService, private getConfigurationsService: ConfigurationsService,
+    private getGeneralService: GeneralService,
+  ) { }
 
 
 
@@ -84,8 +86,6 @@ export class MoviesComponent implements OnInit {
     localStorage.setItem('scrollY', String(window.scrollY));
   }
 
-
-
   public pluralizeMovies(): boolean {
     if (this.getMoviesService.getMoviesByName().length == 1) {
       return false;
@@ -94,12 +94,11 @@ export class MoviesComponent implements OnInit {
     return true;
   }
 
+  //Um dia se precisar
   public haveMoviesToGet(): boolean {
     //Se bater no final do array dos filmes da API
     return true;
   }
-
-
 
   public getMoviesByName(): Array<Movie> {
     return this.getMoviesService.getMoviesByName();
@@ -122,6 +121,6 @@ export class MoviesComponent implements OnInit {
   }
 
   public createZeroBeforeNumbers(number: number,): string {
-    return this.getMoviesService.createZeroBeforeNumbers(number);
+    return this.getGeneralService.createZeroBeforeNumbers(number);
   }
 }

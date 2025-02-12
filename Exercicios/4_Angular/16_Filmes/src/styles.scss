@@ -15,6 +15,9 @@ body{
     //Azul Transparente da Search Bar
     --searchbar-text-color: #4B5563;
 
+    //Textos no site:
+    --text-placeholder-color: rgb(162, 162, 162);
+
     --transition-theme-time: 0;
     
     background-color: var(--background-default-color);
@@ -97,20 +100,18 @@ app-common-router-button button{
     ;
 }
 
+.custom-movies-button:disabled{
+    background-color: gray;
+    color:rgb(81, 81, 81);
+}
+
+.custom-movies-button:hover:disabled{
+    background-color: gray;
+    color:rgb(81, 81, 81);
+}
+
 .border-6{
     border-radius: 0.375rem;
-}
-
-.see-more-movies{
-    width: 8rem;
-    padding-top:0.75rem;
-    padding-bottom:0.75rem;
-}
-
-.see-more-actors{
-    width:7rem;
-    padding-top:0.75rem;
-    padding-bottom:0.75rem;
 }
 
 //Azul Claro

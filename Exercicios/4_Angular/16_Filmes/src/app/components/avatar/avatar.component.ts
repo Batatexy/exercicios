@@ -23,31 +23,20 @@ export class AvatarComponent {
 
 
   ngOnInit() {
-    if (this.actor) {
-      if (!this.actor?.profile_path) {
-        if (this.actor?.gender == 1) {
-          this.image = "../../images/female-profile.png";
+    if (this.actor || this.crew) {
+      if (!this.actor?.profile_path && !this.crew?.profile_path) {
+        if (this.actor?.gender == 1 || this.crew?.gender == 1) {
+          //Imagem genérica feminina
+          this.image = "../../../assets/images/female-profile.png";
         }
         else {
-          this.image = "../../images/male-profile.png";
+          //Imagem genérica masculina
+          this.image = "../../../assets/images/male-profile.png";
         }
       }
+      //Imagem da pessoa
       else {
-        this.image = this.getMoviesService.getImagesUrl() + this.actor?.profile_path;
-      }
-    }
-
-    if (this.crew) {
-      if (!this.crew?.profile_path) {
-        if (this.crew?.gender == 1) {
-          this.image = "../../images/female-profile.png";
-        }
-        else {
-          this.image = "../../images/male-profile.png";
-        }
-      }
-      else {
-        this.image = this.getMoviesService.getImagesUrl() + this.crew?.profile_path;
+        this.image = this.getMoviesService.getImagesUrl() + (this.actor?.profile_path || this.crew?.profile_path);
       }
     }
 

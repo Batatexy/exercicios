@@ -18,14 +18,16 @@ import { Review } from '../../models/review';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { UserService } from '../../services/user.service';
+import { CommonActionButtonComponent } from "../../components/common-action-button/common-action-button.component";
+import { GeneralService } from '../../services/general.service';
 
 @Component({
   selector: 'app-movie-details',
   imports: [
     WhiteCardComponent, HeaderComponent, CommonModule,
     AvatarComponent, BadgeComponent, ReviewComponent,
-    ModalComponent, ReactiveFormsModule, FormsModule
-
+    ModalComponent, ReactiveFormsModule, FormsModule,
+    CommonActionButtonComponent
   ],
   templateUrl: './movie-details.component.html',
   styleUrl: './movie-details.component.scss'
@@ -39,10 +41,6 @@ export class MovieDetailsComponent {
   reviewContentModel: string = '';
   watchedDateModel: string = '';
 
-
-
-
-
   sliceCast: number = 8;
   nameLength: number = 20;
 
@@ -52,15 +50,18 @@ export class MovieDetailsComponent {
   credits?: Credits;
   director?: string;
 
-  reviews?: Array<Review>;
-  reviewSlice: number = 4;
+  rating: number = 1;
+  ratingArray: Array<{ state: string; }> = [{ state: "half" }, { state: "null" }, { state: "null" }, { state: "null" }, { state: "null" }];
 
-  constructor(private route: ActivatedRoute, private getMoviesService: MoviesService, private getReviewsService: ReviewsService,
-    private getRouter: Router, private getConfigurationsService: ConfigurationsService, getUserService: UserService) {
+  constructor(
+    private route: ActivatedRoute, private getMoviesService: MoviesService, private getReviewsService: ReviewsService,
+    private getRouter: Router, private getConfigurationsService: ConfigurationsService, getUserService: UserService,
+    private getGeneralService: GeneralService,
+  ) {
 
     this.newReview = new FormGroup({
       reviewContent: new FormControl('', [Validators.minLength(3), Validators.required]),
-      watchedDate: new FormControl('', [Validators.minLength(3), Validators.required])
+      watchedDate: new FormControl('', [])
     });
 
   }
@@ -69,6 +70,13 @@ export class MovieDetailsComponent {
   ngOnInit(): void {
     console.clear();
     console.log(this.getConfigurationsService.getSelectedLanguage());
+
+    let currentDate = new Date;
+    console.log("Data:", currentDate);
+
+
+
+    this.getReviewsService.setReviewSlice(this.getReviewsService.getReviewSliceIncrease());
 
     this.getConfigurationsService.selectedLanguage$.subscribe({
       next: (language) => {
@@ -100,7 +108,6 @@ export class MovieDetailsComponent {
       next: (res) => {
         console.log("Movie:", res);
         this.movie = res;
-        this.movie.vote_average /= 2;
       },
       error: () => {
         this.getRouter.navigate(['/movies']);
@@ -132,9 +139,7 @@ export class MovieDetailsComponent {
   public getReviewsByMovieID() {
     this.getReviewsService.getReviewsByMovieID(this.id).subscribe({
       next: (res) => {
-        this.reviews = res;
-        console.log("reviews", this.reviews);
-
+        this.getReviewsService.setReviews(res);
       },
       error: () => {
         console.error("Error");
@@ -143,13 +148,6 @@ export class MovieDetailsComponent {
 
     this.calculateStars(1);
   }
-
-  public getReviewsSliced(): Array<Review> | undefined {
-    return this.reviews?.reverse().slice(0, this.reviewSlice);
-  }
-
-  rating: number = 1;
-  ratingArray: Array<{ state: string; }> = [{ state: "half" }, { state: "null" }, { state: "null" }, { state: "null" }, { state: "null" }];
 
   public calculateStars(newRating: number): void {
     let filledStars: number = Math.floor(newRating / 2);
@@ -166,21 +164,45 @@ export class MovieDetailsComponent {
     });
   }
 
-  public setRating(rating: number): void {
-    this.rating = rating;
-    this.calculateStars(this.rating);
+  public seeMoreReviews() {
+    this.getReviewsService.seeMoreReviews();
   }
 
-  public starsReset(): void {
-    this.calculateStars(this.rating);
+  public submitReview() {
+    if (this.movie && !this.newReview.invalid) {
+      let newReview = this.newReview.value;
+
+      this.getReviewsService.sendReview(
+        {
+          id: 2,// Auto Incrementar
+          userID: 1,// Ser Dinamico
+
+          movieID: this.movie?.id,
+
+          reviewContent: newReview['reviewContent'],
+          watchedDate: newReview['watchedDate'],
+          rating: this.rating,
+          reviewDate: String(new Date),
+
+        }).subscribe({
+          next: (val) => console.log(val)
+        });
+    }
+
+
+    this.getReviewsByMovieID();
   }
 
-  public getRange(number: number): Array<number> {
-    return new Array(number);
-  }
+
+
+
+
+
+
+
 
   //Modificar
-  reviewAlreadyUploaded() {
+  public reviewAlreadyUploaded() {
     // if (userID == uma review já enviada com este id){
     //   return false
     // }
@@ -189,45 +211,28 @@ export class MovieDetailsComponent {
   }
 
 
-  submitReview() {
-    if (!this.newReview.invalid && this.movie) {
-      let newReview = this.newReview.value;
+  public getRange(number: number): Array<number> {
+    return new Array(number);
+  }
 
-      this.getReviewsService.sendReview(
-        {
-          id: 2,
-          userID: 1,
+  public starsReset(): void {
+    this.calculateStars(this.rating);
+  }
 
-          movieID: this.movie?.id,
-
-          reviewContent: newReview['reviewContent'],
-          watchedDate: newReview['watchedDate'],
-          rating: this.rating,
-          reviewDate: 'hora atual'
-
-        }).subscribe({
-          next: (val) => console.log(val)
-        });
-
-      this.getReviewsByMovieID();
-    }
+  public setRating(rating: number): void {
+    this.rating = rating;
+    this.calculateStars(this.rating);
   }
 
 
 
+  public divideByTwo(number: number | undefined): number {
+    return this.getGeneralService.divideByTwo(number);
+  }
 
-
-
-
-
-
-
-
-
-
-
-
-
+  public getReviewsSliced(): Array<Review> | undefined {
+    return this.getReviewsService.getReviews()?.reverse().slice(0, this.getReviewsService.getReviewSlice());
+  }
 
   public getImagesUrl(): string {
     return this.getMoviesService.getImagesUrl();
@@ -244,5 +249,21 @@ export class MovieDetailsComponent {
 
   public getCrew(): Array<Crew> | undefined {
     return this.credits?.crew;
+  }
+
+  public haveReviewsToGet(): string {
+
+    let reviewsLength: undefined | number = this.getReviewsService.getReviews()?.length;
+
+    if (reviewsLength) {
+      if (this.getReviewsService.getReviewSlice() >= reviewsLength) {
+        return "end";
+      }
+    }
+    else {
+      return "null";
+    }
+
+    return "show";
   }
 }

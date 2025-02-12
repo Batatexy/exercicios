@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MoviesService } from '../../services/movies.service';
 import { CommonModule } from '@angular/common';
+import { BreadCrumbService } from '../../services/bread-crumb.service';
 
 @Component({
   selector: 'app-bread-crumb',
@@ -11,37 +12,21 @@ import { CommonModule } from '@angular/common';
 })
 export class BreadCrumbComponent {
 
-  private pathArray: Array<string> = [];
-  constructor(private route: ActivatedRoute, private getMoviesService: MoviesService) { }
+  pathArray: Array<string> = [];
+  constructor(private router: ActivatedRoute, private getMoviesService: MoviesService, private getBreadCrumbService: BreadCrumbService) { }
+
+  public getActualRoute(): string {
+    return this.getBreadCrumbService.getActualRoute();
+  }
 
   ngOnInit(): void {
-    let urlArray: Array<string> = this.route.snapshot.url.join().split(",");
+    this.router.data.subscribe({
+      next: (route) => {
+        this.getBreadCrumbService.setActualRoute(route["breadCrumb"]);
+        console.log(this.getBreadCrumbService.getActualRoute());
 
-    for (let i: number = 0; i < urlArray.length; i++) {
-      let pathString: string = "";
-
-      for (let j: number = 0; j <= i; j++) {
-        //Verificar se existe algo neste proximo elemento, senão em home fica : "Home - Home"
-        if (urlArray[j]) {
-          pathString += "/" + urlArray[j];
-        }
-
-        if (pathString != "") this.pathArray[i] = pathString;
       }
-
-      //Alterar rotas se necessário:
-      if (this.pathArray[i] == "/movie") this.pathArray[i] = "/movies";
-    }
-
-    //Caso não precise existir o Home, remover:
-    let finalPath = ["/"];
-    finalPath = finalPath.concat(this.pathArray);
-    this.pathArray = finalPath;
-
-    //console.log(this.pathArray);
+    });
   }
 
-  public getPathArray(): Array<string> {
-    return this.pathArray;
-  }
 }

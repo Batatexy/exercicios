@@ -122,25 +122,6 @@ export class MoviesService {
 
 
 
-  //Service mais Geral
-  public createZeroBeforeNumbers(number: number,): string {
-    let numberToString: string = String(number);
-
-    if (number < 10) {
-      numberToString = "0" + number;
-    }
-
-    return numberToString;
-  }
-
-
-
-
-
-
-
-
-
 
 
 

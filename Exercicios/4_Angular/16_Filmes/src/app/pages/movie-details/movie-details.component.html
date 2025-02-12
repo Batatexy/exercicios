@@ -1,6 +1,8 @@
 <section class="movie-details-component">
 
-<app-header [movie]="movie">
+Antigo:
+
+<app-header>
     <ng-container title>
         {{movie?.title}}
     </ng-container>
@@ -9,17 +11,16 @@
         <app-badge class="work-sans font-36" >
             <ng-container content >
                 <i class="pe-3 bi bi-star-fill text-warning"></i>
-                <p class="m-0 font-bold" >{{movie?.vote_average?.toFixed(1)}}</p>
+                <p class="m-0 font-bold" >{{divideByTwo(movie?.vote_average).toFixed(1)}}</p>
             </ng-container>
         </app-badge>
     </ng-container>
 </app-header>
 
-
-
-<section class="d-flex flex-lg-row flex-column ">
+<!-- Detalhes do Filme -->
+<section class="d-flex flex-lg-row flex-column">
     <!-- Card da Imagem, Nome do Diretor e Data do Filme -->
-    <app-white-card class="movie-detail-image">
+    <app-white-card class="movie-detail-image pb-3">
         <ng-container content>
             <div class="d-flex flex-column flex-xl-row">
 
@@ -64,16 +65,13 @@
                 <!-- Genre Badges -->
             </div>
 
-
-
-            
-            
         </ng-container>
     </app-white-card>
     <!-- Card da Imagem, Nome do Diretor e Data do Filme -->
 
     <!-- Atores e Sinopse -->
-    <div class="movie-detail-actors d-flex flex-column">
+    <div class="movie-detail-actors d-flex flex-column pb-3">
+        <!-- Elenco -->
         <app-white-card class="pb-4 pt-1 pt-sm-0">
             <ng-container content>
                 <div class="d-flex flex-column p-3 w-100">
@@ -106,7 +104,7 @@
                 </div>
             </ng-container>
         </app-white-card>
-        
+        <!-- Elenco -->
 
         <!-- Sinopse -->
         <app-white-card class="">
@@ -123,32 +121,23 @@
     </div>
     <!-- Atores e Sinopse -->
 </section>
-
-<section class="d-flex flex-wrap">
-    @for (review of getReviewsSliced(); track $index)
-    {
-        <div class="review-card">
-            <app-review [review]="review"/>
-        </div>
-    }
-</section>
-
+<!-- Detalhes do Filme -->
 
 <!-- Nova Review -->
  @if (reviewAlreadyUploaded())
  {
-    <section class="pt-3" >
-        <form [formGroup]="newReview" (ngSubmit)="submitReview()">
+    <section class="pt-3 pb-4" >
+        <form [formGroup]="newReview" (ngSubmit)="submitReview()" id="new-review">
             <legend class="text-center">Escreva Uma Review Sobre <b>{{movie?.title}}</b>:</legend>
-    
+
             <div class="d-flex justify-content-center">
                 <div class="stars text-warning font-24">
                     <div class="star-buttons">
                         @for (button of ratingArray.concat(ratingArray); track $index) 
                         {
-                            <button 
+                            <button type="button"
                                 (click)="setRating($index + 1)"
-                                (mouseenter)="calculateStars($index + 1)" 
+                                (mouseenter)="calculateStars($index + 1)"
                                 (mouseleave)="starsReset()">
                             </button>
                         }
@@ -165,16 +154,16 @@
                             }
                         }
                     </div>
-                    
                 </div>
             </div>
-        
-            <div class="text-center pt-2">
-                <textarea 
-                    class="review-field col-4 text-center" id="reviewContent" type="text" name="reviewContent" placeholder="(Obrigatório) Digite o que achou sobre {{movie?.title}}" 
-                    formControlName="reviewContent" [(ngModel)]="reviewContentModel">
-                </textarea>
-    
+            <div class="text-center pt-3 pb-3">
+                <div class="d-flex justify-content-center pb-1">
+                    <textarea 
+                        class="review-field col-4 text-center form-control" id="reviewContent" type="text" name="reviewContent" placeholder="(Obrigatório) Digite o que achou sobre {{movie?.title}}" 
+                        formControlName="reviewContent" [(ngModel)]="reviewContentModel">
+                    </textarea>
+                </div>
+                
                 <p *ngIf="newReview.get('reviewContent')?.invalid && newReview.get('reviewContent')?.touched" class="text-danger">
                     Digite uma análise com pelo menos 3 caracteres.
                 </p>
@@ -195,14 +184,47 @@
                 </div>
             </div>
         </form>
-    
     </section>
  }
+<!-- Nova Review -->
 
 
 
+<!-- Reviews -->
+<h3 class="text-center pb-2 pt-3">Reviews</h3>
 
+<section class="d-flex flex-wrap justify-content-center">
+    
 
+    @for (review of getReviewsSliced(); track $index)
+    {
+        <div class="review-card">
+            <app-review [review]="review"/>
+        </div>
+    }
+
+    @if (haveReviewsToGet() == "show")
+    {
+        <div class="container d-flex justify-content-center ">
+            <app-common-action-button className="blue border-6 see-more-reviews" [actionFunction]="seeMoreReviews">
+                <ng-container content>
+                    
+                    Ver Mais
+                    
+                </ng-container>
+            </app-common-action-button>
+        </div>
+    }
+    @else 
+    {
+        @if(haveReviewsToGet() == "null"){
+            <p>
+                Ainda não há nenhuma Review deste filme
+            </p>
+        }
+    }
+</section>
+ <!-- Reviews -->
 
 
 

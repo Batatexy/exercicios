@@ -6,27 +6,25 @@ import { ReviewsService } from '../../services/reviews.service';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 import { BadgeComponent } from "../badge/badge.component";
+import { GeneralService } from '../../services/general.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-review',
-  imports: [WhiteCardComponent, AvatarComponent, BadgeComponent],
+  imports: [WhiteCardComponent, AvatarComponent, BadgeComponent, DatePipe],
   templateUrl: './review.component.html',
   styleUrl: './review.component.scss'
 })
 export class ReviewComponent {
   @Input() review?: Review;
   user?: User;
-  trigger: boolean = false;
 
-  constructor(private getReviewsService: ReviewsService, private getUserService: UserService) { };
+  constructor(
+    private getUserService: UserService, private getGeneralService: GeneralService
+  ) { };
 
   ngOnInit() {
     if (this.review) {
-      if (!this.trigger) {
-        this.review.rating /= 2;
-        this.trigger = true;
-      }
-
       this.getUserService.getUser(this.review.userID).subscribe({
         next: (res) => {
           // ??????????
@@ -38,6 +36,9 @@ export class ReviewComponent {
         }
       });
     }
+  }
 
+  public divideByTwo(number: number | undefined): number {
+    return this.getGeneralService.divideByTwo(number);
   }
 }

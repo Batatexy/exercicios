@@ -1,11 +1,3 @@
-<section class="movies-component">
-
-<app-header>
-    <ng-container title>
-        Filmes
-    </ng-container>
-</app-header>
-
 <app-search-area />
 
 <p class="listed-movies work-sans pt-2">
@@ -21,6 +13,7 @@
             <div class="movies d-flex flex-wrap justify-content-center w-100">
                 <!-- Limitar a lista, ao apertar ver mais, ir aumentando este limite -->
     
+                
                 @for (movie of getMoviesByName(); track $index) 
                 {
                     <app-movie-card [movie]="movie" (eventEmitterMovie)="setLikedMovies($event)" />
@@ -50,6 +43,3 @@
         </app-common-action-button>
     </section>
 }
-
-</section>
-

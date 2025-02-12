@@ -38,9 +38,33 @@
     flex-direction: column;
 }
 
+.see-more-actors{
+    width:7rem;
+    padding-top:0.75rem;
+    padding-bottom:0.75rem;
+}
 
+textarea{
+    background-color: var(--foreground-default-color);
+    color: var(--text-default-color)
+}
 
+textarea:focus{
+    background-color: var(--foreground-default-color);
+    color: var(--text-default-color)
+}
 
+textarea::placeholder{
+    color: rgb(150, 150, 150)
+}
+
+#watchedDate{
+    background-color: var(--foreground-default-color);
+    color: var(--text-default-color);
+    border:1px solid var(--text-default-color);
+    padding: 0.1rem;
+    margin: 0;
+}
 
 .stars button{
     border: 1px solid transparent;
@@ -49,10 +73,8 @@
     padding:0;
 
     position: relative;
-    width: 0.75rem;
+    width: 0.76rem;
     height: 1.75rem;
-
-
 }
 
 .star-buttons{

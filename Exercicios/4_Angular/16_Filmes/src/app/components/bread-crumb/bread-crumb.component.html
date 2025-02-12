@@ -1,6 +1,8 @@
-@for (path of getPathArray(); track $index) 
+{{getActualRoute()}}
+
+@for (path of pathArray; track $index) 
 {
-    <a class="bread-crumb font-14 work-sans" [ngClass]="{'font-bold' : $index == getPathArray().length-1}"  [routerLink]="path">
+    <a class="bread-crumb font-14 work-sans" [ngClass]="{'font-bold' : $index == pathArray.length-1}"  [routerLink]="path">
         @switch (path)
         {
             @case ("/") { Home }
@@ -18,7 +20,7 @@
         }
     </a>
 
-    @if($index < getPathArray().length-1)
+    @if($index < pathArray.length-1)
     {
         <label>-</label>
     }

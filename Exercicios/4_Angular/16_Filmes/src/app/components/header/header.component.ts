@@ -10,5 +10,4 @@ import { LanguageSelectorComponent } from '../language-selector/language-selecto
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  @Input() movie?: Movie;
 }
