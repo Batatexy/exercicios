@@ -3,10 +3,11 @@ import { ConfigurationsService } from '../../services/configurations.service';
 import { CommonModule } from '@angular/common';
 import { Language } from '../../models/language';
 import { MoviesService } from '../../services/movies.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-language-selector',
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './language-selector.component.html',
   styleUrl: './language-selector.component.scss'
 })
@@ -17,7 +18,7 @@ export class LanguageSelectorComponent {
     this.getConfigurationsService.switchTheme("0.3s");
   }
 
-  public getTheme(): boolean {
+  public getTheme(): string {
     return this.getConfigurationsService.getTheme();
   }
 

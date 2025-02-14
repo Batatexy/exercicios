@@ -8,10 +8,11 @@ import { UserService } from '../../services/user.service';
 import { BadgeComponent } from "../badge/badge.component";
 import { GeneralService } from '../../services/general.service';
 import { DatePipe } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-review',
-  imports: [WhiteCardComponent, AvatarComponent, BadgeComponent, DatePipe],
+  imports: [WhiteCardComponent, AvatarComponent, BadgeComponent, DatePipe, TranslatePipe],
   templateUrl: './review.component.html',
   styleUrl: './review.component.scss'
 })

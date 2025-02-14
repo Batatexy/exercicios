@@ -1,22 +1,3 @@
-<section class="movie-details-component">
-
-Antigo:
-
-<app-header>
-    <ng-container title>
-        {{movie?.title}}
-    </ng-container>
-
-    <ng-container icon>
-        <app-badge class="work-sans font-36" >
-            <ng-container content >
-                <i class="pe-3 bi bi-star-fill text-warning"></i>
-                <p class="m-0 font-bold" >{{divideByTwo(movie?.vote_average).toFixed(1)}}</p>
-            </ng-container>
-        </app-badge>
-    </ng-container>
-</app-header>
-
 <!-- Detalhes do Filme -->
 <section class="d-flex flex-lg-row flex-column">
     <!-- Card da Imagem, Nome do Diretor e Data do Filme -->
@@ -25,14 +6,14 @@ Antigo:
             <div class="d-flex flex-column flex-xl-row">
 
                 <div class="d-flex flex-column p-3">
-                    <img src="{{getImagesUrl()}}{{movie?.poster_path}}" class="image-border ">
+                    <img src="{{getImagesUrl()}}{{getMovie()?.poster_path}}" class="image-border ">
                    
                     <!-- Note Badge / Nome do Autor e Data do Filme -->
                     <div class="d-flex mt-3 align-items-center">
                         <!-- Alguma bruxaria faz com que, quando ponho a classe de bold, ele remove o Bold -->
                         
                         <div class="d-flex flex-column">
-                            <p class="m-0 inter">Dirigido por <b>{{director}}
+                            <p class="m-0 inter">{{"movieDetailsPage.directedBy" | translate}} <b>
 
                                 @for (director of credits?.crew; track $index) 
                                 {
@@ -42,7 +23,7 @@ Antigo:
                                 }
 
                             </b></p>
-                            <p class="m-0 inter">Lançado em {{ movie?.release_date| date:'longDate'}}</p>
+                            <p class="m-0 inter">{{"movieDetailsPage.releasedIn" | translate}} {{ getMovie()?.release_date| date:'longDate'}}</p>
                         </div>
                     </div>
                     <!-- Note Badge / Nome do Autor e Data do Filme -->
@@ -53,7 +34,7 @@ Antigo:
 
                 <!-- Genre Badges -->
                 <div class="badges-genres d-flex flex-wrap align-content-start">
-                    @for (genres of movie?.genres; track $index)
+                    @for (genres of getMovie()?.genres; track $index)
                     {
                         <app-badge class="gender-badge inter font-20 mt-3">
                             <ng-container content >
@@ -76,7 +57,7 @@ Antigo:
             <ng-container content>
                 <div class="d-flex flex-column p-3 w-100">
                     <h4 class="work-sans font-24 font-bold">
-                        Elenco
+                        {{"movieDetailsPage.cast" | translate}}
                     </h4>
     
                     <!-- Atores -->
@@ -98,7 +79,7 @@ Antigo:
                      
                     <div class="d-flex justify-content-end">
                         <button type="button" class="custom-movies-button see-more-actors blue" data-bs-toggle="modal" data-bs-target="#actorsModal">
-                            Ver Mais +
+                            {{"defaultThings.seeMore" | translate}} +
                         </button>
                     </div>
                 </div>
@@ -110,9 +91,9 @@ Antigo:
         <app-white-card class="">
             <ng-container content>
                 <div class="p-3">
-                    <h3 class="work-sans font-24 font-bold">Sinopse</h3>
+                    <h3 class="work-sans font-24 font-bold">{{"movieDetailsPage.synopsis" | translate}}</h3>
                     <p class="work-sans">
-                        {{movie?.overview}}
+                        {{getMovie()?.overview}}
                     </p>
                 </div>
             </ng-container>
@@ -128,7 +109,7 @@ Antigo:
  {
     <section class="pt-3 pb-4" >
         <form [formGroup]="newReview" (ngSubmit)="submitReview()" id="new-review">
-            <legend class="text-center">Escreva Uma Review Sobre <b>{{movie?.title}}</b>:</legend>
+            <legend class="text-center">{{"movieDetailsPage.review.writeReviewAbout" | translate}} <b>{{getMovie()?.title}}</b>:</legend>
 
             <div class="d-flex justify-content-center">
                 <div class="stars text-warning font-24">
@@ -159,28 +140,29 @@ Antigo:
             <div class="text-center pt-3 pb-3">
                 <div class="d-flex justify-content-center pb-1">
                     <textarea 
-                        class="review-field col-4 text-center form-control" id="reviewContent" type="text" name="reviewContent" placeholder="(Obrigatório) Digite o que achou sobre {{movie?.title}}" 
+                        class="review-field col-4 text-center form-control" id="reviewContent" type="text" name="reviewContent" 
+                        placeholder="({{'defaultThings.required' | translate}}) {{'movieDetailsPage.review.writeReviewInput' | translate}} {{getMovie()?.title}}" 
                         formControlName="reviewContent" [(ngModel)]="reviewContentModel">
                     </textarea>
                 </div>
                 
                 <p *ngIf="newReview.get('reviewContent')?.invalid && newReview.get('reviewContent')?.touched" class="text-danger">
-                    Digite uma análise com pelo menos 3 caracteres.
+                    {{"movieDetailsPage.review.writeReviewInputInvalid" | translate}}
                 </p>
             </div>
                        
             <div class="text-center">
-                <label class="pe-2" for="watchedDate" >(Opcional) Data que viu o Filme: </label>
+                <label class="pe-2" for="watchedDate" >({{'defaultThings.optional' | translate}}) {{'movieDetailsPage.review.watchedDate' | translate}}: </label>
                 <input id="watchedDate" name="watchedDate" type="date" formControlName="watchedDate" [(ngModel)]="watchedDateModel">
     
                 <p *ngIf="newReview.get('watchedDate')?.invalid && newReview.get('watchedDate')?.touched" class="text-danger">
-                    Insira uma data Válida.
+                    {{"movieDetailsPage.review.watchedDateInvalid" | translate}}
                 </p>
             </div>
     
             <div class="d-flex justify-content-center pt-3">
                 <div class="text-center">
-                    <button class="custom-movies-button blue" type="submit" [disabled]="newReviewInvalid">Enviar Review</button>
+                    <button class="custom-movies-button blue" type="submit" [disabled]="newReviewInvalid">{{'movieDetailsPage.review.submitReview' | translate}}</button>
                 </div>
             </div>
         </form>
@@ -188,10 +170,34 @@ Antigo:
  }
 <!-- Nova Review -->
 
+<app-toast [show]="showToast" [reviewStatus]="reviewStatus" (eventEmitterShowStatus)="setShowToast($event)">
+    <ng-container alert>
+        @if (reviewStatus == "success")
+        {
+            Sucesso
+        }
+        @else 
+        {
+            Fracasso
+        }
+    </ng-container>
+    
+    <ng-container content >
+        @if (reviewStatus == "success")
+        {
+            Sua análise foi enviada!
+        }
+        @else 
+        {
+            Houve um erro no envio de sua análise
+        }
+    </ng-container>
+</app-toast>
+
 
 
 <!-- Reviews -->
-<h3 class="text-center pb-2 pt-3">Reviews</h3>
+<h3 class="text-center pb-2 pt-3">{{'movieDetailsPage.reviews' | translate}}</h3>
 
 <section class="d-flex flex-wrap justify-content-center">
     
@@ -209,7 +215,7 @@ Antigo:
             <app-common-action-button className="blue border-6 see-more-reviews" [actionFunction]="seeMoreReviews">
                 <ng-container content>
                     
-                    Ver Mais
+                    {{'defaultThings.seeMore' | translate}}
                     
                 </ng-container>
             </app-common-action-button>
@@ -219,7 +225,7 @@ Antigo:
     {
         @if(haveReviewsToGet() == "null"){
             <p>
-                Ainda não há nenhuma Review deste filme
+                {{'movieDetailsPage.noReviews' | translate}}
             </p>
         }
     }
@@ -245,13 +251,9 @@ Antigo:
 
 
 
-</section>
-
-
-
 <app-modal [id]="'actorsModal'">
     <ng-container modalTitle>
-        <b>Elenco</b>
+        <b>{{'movieDetailsPage.cast' | translate}}</b>
     </ng-container>
 
     <ng-container modalContent>
@@ -273,7 +275,7 @@ Antigo:
         </div>
 
 
-        <h5 class="mt-5"><b>Equipe de Produção</b></h5>
+        <h5 class="mt-5"><b>{{'movieDetailsPage.crew' | translate}}</b></h5>
 
         <div class="modal-footer mt-4">
         </div>
@@ -292,3 +294,18 @@ Antigo:
         </div>
     </ng-container>
 </app-modal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

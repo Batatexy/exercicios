@@ -24,7 +24,6 @@ export class AppComponent {
 
     this.getConfigurationsService.selectedLanguage$.subscribe({
       next: (language) => {
-        this.translate.setDefaultLang(language);
         this.translate.use(language);
       }
     });

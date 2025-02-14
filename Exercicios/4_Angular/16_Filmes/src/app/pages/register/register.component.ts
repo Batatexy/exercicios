@@ -44,7 +44,10 @@ export class RegisterComponent {
     if (!this.newRegister.invalid) {
       let newUser = this.newRegister.value;
 
-      this.getUserService.sendUser({ id: 2, name: newUser['name'], email: newUser['email'] }).subscribe({
+      newUser.id = 2;
+      newUser.favorites = [];
+
+      this.getUserService.sendUser(newUser).subscribe({
         next: (val) => console.log(val)
       });
     }

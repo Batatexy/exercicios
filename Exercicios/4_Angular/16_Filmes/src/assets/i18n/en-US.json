@@ -3,9 +3,72 @@
     {
         "home": "Home",
         "movies": "Movies",
-        "logout": "LogOut"
-    }
-        
-    
+        "logout": "Logout"
+    },
 
+    "configurations": 
+    {
+        "themes": {"theme": "Theme", "light": "Light", "dark": "Dark"},
+        "language": "Language"
+    },
+
+    "defaultThings":
+    {
+        "seeMore": "See More",
+        "required": "Required",
+        "optional": "Optional",
+        "close": "Close"
+    },
+
+    "header": {
+        "home": "Home",
+        "movies": "Movies"
+    },
+
+    "notFoundPage":
+    {
+        "notFound": "Page Not Found",
+        "backToMovies": "Back to Movies"
+    },
+
+    "moviesPage":
+    {
+        "listedMovie": "Listed Movie",
+        "listedMovies": "Listed Movies",
+        "noListedMovies": "No Movies Found"
+    },
+
+    "searchBar": 
+    {
+        "searchMovie": "Search a Movie"
+    },
+        
+    "movieDetailsPage":
+    {
+        "directedBy": "Directed by",
+        "releasedIn": "Released in",
+
+        "cast": "Cast",
+        "crew": "Crew",
+
+        "synopsis": "Synopsis",
+
+        "reviews": "Reviews",
+        "noReviews": "No reviews yet for this movie",
+
+        "publishedIn": "Published in",
+        "watchedIn": "Watched on",
+
+        "review":
+        {
+            "writeReviewAbout": "Write a Review About",
+            "writeReviewInput": "Type what you thought about",
+            "writeReviewInputInvalid": "Please enter a review with at least 3 characters",
+
+            "watchedDate": "Date Watched",
+            "watchedDateInvalid": "Please enter a valid date",
+
+            "submitReview": "Submit Review"
+        }
+    }
 }

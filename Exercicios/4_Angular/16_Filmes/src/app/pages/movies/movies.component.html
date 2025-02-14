@@ -2,8 +2,15 @@
 
 <p class="listed-movies work-sans pt-2">
     {{createZeroBeforeNumbers(getMoviesByName().length)}} 
-    Filme@if(pluralizeMovies()){s}
-    Listado@if(pluralizeMovies()){s}
+
+    @if(pluralizeMovies())
+    {
+        {{"moviesPage.listedMovies" | translate}}
+    }
+    @else 
+    {
+        {{"moviesPage.listedMovie" | translate}}
+    }
 </p>
 
 @if(getMoviesByName().length > 0)
@@ -26,7 +33,7 @@
 @else 
 {
     <div class="movie-not-found d-flex flex-column align-items-center justify-content-center">
-        <p>Nenhum Filme Encontrado</p>
+        <p>{{"moviesPage.noListedMovies" | translate}}</p>
     </div>
 }
 
@@ -37,9 +44,13 @@
         <app-common-action-button className="blue border-6 see-more-movies" [actionFunction]="increaseMovieRange">
             <ng-container content>
                 
-                Ver Mais <i class="bi bi-arrow-down"></i>
+                {{"defaultThings.seeMore" | translate}} <i class="bi bi-arrow-down"></i>
                 
             </ng-container>
         </app-common-action-button>
     </section>
 }
+
+
+
+

@@ -1,23 +1,7 @@
-{{getActualRoute()}}
-
 @for (path of pathArray; track $index) 
 {
     <a class="bread-crumb font-14 work-sans" [ngClass]="{'font-bold' : $index == pathArray.length-1}"  [routerLink]="path">
-        @switch (path)
-        {
-            @case ("/") { Home }
-            @case ("/movies") { Filmes }
-            @case ("/configurations") { Configurações }
-            <!-- Qualquer Número -->
-            @default
-            {
-                @if (path.includes("/movie/")){
-                    <ng-content select="[movieName]">
-                        
-                    </ng-content>
-                }
-            }
-        }
+        <app-header-translations [path]="path" />
     </a>
 
     @if($index < pathArray.length-1)

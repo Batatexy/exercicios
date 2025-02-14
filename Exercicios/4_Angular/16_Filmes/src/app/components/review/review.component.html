@@ -2,6 +2,7 @@
     <app-white-card>
         <ng-container content>
             <div class="d-flex flex-column">
+                
                 <app-avatar class="pb-2" nameClassName="font-bold" image="{{user?.profileImage}}">
                     <ng-container name>
                         <div class="d-flex justify-content-between">
@@ -18,12 +19,11 @@
                     </ng-container>
                 </app-avatar>
 
-                <p class="m-0">Publicado em {{review?.reviewDate | date:'longDate'}} {{review?.reviewDate | date:'shortTime'}}</p>
+                <p class="m-0">{{"movieDetailsPage.publishedIn" | translate}} {{review?.reviewDate | date:'longDate'}} {{review?.reviewDate | date:'shortTime'}}</p>
                 @if(review?.watchedDate)
                 {
-                    <p>Assistiu em {{review?.watchedDate | date:'longDate'}}</p>
+                    <p>{{"movieDetailsPage.watchedIn" | translate}} {{review?.watchedDate | date:'longDate'}}</p>
                 }
-                
                 <p>{{review?.reviewContent}}</p>
             </div>
         </ng-container>

@@ -1,29 +1,29 @@
- <!-- Modal -->
+<div class="modal fade" [id]="id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="false">
+  <div class="modal-dialog modal-dialog modal-xl">
+    <div class="modal-content">
 
-  <div class="modal fade" [id]="id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="false">
-    <div class="modal-dialog modal-dialog modal-xl">
-      <div class="modal-content">
-
-        <div class="modal-header text-center ">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">
-            <ng-content select="[modalTitle]">
-
-            </ng-content>
-          </h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-
-        <div class="modal-body ">
-          <ng-content select="[modalContent]">
+      <div class="modal-header text-center ">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          <ng-content select="[modalTitle]">
 
           </ng-content>
-        </div>
+        </h1>
+        <button class="close-modal" type="button" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x"></i></button>
+      </div>
 
-        <div class="modal-footer ">
-          <button type="button" class="custom-movies-button see-more-actors blue" data-bs-dismiss="modal">Fechar</button>
+      <div class="modal-body ">
+        <ng-content select="[modalContent]">
+
+        </ng-content>
+      </div>
+
+      <div class="modal-footer ">
+          <div class="close-button">
+            <button type="button" class="custom-movies-button blue border-6" data-bs-dismiss="modal">{{'defaultThings.close' | translate}}</button>
         </div>
       </div>
     </div>
   </div>
+</div>
 
   

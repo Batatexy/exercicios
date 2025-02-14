@@ -1,4 +1,4 @@
-import { Component, Type } from '@angular/core';
+import { Component, EventEmitter, Output, Type } from '@angular/core';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { Movie } from '../../models/movie';
 import { MoviesService } from '../../services/movies.service';
@@ -20,6 +20,8 @@ import { Observable } from 'rxjs';
 import { UserService } from '../../services/user.service';
 import { CommonActionButtonComponent } from "../../components/common-action-button/common-action-button.component";
 import { GeneralService } from '../../services/general.service';
+import { TranslatePipe } from '@ngx-translate/core';
+import { ToastComponent } from '../../components/toast/toast.component';
 
 @Component({
   selector: 'app-movie-details',
@@ -27,7 +29,7 @@ import { GeneralService } from '../../services/general.service';
     WhiteCardComponent, HeaderComponent, CommonModule,
     AvatarComponent, BadgeComponent, ReviewComponent,
     ModalComponent, ReactiveFormsModule, FormsModule,
-    CommonActionButtonComponent
+    CommonActionButtonComponent, TranslatePipe, ToastComponent
   ],
   templateUrl: './movie-details.component.html',
   styleUrl: './movie-details.component.scss'
@@ -37,6 +39,10 @@ export class MovieDetailsComponent {
   //Registro de Usuário
   newReview: FormGroup;
   newReviewInvalid: boolean = false;
+  reviewStatus: string = "";
+  showToast = false;
+
+
 
   reviewContentModel: string = '';
   watchedDateModel: string = '';
@@ -45,10 +51,9 @@ export class MovieDetailsComponent {
   nameLength: number = 20;
 
   id?: number;
-  movie?: Movie;
+
 
   credits?: Credits;
-  director?: string;
 
   rating: number = 1;
   ratingArray: Array<{ state: string; }> = [{ state: "half" }, { state: "null" }, { state: "null" }, { state: "null" }, { state: "null" }];
@@ -60,21 +65,17 @@ export class MovieDetailsComponent {
   ) {
 
     this.newReview = new FormGroup({
-      reviewContent: new FormControl('', [Validators.minLength(3), Validators.required]),
+      reviewContent: new FormControl('', [Validators.minLength(3), Validators.maxLength(100), Validators.required]),
       watchedDate: new FormControl('', [])
     });
 
   }
 
+
+
   //Caso o ID do filme não exista, redireciona para a página de filmes
   ngOnInit(): void {
-    console.clear();
-    console.log(this.getConfigurationsService.getSelectedLanguage());
-
-    let currentDate = new Date;
-    console.log("Data:", currentDate);
-
-
+    //console.clear();
 
     this.getReviewsService.setReviewSlice(this.getReviewsService.getReviewSliceIncrease());
 
@@ -107,10 +108,10 @@ export class MovieDetailsComponent {
     this.getMoviesService.getMovieById(this.id, this.getConfigurationsService.getSelectedLanguage()).subscribe({
       next: (res) => {
         console.log("Movie:", res);
-        this.movie = res;
+        this.getMoviesService.setMovie(res);
       },
       error: () => {
-        this.getRouter.navigate(['/movies']);
+        //this.getRouter.navigate(['/movies']);
       }
     });
 
@@ -122,14 +123,6 @@ export class MovieDetailsComponent {
       },
       error: () => {
         console.error("Erro");
-      }
-    });
-
-    this.director = "";
-
-    this.credits?.crew.forEach(member => {
-      if (member.job == "Director") {
-        this.director = member.name;
       }
     });
 
@@ -169,7 +162,9 @@ export class MovieDetailsComponent {
   }
 
   public submitReview() {
-    if (this.movie && !this.newReview.invalid) {
+    this.showToast = true;
+
+    if (this.getMoviesService.getMovie() && !this.newReview.invalid) {
       let newReview = this.newReview.value;
 
       this.getReviewsService.sendReview(
@@ -177,7 +172,7 @@ export class MovieDetailsComponent {
           id: 2,// Auto Incrementar
           userID: 1,// Ser Dinamico
 
-          movieID: this.movie?.id,
+          movieID: this.getMoviesService.getMovie()!.id,
 
           reviewContent: newReview['reviewContent'],
           watchedDate: newReview['watchedDate'],
@@ -185,8 +180,13 @@ export class MovieDetailsComponent {
           reviewDate: String(new Date),
 
         }).subscribe({
-          next: (val) => console.log(val)
+          next: (val) => console.log(val),
+          complete: () => { this.reviewStatus = "success"; },
+          error: () => { this.reviewStatus = "failed"; }
+
         });
+
+
     }
 
 
@@ -194,7 +194,9 @@ export class MovieDetailsComponent {
   }
 
 
-
+  ngOnDestroy() {
+    this.getMoviesService.setMovie(undefined);
+  }
 
 
 
@@ -249,6 +251,14 @@ export class MovieDetailsComponent {
 
   public getCrew(): Array<Crew> | undefined {
     return this.credits?.crew;
+  }
+
+  public getMovie(): Movie | undefined {
+    return this.getMoviesService.getMovie();
+  }
+
+  public setShowToast(showToast: boolean): void {
+    this.showToast = showToast;
   }
 
   public haveReviewsToGet(): string {

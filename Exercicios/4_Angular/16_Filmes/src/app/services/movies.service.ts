@@ -22,6 +22,8 @@ export class MoviesService {
 
   //Filmes
   private movies: Array<Movie> = [];
+  private movie?: Movie;
+
   private page: number = 1;
 
   //SearchBar
@@ -212,4 +214,12 @@ export class MoviesService {
   public setPage(page: number): void {
     this.page = page;
   }
+
+  public getMovie(): Movie | undefined {
+    return this.movie;
+  }
+
+  public setMovie(movie: Movie | undefined): void {
+    this.movie = movie;
+  };
 }

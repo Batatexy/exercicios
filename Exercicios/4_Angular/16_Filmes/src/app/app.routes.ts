@@ -11,14 +11,11 @@ export const routes: Routes =
     {
       path: "",
       component: LayoutComponent,
-      data: {
-        breadCrumb: '/'
-      },
       children:
         [
           {
             path: "",
-            component: HomeComponent,
+            component: HomeComponent
           },
           {
             path: "register",
@@ -30,17 +27,11 @@ export const routes: Routes =
           },
           {
             path: "movies",
-            component: MoviesComponent,
-            data: {
-              breadCrumb: '/movies'
-            },
+            component: MoviesComponent
           },
           {
             path: "movie/:id",
-            component: MovieDetailsComponent,
-            data: {
-              breadCrumb: '/movie:id'
-            },
+            component: MovieDetailsComponent
           }
         ],
     }

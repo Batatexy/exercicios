@@ -1,5 +1,5 @@
 export type Language = {
-    flag: string;
-    language_id: string;
+    language: string;
     language_name: string;
+    flag: string;
 };

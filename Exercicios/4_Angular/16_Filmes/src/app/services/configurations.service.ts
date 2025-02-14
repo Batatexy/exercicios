@@ -10,52 +10,53 @@ export class ConfigurationsService {
   constructor() { }
 
   //Falso = Claro
-  private theme: boolean = false;
+  private theme: string = "light";
   private allLanguages: Array<Language> =
     [
+      //Primeira linguagem será a padrão
       {
         flag: "fi-br",
-        language_id: "pt-BR",
+        language: "pt-BR",
         language_name: "Português (Brasil)"
       },
       {
         flag: "fi-us",
-        language_id: "en-US",
+        language: "en-US",
         language_name: "English (United States)"
       },
       {
         flag: "fi-cn",
-        language_id: "zh-Hans",
-        language_name: "中国 (中国)"
+        language: "zh-CN",
+        language_name: "简体中文 (中国)"
       },
     ];
 
-  private selectedLanguage: string = this.allLanguages[0].language_id;
-  private lastLanguage: string = this.selectedLanguage;
+  private selectedLanguage: string = this.allLanguages[0].language;
 
   public selectedLanguage$ = new Observable<string>((observer) => {
+    let previousLanguage: string = this.selectedLanguage;
     setInterval(() => {
-      if (this.selectedLanguage != this.lastLanguage) {
+      if (this.selectedLanguage !== previousLanguage) {
         observer.next(this.selectedLanguage);
-        this.lastLanguage = this.selectedLanguage;
+        previousLanguage = this.selectedLanguage;
       }
-    });
+    },);
   });
 
   public switchTheme(seconds: string): void {
     let body = document.body.style;
     body.setProperty("--transition-theme-time", seconds);
 
-    if (this.theme) {
+    if (this.theme == "dark") {
 
-      this.theme = false;
+      this.theme = "light";
       body.setProperty("--background-default-color", "#EFEFEF");
       body.setProperty("--foreground-default-color", "white");
       body.setProperty("--text-default-color", "black");
       body.setProperty("--searchbar-text-color", "#4B5563");
     }
     else {
-      this.theme = true;
+      this.theme = "dark";
       body.setProperty("--background-default-color", "rgb(41, 41, 41)");
       body.setProperty("--foreground-default-color", "rgb(57, 57, 57)");
       body.setProperty("--text-default-color", "white");
@@ -65,7 +66,7 @@ export class ConfigurationsService {
     this.setThemeLocalStorage(this.theme);
   }
 
-  public getTheme(): boolean {
+  public getTheme(): string {
     return this.theme;
   }
 
@@ -77,7 +78,7 @@ export class ConfigurationsService {
     this.selectedLanguage = selectedLanguage;
   }
 
-  public setThemeLocalStorage(theme: boolean): void {
+  public setThemeLocalStorage(theme: string): void {
     localStorage.setItem("userTheme", JSON.stringify(theme));
   }
 

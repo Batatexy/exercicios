@@ -10,12 +10,14 @@ import { CommonActionButtonComponent } from '../../components/common-action-butt
 import { Movie } from '../../models/movie';
 import { ConfigurationsService } from '../../services/configurations.service';
 import { GeneralService } from '../../services/general.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-movies',
   imports:
     [
-      MovieCardComponent, WhiteCardComponent, CommonModule, HeaderComponent, CommonActionButtonComponent, SearchAreaComponent,
+      MovieCardComponent, WhiteCardComponent, CommonModule, HeaderComponent,
+      CommonActionButtonComponent, SearchAreaComponent, TranslatePipe
 
     ],
   templateUrl: './movies.component.html',
@@ -29,10 +31,8 @@ export class MoviesComponent implements OnInit {
     private getGeneralService: GeneralService,
   ) { }
 
-
-
   ngOnInit(): void {
-    console.clear();
+    //console.clear();
 
     this.getConfigurationsService.selectedLanguage$.subscribe({
       next: (language) => {
@@ -48,6 +48,8 @@ export class MoviesComponent implements OnInit {
   }
 
   public getMovies() {
+    this.getMoviesService.setMovies([]);
+
     for (let page = 1; page <= this.getMoviesService.getPage(); page++) {
       this.getMoviesService.getPopularMovies(page, this.getConfigurationsService.getSelectedLanguage()).subscribe({
         next: (res) => {
@@ -61,9 +63,6 @@ export class MoviesComponent implements OnInit {
         }
       });
     }
-
-
-
   }
 
 

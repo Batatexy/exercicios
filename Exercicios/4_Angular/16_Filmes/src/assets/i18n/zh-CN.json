@@ -1,0 +1,69 @@
+{
+    "navBar": 
+    {
+        "home": "首页",
+        "movies": "电影",
+        "logout": "退出"
+    },
+
+    "configurations": 
+    {
+        "themes": {"theme": "主题", "light": "明亮", "dark": "黑暗"},
+        "language": "语言"
+    },
+
+    "defaultThings":
+    {
+        "seeMore": "查看更多",
+        "required": "必填",
+        "optional": "可选",
+        "close": "关闭"
+    },
+
+    "notFoundPage":
+    {
+        "notFound": "页面未找到",
+        "backToMovies": "返回电影"
+    },
+
+    "moviesPage":
+    {
+        "listedMovie": "已列出的电影",
+        "listedMovies": "已列出的电影",
+        "noListedMovies": "没有找到电影"
+    },
+
+    "searchBar": 
+    {
+        "searchMovie": "搜索电影"
+    },
+        
+    "movieDetailsPage":
+    {
+        "directedBy": "导演",
+        "releasedIn": "发布于",
+
+        "cast": "演员",
+        "crew": "制作团队",
+
+        "synopsis": "剧情简介",
+
+        "reviews": "评论",
+        "noReviews": "此电影尚无评论",
+
+        "publishedIn": "发布于",
+        "watchedIn": "观看日期",
+
+        "review":
+        {
+            "writeReviewAbout": "写评论",
+            "writeReviewInput": "输入您的看法",
+            "writeReviewInputInvalid": "请输入至少3个字符的评论",
+
+            "watchedDate": "观看日期",
+            "watchedDateInvalid": "请输入有效日期",
+
+            "submitReview": "提交评论"
+        }
+    }
+}
