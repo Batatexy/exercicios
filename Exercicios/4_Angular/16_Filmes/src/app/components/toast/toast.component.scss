@@ -27,6 +27,11 @@ strong{
     color: var(--text-default-color)
 }
 
+.close-button{
+    margin: -0.5rem;
+    margin-right: -0.1rem;
+}
+
 .toast-header{
     background-color: var(--foreground-default-color);
     border:0 solid transparent;

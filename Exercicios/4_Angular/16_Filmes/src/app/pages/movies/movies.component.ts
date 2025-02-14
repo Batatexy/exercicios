@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { MovieCardComponent } from '../../components/movie-card/movie-card.component';
 import { MoviesService } from '../../services/movies.service';
 import { WhiteCardComponent } from "../../components/white-card/white-card.component";
-import { HeaderComponent } from "../../components/header/header.component";
 import { SearchAreaComponent } from "../../components/search-area/search-area.component";
 import { CommonActionButtonComponent } from '../../components/common-action-button/common-action-button.component';
 import { Movie } from '../../models/movie';
@@ -16,7 +15,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   selector: 'app-movies',
   imports:
     [
-      MovieCardComponent, WhiteCardComponent, CommonModule, HeaderComponent,
+      MovieCardComponent, WhiteCardComponent, CommonModule,
       CommonActionButtonComponent, SearchAreaComponent, TranslatePipe
 
     ],
@@ -116,7 +115,10 @@ export class MoviesComponent implements OnInit {
   }
 
   public setLikedMovies(movie: Movie): void {
-    this.getMoviesService.addLikedMovies(movie);
+    // this.getMoviesService.addLikedMovies(movie);
+
+
+
   }
 
   public createZeroBeforeNumbers(number: number,): string {

@@ -1,3 +1,21 @@
 .home-component{
-    color: var(--text-default-color)
+    width: 100%;
+}
+
+.above-banner{
+    position: relative;
+    width: 26rem;
+    margin-top: -12rem;
+    top:13.5rem;
+    left:3rem;
+}
+
+.movies{
+    padding-top: 0.75rem;
+}
+
+
+h1{
+    margin-top:3rem;
+    margin-bottom:1.5rem;
 }

@@ -1,9 +1,8 @@
-import { Component, EventEmitter, Output, Type } from '@angular/core';
-import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Movie } from '../../models/movie';
 import { MoviesService } from '../../services/movies.service';
 import { WhiteCardComponent } from "../../components/white-card/white-card.component";
-import { HeaderComponent } from '../../components/header/header.component';
 import { AvatarComponent } from '../../components/avatar/avatar.component';
 import { BadgeComponent } from '../../components/badge/badge.component';
 import { Credits } from '../../models/credits';
@@ -16,7 +15,6 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { ReviewsService } from '../../services/reviews.service';
 import { Review } from '../../models/review';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
 import { UserService } from '../../services/user.service';
 import { CommonActionButtonComponent } from "../../components/common-action-button/common-action-button.component";
 import { GeneralService } from '../../services/general.service';
@@ -26,7 +24,7 @@ import { ToastComponent } from '../../components/toast/toast.component';
 @Component({
   selector: 'app-movie-details',
   imports: [
-    WhiteCardComponent, HeaderComponent, CommonModule,
+    WhiteCardComponent, CommonModule,
     AvatarComponent, BadgeComponent, ReviewComponent,
     ModalComponent, ReactiveFormsModule, FormsModule,
     CommonActionButtonComponent, TranslatePipe, ToastComponent
@@ -41,8 +39,6 @@ export class MovieDetailsComponent {
   newReviewInvalid: boolean = false;
   reviewStatus: string = "";
   showToast = false;
-
-
 
   reviewContentModel: string = '';
   watchedDateModel: string = '';
@@ -161,12 +157,27 @@ export class MovieDetailsComponent {
     this.getReviewsService.seeMoreReviews();
   }
 
+  validateDate(date: unknown) {
+    if (date) {
+      let watchedDate = new Date(String(date));
+      let movieDate = new Date(String(this.getMoviesService.getMovie()?.release_date));
+
+      console.log("watchedDate:", watchedDate);
+      console.log("movieDate:", movieDate);
+
+      if (watchedDate > new Date() || watchedDate < movieDate) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+
   public submitReview() {
     this.showToast = true;
 
-    if (this.getMoviesService.getMovie() && !this.newReview.invalid) {
-      let newReview = this.newReview.value;
-
+    if (this.getMoviesService.getMovie() && !this.newReview.invalid && this.validateDate(this.newReview.value['watchedDate'])) {
       this.getReviewsService.sendReview(
         {
           id: 2,// Auto Incrementar
@@ -174,23 +185,19 @@ export class MovieDetailsComponent {
 
           movieID: this.getMoviesService.getMovie()!.id,
 
-          reviewContent: newReview['reviewContent'],
-          watchedDate: newReview['watchedDate'],
+          reviewContent: this.newReview.value['reviewContent'],
+          watchedDate: this.newReview.value['watchedDate'],
           rating: this.rating,
           reviewDate: String(new Date),
 
         }).subscribe({
-          next: (val) => console.log(val),
           complete: () => { this.reviewStatus = "success"; },
           error: () => { this.reviewStatus = "failed"; }
-
         });
 
 
+      this.getReviewsByMovieID();
     }
-
-
-    this.getReviewsByMovieID();
   }
 
 

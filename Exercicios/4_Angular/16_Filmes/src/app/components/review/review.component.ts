@@ -26,7 +26,7 @@ export class ReviewComponent {
 
   ngOnInit() {
     if (this.review) {
-      this.getUserService.getUser(this.review.userID).subscribe({
+      this.getUserService.getUser$(this.review.userID).subscribe({
         next: (res) => {
           // ??????????
           // this.user = res;

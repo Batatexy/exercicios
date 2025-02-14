@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CloseButtonComponent } from '../close-button/close-button.component';
 
 @Component({
   selector: 'app-toast',
-  imports: [CommonModule],
+  imports: [CommonModule, CloseButtonComponent],
   templateUrl: './toast.component.html',
   styleUrl: './toast.component.scss'
 })

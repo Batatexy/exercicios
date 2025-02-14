@@ -10,7 +10,10 @@
                     }
                     @else 
                     {
-                        <app-header-translations [path]="title"/>
+                        @if (title != "/"){
+                            <app-header-translations [path]="title"/>
+                        }
+                        
                     }
                 </b>
             

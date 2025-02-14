@@ -23,7 +23,7 @@
                 
                 @for (movie of getMoviesByName(); track $index) 
                 {
-                    <app-movie-card [movie]="movie" (eventEmitterMovie)="setLikedMovies($event)" />
+                    <app-movie-card [movie]="movie"/>
                 }
                 
             </div>

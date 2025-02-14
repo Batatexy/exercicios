@@ -11,7 +11,7 @@
                 <p class="work-sans">{{movie.release_date | date:'longDate'}}</p>
             </div>
             <div class="col-2 d-flex flex-column justify-content-center">
-                <button class="heart-button btn d-flex justify-content-center align pt-1 pb-1" (click)="sendLikedState(movie)">
+                <button class="heart-button btn d-flex justify-content-center align pt-1 pb-1" (click)="setFavoriteMovie(movie)">
                     @if(getLikedState())
                     {
                         <i class="bi-heart-fill"></i>

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Movie } from '../models/movie';
-import { LikedMovie } from '../models/likedMovie';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
@@ -28,7 +27,6 @@ export class MoviesService {
 
   //SearchBar
   private search: string = "";
-  private likedMovies: Array<LikedMovie> = [];
 
   //Variavel ajustda pelo usuario
   private rangeIncrease: number = 8;
@@ -130,32 +128,51 @@ export class MoviesService {
 
 
 
-  //Getters and Setters
-  public addLikedMovies(movie: Movie): void {
-    let likedMovies: Array<LikedMovie> = this.getLikedMovies();
-    let toPush: boolean = true;
+  // //Getters and Setters
+  // public addLikedMovies(movie: Movie): void {
+  //   let likedMovies: Array<LikedMovie> = this.getLikedMovies();
+  //   let toPush: boolean = true;
 
-    likedMovies.forEach((likedMovie, index) => {
-      if (likedMovie.movieID == movie.id) {
-        likedMovie.liked = !likedMovie.liked;
-        toPush = false;
-      }
-    });
+  //   likedMovies.forEach((likedMovie, index) => {
+  //     if (likedMovie.movieID == movie.id) {
+  //       likedMovie.liked = !likedMovie.liked;
+  //       toPush = false;
+  //     }
+  //   });
 
-    if (toPush) {
-      likedMovies.push({ movieID: movie.id, liked: true });
-    }
+  //   if (toPush) {
+  //     likedMovies.push({ movieID: movie.id, liked: true });
+  //   }
 
-    this.setLikedMovies(likedMovies);
-  }
+  //   this.setLikedMovies(likedMovies);
+  // }
 
-  public setLikedMovies(likedMovies: Array<LikedMovie>): void {
-    this.likedMovies = likedMovies;
-  }
+  // public setLikedMovies(likedMovies: Array<LikedMovie>): void {
+  //   this.likedMovies = likedMovies;
+  // }
 
-  public getLikedMovies(): Array<LikedMovie> {
-    return this.likedMovies;
-  };
+  // public getLikedMovies(): Array<LikedMovie> {
+  //   return this.likedMovies;
+  // };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   //Pegar o que foi digitado pelo usuário
   public getSearch(): string {
