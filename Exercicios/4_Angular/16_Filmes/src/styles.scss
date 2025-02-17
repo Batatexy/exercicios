@@ -114,6 +114,18 @@ app-common-router-button button{
     border-radius: 0.375rem;
 }
 
+//Branco
+.white{
+    background-color:white;
+    color:black;
+}
+
+.white:hover{
+    background-color:rgb(230, 230, 230);
+    color:black;
+}
+
+
 //Azul Claro
 .blue,
 .hover-blue:hover{

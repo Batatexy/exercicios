@@ -39,6 +39,7 @@ export class ConfigurationsService {
       if (this.selectedLanguage !== previousLanguage) {
         observer.next(this.selectedLanguage);
         previousLanguage = this.selectedLanguage;
+        document.getElementById("search-movies")?.focus();
       }
     },);
   });

@@ -174,22 +174,22 @@
     <ng-container alert>
         @if (reviewStatus == "success")
         {
-            Sucesso
+            {{"toast.success" | translate}}
         }
         @else 
         {
-            Fracasso
+            {{"toast.failed" | translate}}
         }
     </ng-container>
     
     <ng-container content >
         @if (reviewStatus == "success")
         {
-            Sua análise foi enviada!
+            {{"toast.reviewSent" | translate}}
         }
         @else 
         {
-            Houve um erro no envio de sua análise
+            {{"toast.reviewNotSent" | translate}}
         }
     </ng-container>
 </app-toast>

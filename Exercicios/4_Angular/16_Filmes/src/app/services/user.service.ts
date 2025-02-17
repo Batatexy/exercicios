@@ -4,29 +4,26 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { User } from '../models/user';
 import { Movie } from '../models/movie';
+import { MoviesService } from './movies.service';
+import { ConfigurationsService } from './configurations.service';
 
 @Injectable({
   providedIn: 'root',
 })
 
 export class UserService {
-  private userID = 1;
+  private apiUrl = 'http://localhost:3000';
+
   private user?: User;
   private favoritesMovies: Array<Movie> = [];
 
-  private apiUrl = 'http://localhost:3000';
-
-  constructor(private http: HttpClient) { }
-
-
-
-  // public getUserFavoriteMovies(userID?: number): Observable<Array<number>> {
-  //   return this.http.get<Array<number>>(`${this.apiUrl}/users?id=${userID}`).pipe(map(user => user));;
-  // }
-
-  // public sendFavoriteMovie(userID: number, movieID: number): Observable<unknown> {
-  //   return this.http.post<unknown>(`${this.apiUrl}/users?id=${userID}`, { ...movieID });
-  // }
+  constructor(private http: HttpClient, private getMoviesService: MoviesService, private getConfigurationsService: ConfigurationsService) {
+    this.getUser$(1).subscribe({
+      next: (user) => {
+        this.user = user[0];
+      }
+    });
+  }
 
   public setFavoriteMovie(movieID: number) {
     if (this.user) {
@@ -35,6 +32,7 @@ export class UserService {
       for (let i = 0; i < this.user.favorites.length; i++) {
         if (this.user.favorites[i] == movieID) {
           this.user.favorites.splice(i, 1);
+          this.favoritesMovies.splice(i, 1);
           push = false;
         }
       }
@@ -43,9 +41,23 @@ export class UserService {
         this.user.favorites.push(movieID);
       }
 
-      this.setUser(
-        this.user).subscribe({});
+      this.putUser(this.user).subscribe({});
     }
+  }
+
+  public generateFavoriteMoviesList() {
+    console.log("null");
+
+    this.setFavoritesMovies([]);
+
+    this.getUser()?.favorites.forEach(movie => {
+      this.getMoviesService.getMovieById(movie, this.getConfigurationsService.getSelectedLanguage()).subscribe
+        ({
+          next: (movie) => {
+            this.favoritesMovies.push(movie);
+          }
+        });
+    });
   }
 
 
@@ -55,35 +67,23 @@ export class UserService {
   }
 
 
+  public postUser(user: User): Observable<unknown> {
+    return this.http.post<unknown>(`${this.apiUrl}/users`, { ...user });
+  }
+
+  public putUser(user: User): Observable<unknown> {
+    return this.http.put<unknown>(`${this.apiUrl}/users/${user.id}`, { ...user });
+  }
 
   public getUser$(id: number): Observable<Array<User>> {
     return this.http.get<Array<User>>(`${this.apiUrl}/users?id=${id}`);
   }
 
-
-
-  public sendUser(user: User): Observable<unknown> {
-    return this.http.post<unknown>(`${this.apiUrl}/users`, { ...user });
-  }
-
-  public setUser(user: User): Observable<unknown> {
-    return this.http.put<unknown>(`${this.apiUrl}/users/${user.id}`, { ...user });
-  }
-
-
-
-
-  public getUserID(): number {
-    return this.userID;
-  }
-
-
-
-  public getActualUser(): User | undefined {
+  public getUser(): User | undefined {
     return this.user;
   }
 
-  public setActualUser(user: User): void {
+  public setUser(user: User): void {
     this.user = user;
   }
 
@@ -97,9 +97,6 @@ export class UserService {
     return this.favoritesMovies;
   }
 
-  public addFavoritesMovies(movie: Movie): void {
-    this.favoritesMovies.push(movie);
-  }
 }
 
 

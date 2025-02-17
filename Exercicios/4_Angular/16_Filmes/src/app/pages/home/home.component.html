@@ -1,117 +1,76 @@
 <section class="home-component">
 
-    <div class="above-banner">
+    <div class="above-banner rounded-3">
         <h1 class="font-36 work-sans d-flex font-bold">
-            Crie sua lista de filmes
+            {{"home.createYourList" | translate}}
         </h1>
     
         <p>
-            Salve seus filmes favoritos e fique por dentro de todos os detalhes.
+            {{"home.saveYourMovies" | translate}}
         </p>
     
-        <app-common-router-button>
-            <ng-container content>
-                Ver filmes
-            </ng-container>
-        </app-common-router-button>
+        <div class="w-25">
+            <app-common-router-button className="white" router="/movies">
+                <ng-container content>
+                    {{"home.seeMovies" | translate}}
+                </ng-container>
+            </app-common-router-button>
+        </div>
     </div>
 
-    <img class="banner rounded-3 w-100" src="../../../assets/images/home-banner.png">
+    <div class="banner"></div>
 
     <h1 class="font-36 work-sans d-flex">
-        Seus Filmes Favoritos
+        {{"home.yourFavoriteMovies" | translate}}
     </h1>
 
     <!-- getMoviesByName().length > 0 -->
-    @if(true)
-    {
-       
-                    
-        <app-white-card class="d-flex justify-content-center">
-            <ng-container content>
-                
-                  <div id="carouselExample" class="carousel slide">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <div class="movies d-flex flex-wrap justify-content-center w-100">
-                                @for (movie of getFavoritesMovies().slice(0,4); track $index) 
-                                {
-                                    <app-movie-card [movie]="movie"/>
-                                }
-                            </div>
-                        </div>
-
-                        @for (i of getFavoritesMovies().slice((getFavoritesMovies().length / 4)); track $index) 
-                        {
-                            <div class="carousel-item">
+    @if(getUser())
+    {    
+        @if(getFavoritesMovies())
+        {
+            <app-white-card class="d-flex justify-content-center">
+                <ng-container content>
+                      <div id="carouselExample" class="carousel slide">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
                                 <div class="movies d-flex flex-wrap justify-content-center w-100">
-                                    @for (movie of getFavoritesMovies().slice((getFavoritesMovies().length - 4)/4); track $index) 
+                                    @for (movie of getFavoritesMovies().slice(0, movieSlice); track $index) 
                                     {
                                         <app-movie-card [movie]="movie"/>
                                     }
                                 </div>
                             </div>
-                        }
-
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Next</span>
-                    </button>
-                  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            </ng-container>
-        </app-white-card>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                
-
-
-
-
-
-
-
-
+    
+                            @for (i of getFavoritesMovies().slice((this.getFavoritesMovies().length - movieSlice) / movieSlice); track $index) 
+                            {
+                                <div class="carousel-item">
+                                    <div class="movies d-flex flex-wrap justify-content-center w-100">
+                                        @for (movie of getFavoritesMovies().slice((($index * movieSlice) + movieSlice), ($index * movieSlice) + (movieSlice * 2)); track $index) 
+                                        {
+                                            <app-movie-card [movie]="movie"/>
+                                        }
+                                    </div>
+                                </div>
+                            }
+    
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Next</span>
+                        </button>
+                      </div>
+                </ng-container>
+            </app-white-card>
+        }
+        @else
+        {
+            <p>Adicione um Filme</p>
+        }
     }
     @else 
     {

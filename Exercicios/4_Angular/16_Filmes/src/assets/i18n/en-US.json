@@ -1,8 +1,11 @@
 {
-    "navBar": 
+    "pages": 
     {
         "home": "Home",
         "movies": "Movies",
+        
+        "register": "Register",
+        "login": "Login",
         "logout": "Logout"
     },
 
@@ -20,15 +23,26 @@
         "close": "Close"
     },
 
-    "header": {
-        "home": "Home",
-        "movies": "Movies"
+    "toast":
+    {
+        "success": "Success",
+        "reviewSent": "Your review has been sent!",
+        "failed": "Failure",
+        "reviewNotSent": "There was an error sending your review"
     },
 
     "notFoundPage":
     {
         "notFound": "Page Not Found",
         "backToMovies": "Back to Movies"
+    },
+
+    "home":
+    {
+        "createYourList": "Create Your Movie List",
+        "saveYourMovies": "Save your favorite movies and stay updated on all the details.",
+        "seeMovies": "See Movies",
+        "yourFavoriteMovies": "Your Favorite Movies"
     },
 
     "moviesPage":
@@ -49,7 +63,7 @@
         "releasedIn": "Released in",
 
         "cast": "Cast",
-        "crew": "Crew",
+        "crew": "Production Crew",
 
         "synopsis": "Synopsis",
 
@@ -62,11 +76,11 @@
         "review":
         {
             "writeReviewAbout": "Write a Review About",
-            "writeReviewInput": "Type what you thought about",
-            "writeReviewInputInvalid": "Please enter a review with at least 3 characters",
+            "writeReviewInput": "Enter your thoughts on",
+            "writeReviewInputInvalid": "Enter a review with at least 3 characters",
 
-            "watchedDate": "Date Watched",
-            "watchedDateInvalid": "Please enter a valid date",
+            "watchedDate": "Date you watched the Movie",
+            "watchedDateInvalid": "Enter a valid date",
 
             "submitReview": "Submit Review"
         }

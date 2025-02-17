@@ -1,8 +1,11 @@
 {
-    "navBar": 
+    "pages": 
     {
         "home": "Home",
         "movies": "Filmes",
+        
+        "register": "Registrar",
+        "login": "Login",
         "logout": "Sair"
     },
 
@@ -20,15 +23,26 @@
         "close": "Fechar"
     },
 
-    "header": {
-        "home": "Home",
-        "movies": "Filmes"
+    "toast":
+    {
+        "success": "Sucesso",
+        "reviewSent": "Sua análise foi enviada!",
+        "failed": "Fracasso",
+        "reviewNotSent": "Houve um erro no envio de sua análise"
     },
 
     "notFoundPage":
     {
         "notFound": "Página não Encontrada",
         "backToMovies": "Voltar aos Filmes"
+    },
+
+    "home":
+    {
+        "createYourList": "Crie sua lista de filmes",
+        "saveYourMovies": "Salve seus filmes favoritos e fique por dentro de todos os detalhes.",
+        "seeMovies": "Ver filmes",
+        "yourFavoriteMovies": "Seus Filmes Favoritos"
     },
 
     "moviesPage":

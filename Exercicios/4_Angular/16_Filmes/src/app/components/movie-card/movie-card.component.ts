@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { MoviesService } from '../../services/movies.service';
 import { DatePipe } from '@angular/common';
 import { UserService } from '../../services/user.service';
+import { ConfigurationsService } from '../../services/configurations.service';
 
 @Component({
   selector: 'app-movie-card',
@@ -14,7 +15,7 @@ import { UserService } from '../../services/user.service';
 export class MovieCardComponent {
   @Input() movie!: Movie;
 
-  constructor(private getMoviesService: MoviesService, private getUserService: UserService) { }
+  constructor(private getMoviesService: MoviesService, private getUserService: UserService, private getConfigurationsService: ConfigurationsService) { }
 
   public getImagesUrl(): string {
     return this.getMoviesService.getImagesUrl();
@@ -31,12 +32,16 @@ export class MovieCardComponent {
   public getLikedState(): boolean {
     let liked: boolean = false;
 
-    this.getUserService.getActualUser()?.favorites.forEach(movieID => {
+    this.getUserService.getUser()?.favorites.forEach(movieID => {
       if (movieID == this.movie.id) {
         liked = true;
       }
     });
 
     return liked;
+  }
+
+  public getSelectedLanguage(): string {
+    return this.getConfigurationsService.getSelectedLanguage();
   }
 }

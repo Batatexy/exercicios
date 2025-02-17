@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { ConfigurationsService } from '../../services/configurations.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
@@ -47,7 +48,7 @@ export class RegisterComponent {
       newUser.id = 2;
       newUser.favorites = [];
 
-      this.getUserService.sendUser(newUser).subscribe({
+      this.getUserService.postUser(newUser).subscribe({
         next: (val) => console.log(val)
       });
     }
