@@ -1,2 +1,109 @@
-<legend class="">Registrar Novo Hóspede</legend>
-<app-form [form]="form" [formGroup]="guestFormGroup" (formGroupEmitter)="submitGuest()" submitText="Registrar"/>
+@if(id)
+{
+    @if (guest)
+    {
+        <legend>{{guest.name}}</legend>
+
+        <div class="container">
+            <div class="row border border-1 p-2">
+                <div class="col">
+                    <b>ID</b>
+                 </div>
+            
+                <div class="col">
+                    <b>Email</b>
+                </div>
+            
+                <div class="col">
+                    <b>Telefone</b>
+                </div>
+            
+                <div class="col">
+                    <b>CPF</b>
+                </div>
+            </div>
+
+            <div class="row border border-1 p-2">
+                <div class="col">
+                    {{guest.id}}
+                </div>
+        
+                <div class="col">
+                    {{guest.email}}
+                </div>
+        
+                <div class="col">
+                    {{guest.phone}}
+                </div>
+        
+                <div class="col">
+                    {{guest.document}}
+                </div>
+            </div>
+        </div>
+    }
+    @else
+    {
+        <legend>Não existe nenhuma reserva com este ID</legend>
+    }
+}
+@else 
+{
+    <legend>Hóspedes</legend>
+
+    <div class="container">
+        <div class="row border border-1 p-2">
+            <div class="col">
+               <b>Nome</b>
+            </div>
+        
+            <div class="col">
+                <b>Email</b>
+            </div>
+        
+            <div class="col">
+                <b>Telefone</b>
+            </div>
+        
+            <div class="col">
+                <b>CPF</b>
+            </div>
+        
+            <div class="col">
+                <b>Ações</b>
+            </div>
+        </div>
+    
+
+        @for (guest of guests; track $index) 
+        {
+            <div class="row row-item border border-1 p-2" role="button" routerLink="/guests/{{guest.id}}">
+                <div class="col">
+                    {{guest.name}}
+                </div>
+
+                <div class="col">
+                    {{guest.email}}
+                </div>
+
+                <div class="col">
+                    {{guest.phone}}
+                </div>
+
+                <div class="col">
+                    {{guest.document}}
+                </div>
+
+                <div class="col action-buttons">
+                    <button class="btn text-primary">
+                        <i class="bi bi-pen"></i>
+                    </button>
+                    
+                    <button class="btn text-danger">
+                        <i class="bi bi-trash-fill"></i>
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+}

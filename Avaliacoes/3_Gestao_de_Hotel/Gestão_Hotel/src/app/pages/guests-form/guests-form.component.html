@@ -1,4 +1,6 @@
-<form class="" id="new-guest" [formGroup]="formGroup" (ngSubmit)="submit()">
+<legend>Registrar Novo Hóspede</legend>
+
+<form class="" id="new-guest" [formGroup]="guestFormGroup" (ngSubmit)="submitGuest()">
     @for (item of form; track $index) 
     {
         <div class="pt-2">
@@ -19,12 +21,13 @@
             }
 
             
-            <p class="text-danger m-0" *ngIf="formGroup.get(item.name)?.invalid && formGroup.get(item.name)?.touched">
+            <p class="text-danger m-0" *ngIf="guestFormGroup.get(item.name)?.invalid && guestFormGroup.get(item.name)?.touched">
                 {{item.invalid}}
             </p>
         </div>
     }
     <button class="btn btn-primary mt-2" type="submit">
-        {{submitText}}
+        Registrar Hóspede
     </button>
 </form>
+

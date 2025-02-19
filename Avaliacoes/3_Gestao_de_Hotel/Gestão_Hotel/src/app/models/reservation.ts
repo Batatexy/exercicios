@@ -1,6 +1,6 @@
 export type Reservation = {
     id: string;
-    guestId: number;
+    guestId: string;
     checkIn: string;
     checkOut: string;
     roomType: string;

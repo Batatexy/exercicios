@@ -17,16 +17,13 @@ export class GuestsService {
     return this.http.get<Array<Guest>>(`${this.apiUrl}`);
   }
 
-  public getGuestByID(id: number): Observable<Guest> {
-    return this.http.get<Guest>(`${this.apiUrl}?id=${id}`);
+  public getGuestByID(id: number): Observable<Array<Guest>> {
+    return this.http.get<Array<Guest>>(`${this.apiUrl}?id=${id}`);
   }
 
   public addGuest(guest: Guest): Observable<Guest> {
     return this.http.post<Guest>(`${this.apiUrl}`, { ...guest });
   }
-
-
-
 
   public deleteGuestByID(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);  // Corrigido: Enviar o id como parte da URL

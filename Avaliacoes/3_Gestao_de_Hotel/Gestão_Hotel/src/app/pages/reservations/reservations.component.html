@@ -1,3 +1,253 @@
-<legend class="">Registrar Nova Reserva</legend>
-<app-form [form]="form" [formGroup]="reservationFormGroup" (formGroupEmitter)="submitReservation()" submitText="Registrar"/>
+<!-- Detalhes da Reserva -->
+@if(id)
+{
+    @if (guest && reservation)
+    {
+        <legend>Hóspede</legend>
 
+        <div class="container">
+            <div class="row border border-1 p-2">
+                <div class="col">
+                    <b>ID</b>
+                 </div>
+    
+                <div class="col">
+                   <b>Nome</b>
+                </div>
+            
+                <div class="col">
+                    <b>Email</b>
+                </div>
+            
+                <div class="col">
+                    <b>Telefone</b>
+                </div>
+            
+                <div class="col">
+                    <b>CPF</b>
+                </div>
+            </div>
+    
+            <div class="row border border-1 p-2">
+                <div class="col">
+                    {{guest.id}}
+                </div>
+    
+                <div class="col">
+                    {{guest.name}}
+                </div>
+        
+                <div class="col">
+                    {{guest.email}}
+                </div>
+        
+                <div class="col">
+                    {{guest.phone}}
+                </div>
+        
+                <div class="col">
+                    {{guest.document}}
+                </div>
+            </div>
+        </div>
+        
+
+
+
+
+        <legend class="pt-4">Reserva</legend>
+
+        <div class="container">
+            <div class="row border border-1 p-2">
+                <div class="col">
+                   <b>ID</b>
+                </div>
+            
+                <div class="col">
+                    <b>checkIn</b>
+                </div>
+            
+                <div class="col">
+                    <b>checkOut</b>
+                </div>
+            
+                <div class="col">
+                    <b>Nº de Hóspedes</b>
+                </div>
+            
+                <div class="col">
+                    <b>Tipo de Quarto</b>
+                </div>
+            
+                <div class="col">
+                    <b>Observação</b>
+                </div>
+            
+                <div class="col">
+                    <b>Status</b>
+                </div>
+            </div>
+    
+            <div class="row border border-1 p-2">
+                <div class="col">
+                    {{reservation.id}}
+                </div>
+    
+                <div class="col">
+                    {{reservation.checkIn}}
+                </div>
+        
+                <div class="col">
+                    {{reservation.checkOut}}
+                </div>
+        
+                <div class="col">
+                    {{reservation.numberOfGuests}}
+                </div>
+        
+                <div class="col">
+                    @if(reservation.roomType == "0")
+                    {
+                        Comum
+                    }
+        
+                    @if(reservation.roomType == "1")
+                    {
+                        Deluxe
+                    }
+        
+                    @if(reservation.roomType == "2")
+                    {
+                        Suíte
+                    }
+                </div>
+    
+                <div class="col">
+                    {{reservation.remarks}}
+                </div>
+        
+                <div class="col" [ngClass]="
+                    {
+                        'text-danger' : reservation.status == 'Cancelado',
+                        'text-warning' : reservation.status == 'Pendente',
+                        'text-success' : reservation.status == 'Confirmado'
+                    }">
+    
+                    {{reservation.status}}
+                </div>
+            </div>
+        </div>
+
+        <div class="pt-3">
+            <button class="btn btn-primary me-2">
+                Editar
+            </button>
+    
+            <button class="btn btn-danger">
+                Deletar
+            </button>
+        </div>
+    }
+    @else
+    {
+        <legend>Não existe nenhuma reserva com este ID</legend>
+    }
+}
+<!-- Tabela completa -->
+@else
+{
+<legend>Reservas</legend>
+
+<div class="container">
+    <div class="row border border-1 p-2">
+        <div class="col">
+           <b>Nome</b>
+        </div>
+    
+        <div class="col">
+            <b>checkIn</b>
+        </div>
+    
+        <div class="col">
+            <b>checkOut</b>
+        </div>
+    
+        <div class="col">
+            <b>Nº de Hóspedes</b>
+        </div>
+    
+        <div class="col">
+            <b>Tipo de Quarto</b>
+        </div>
+    
+        <div class="col">
+            <b>Status</b>
+        </div>
+    
+        <div class="col">
+            <b>Ações</b>
+        </div>
+    </div>
+    
+    @for (reservation of reservations; track $index) 
+    {
+        <div class="row row-item border border-1 p-2" role="button" routerLink="/reservations/{{reservation.id}}">
+    
+            @if(guestsReservations[$index])
+            {
+                <div class="col">
+                    {{guestsReservations[$index].name}}
+                </div> 
+            }
+            
+            <div class="col">
+                {{reservation.checkIn}}
+            </div>
+    
+            <div class="col">
+                {{reservation.checkOut}}
+            </div>
+    
+            <div class="col">
+                {{reservation.numberOfGuests}}
+            </div>
+    
+            <div class="col">
+                @if(reservation.roomType == "0")
+                {
+                    Comum
+                }
+    
+                @if(reservation.roomType == "1")
+                {
+                    Deluxe
+                }
+    
+                @if(reservation.roomType == "2")
+                {
+                    Suíte
+                }
+            </div>
+    
+            <div class="col" [ngClass]="
+            {
+                'text-danger' : reservation.status == 'Cancelado',
+                'text-warning' : reservation.status == 'Pendente',
+                'text-success' : reservation.status == 'Confirmado'
+            }">
+                {{reservation.status}}
+            </div>
+    
+            <div class="col action-buttons">
+                <button class="btn text-primary">
+                    <i class="bi bi-pen"></i>
+                </button>
+                
+                <button class="btn text-danger">
+                    <i class="bi bi-trash-fill"></i>
+                </button>
+            </div>
+        </div>
+    }
+</div>
+}

@@ -1,9 +1,27 @@
 {
-  "newIDs": {
-    "guests": 5,
-    "reservations": 2
-  },
-  "guests": [
+  "rooms": 
+  [
+    {
+      "id": "0",
+      "name": "Comum",
+      "amount": 10,
+      "maxGuests": 2
+    },
+    {
+      "id": "1",
+      "name": "Deluxe",
+      "amount": 5,
+      "maxGuests": 4
+    },
+    {
+      "id": "2",
+      "name": "Suíte",
+      "amount": 3,
+      "maxGuests": 6
+    }
+  ],
+  "guests": 
+  [
     {
       "id": "1",
       "name": "João Silva",
@@ -48,40 +66,87 @@
     },
     {
       "id": "7",
-      "name": "Carlos",
-      "email": "Carlos@gmail.com",
-      "phone": "123",
-      "document": "321"
+      "name": "Rodrigo",
+      "email": "RodriguinhoMatador@gmail.com",
+      "phone": "34534554335345",
+      "document": "34543534534"
+    },
+    {
+      "id": "8",
+      "name": "José",
+      "email": "Josep@gmai.com",
+      "phone": "124235345345",
+      "document": "345345345345345"
     }
   ],
   "reservations": [
     {
       "id": "1",
-      "guestId": 1,
-      "checkIn": "2025-03-01",
-      "checkOut": "2025-03-05",
-      "roomType": "Standard",
+      "guestId": "3",
+      "checkIn": "2025-02-21",
+      "checkOut": "2222-02-22",
+      "roomType": "0",
       "numberOfGuests": 2,
-      "status": "confirmed",
-      "remarks": "Reserva feita online."
+      "status": "Pendente",
+      "remarks": "Reserva feita online"
     },
     {
       "id": "2",
-      "guestId": 2,
-      "checkIn": "2025-03-10",
-      "checkOut": "2025-03-15",
-      "roomType": "Deluxe",
-      "numberOfGuests": 1,
-      "status": "pending",
-      "remarks": "Aguardando confirmação de pagamento."
+      "guestId": "1",
+      "checkIn": "2025-02-20",
+      "checkOut": "2025-02-28",
+      "roomType": "1",
+      "numberOfGuests": 2,
+      "status": "Pendente",
+      "remarks": "Reserva feita online"
     },
     {
       "id": "3",
-      "guestId": 1,
+      "guestId": "1",
+      "checkIn": "",
+      "checkOut": "",
+      "roomType": "0",
+      "numberOfGuests": 0,
+      "status": "Pendente",
+      "remarks": "Reserva feita online"
+    },
+    {
+      "id": "4",
+      "guestId": "1",
+      "checkIn": "",
+      "checkOut": "",
+      "roomType": "2",
+      "numberOfGuests": 0,
+      "status": "Pendente",
+      "remarks": "Reserva feita online"
+    },
+    {
+      "id": "5",
+      "guestId": "8",
+      "checkIn": "2025-02-20",
+      "checkOut": "2025-02-22",
+      "roomType": "1",
+      "numberOfGuests": 2,
+      "status": "Pendente",
+      "remarks": "Reserva feita online"
+    },
+    {
+      "id": "6",
+      "guestId": "8",
       "checkIn": "2025-02-21",
-      "checkOut": "2025-02-27",
-      "roomType": "11",
-      "numberOfGuests": 11,
+      "checkOut": "2025-02-28",
+      "roomType": "1",
+      "numberOfGuests": 3,
+      "status": "Pendente",
+      "remarks": "Reserva feita online"
+    },
+    {
+      "id": "7",
+      "guestId": "8",
+      "checkIn": "2025-02-20",
+      "checkOut": "2025-02-22",
+      "roomType": "1",
+      "numberOfGuests": 2,
       "status": "Pendente",
       "remarks": "Reserva feita online"
     }

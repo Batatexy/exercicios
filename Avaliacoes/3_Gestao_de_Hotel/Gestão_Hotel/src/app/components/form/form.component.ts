@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Field } from '../../models/field';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,7 +17,15 @@ export class FormComponent {
 
   @Output() formGroupEmitter = new EventEmitter<FormGroup>();
 
+  // @ViewChild("guestId") selectName?: ElementRef;
+  // @ViewChild("roomType") selectRoomType?: ElementRef;
+
   public submit() {
+
+    // let array = [];
+    // if (this.selectName) array.push(this.selectName);
+
+
     this.formGroupEmitter.emit();
   }
 }

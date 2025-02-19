@@ -16,8 +16,8 @@ export class ReservationsService {
     return this.http.get<Array<Reservation>>(`${this.apiUrl}`);
   }
 
-  public getReservationByID(id: number): Observable<Reservation> {
-    return this.http.get<Reservation>(`${this.apiUrl}?id=${id}`);
+  public getReservationByID(id: number): Observable<Array<Reservation>> {
+    return this.http.get<Array<Reservation>>(`${this.apiUrl}?id=${id}`);
   }
 
   public addReservation(reservation: Reservation): Observable<Reservation> {
