@@ -21,15 +21,25 @@ export class GuestsService {
     return this.http.get<Array<Guest>>(`${this.apiUrl}?id=${id}`);
   }
 
+  public getGuestByEmail(email: string): Observable<Array<Guest>> {
+    return this.http.get<Array<Guest>>(`${this.apiUrl}?email=${email}`);
+  }
+
+  public getGuestByDocument(document: string): Observable<Array<Guest>> {
+    return this.http.get<Array<Guest>>(`${this.apiUrl}?document=${document}`);
+  }
+
+
+
   public addGuest(guest: Guest): Observable<Guest> {
     return this.http.post<Guest>(`${this.apiUrl}`, { ...guest });
   }
 
-  public deleteGuestByID(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);  // Corrigido: Enviar o id como parte da URL
+  public editGuest(guest: Guest): Observable<Guest> {
+    return this.http.put<Guest>(`${this.apiUrl}/${guest.id}`, { ...guest });
   }
 
-  public editGuest(guest: Guest): Observable<Guest> {
-    return this.http.put<Guest>(`${this.apiUrl}?id=${guest.id}`, { ...guest });  // Corrigido: Usar o id na URL
+  public deleteGuestByID(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

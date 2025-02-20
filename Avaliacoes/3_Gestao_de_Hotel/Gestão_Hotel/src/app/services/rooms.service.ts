@@ -12,7 +12,7 @@ export class RoomsService {
 
   constructor(private http: HttpClient) { }
 
-  public getReservations(): Observable<Array<Room>> {
+  public getRooms(): Observable<Array<Room>> {
     return this.http.get<Array<Room>>(`${this.apiUrl}`);
   }
 }

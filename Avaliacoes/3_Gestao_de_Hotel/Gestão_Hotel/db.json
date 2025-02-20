@@ -1,6 +1,5 @@
 {
-  "rooms": 
-  [
+  "rooms": [
     {
       "id": "0",
       "name": "Comum",
@@ -20,8 +19,7 @@
       "maxGuests": 6
     }
   ],
-  "guests": 
-  [
+  "guests": [
     {
       "id": "1",
       "name": "João Silva",
@@ -44,13 +42,6 @@
       "document": "468.345.646.12"
     },
     {
-      "id": "4",
-      "name": "Cristina",
-      "email": "Cristina@gmail.com",
-      "phone": "(16) 23234245343423",
-      "document": "468.345.646.12"
-    },
-    {
       "id": "5",
       "name": "Rogério",
       "email": "rogerio@gmail.com",
@@ -59,94 +50,160 @@
     },
     {
       "id": "6",
-      "name": "Carlos",
+      "name": "Carlos Augusto",
       "email": "Carlos@gmail.com",
-      "phone": "123",
-      "document": "321"
-    },
-    {
-      "id": "7",
-      "name": "Rodrigo",
-      "email": "RodriguinhoMatador@gmail.com",
-      "phone": "34534554335345",
-      "document": "34543534534"
-    },
-    {
-      "id": "8",
-      "name": "José",
-      "email": "Josep@gmai.com",
-      "phone": "124235345345",
-      "document": "345345345345345"
+      "phone": "345345453543",
+      "document": "123.456.789-01"
     }
   ],
   "reservations": [
     {
       "id": "1",
       "guestId": "3",
-      "checkIn": "2025-02-21",
-      "checkOut": "2222-02-22",
-      "roomType": "0",
-      "numberOfGuests": 2,
-      "status": "Pendente",
-      "remarks": "Reserva feita online"
-    },
-    {
-      "id": "2",
-      "guestId": "1",
-      "checkIn": "2025-02-20",
-      "checkOut": "2025-02-28",
-      "roomType": "1",
-      "numberOfGuests": 2,
-      "status": "Pendente",
-      "remarks": "Reserva feita online"
-    },
-    {
-      "id": "3",
-      "guestId": "1",
-      "checkIn": "",
-      "checkOut": "",
-      "roomType": "0",
-      "numberOfGuests": 0,
-      "status": "Pendente",
-      "remarks": "Reserva feita online"
-    },
-    {
-      "id": "4",
-      "guestId": "1",
-      "checkIn": "",
-      "checkOut": "",
-      "roomType": "2",
-      "numberOfGuests": 0,
-      "status": "Pendente",
-      "remarks": "Reserva feita online"
-    },
-    {
-      "id": "5",
-      "guestId": "8",
-      "checkIn": "2025-02-20",
-      "checkOut": "2025-02-22",
-      "roomType": "1",
-      "numberOfGuests": 2,
-      "status": "Pendente",
-      "remarks": "Reserva feita online"
-    },
-    {
-      "id": "6",
-      "guestId": "8",
-      "checkIn": "2025-02-21",
-      "checkOut": "2025-02-28",
+      "checkIn": "2025-02-28",
+      "checkOut": "2025-03-08",
       "roomType": "1",
       "numberOfGuests": 3,
       "status": "Pendente",
       "remarks": "Reserva feita online"
     },
     {
+      "id": "5",
+      "guestId": "1",
+      "checkIn": "2025-02-21",
+      "checkOut": "2025-02-27",
+      "roomType": "2",
+      "numberOfGuests": 1,
+      "status": "Pendente",
+      "remarks": "Reserva feita online"
+    },
+    {
+      "id": "6",
+      "guestId": "1",
+      "checkIn": "2025-02-21",
+      "checkOut": "2025-02-27",
+      "roomType": "2",
+      "numberOfGuests": 1,
+      "status": "Pendente",
+      "remarks": "Reserva feita online"
+    },
+    {
       "id": "7",
-      "guestId": "8",
-      "checkIn": "2025-02-20",
-      "checkOut": "2025-02-22",
-      "roomType": "1",
+      "guestId": "1",
+      "checkIn": "2025-02-21",
+      "checkOut": "2025-02-27",
+      "roomType": "0",
+      "numberOfGuests": 1,
+      "status": "Pendente",
+      "remarks": "Reserva feita online"
+    },
+    {
+      "id": "7",
+      "guestId": "1",
+      "checkIn": "2025-02-21",
+      "checkOut": "2025-02-27",
+      "roomType": "0",
+      "numberOfGuests": 1,
+      "status": "Pendente",
+      "remarks": "Reserva feita online"
+    },
+    {
+      "id": "7",
+      "guestId": "1",
+      "checkIn": "2025-02-21",
+      "checkOut": "2025-02-27",
+      "roomType": "0",
+      "numberOfGuests": 1,
+      "status": "Pendente",
+      "remarks": "Reserva feita online"
+    },
+    {
+      "id": "7",
+      "guestId": "1",
+      "checkIn": "2025-02-21",
+      "checkOut": "2025-02-27",
+      "roomType": "0",
+      "numberOfGuests": 1,
+      "status": "Pendente",
+      "remarks": "Reserva feita online"
+    },
+    {
+      "id": "7",
+      "guestId": "1",
+      "checkIn": "2025-02-21",
+      "checkOut": "2025-02-27",
+      "roomType": "0",
+      "numberOfGuests": 1,
+      "status": "Pendente",
+      "remarks": "Reserva feita online"
+    },
+    {
+      "id": "16",
+      "guestId": "1",
+      "checkIn": "2025-02-21",
+      "checkOut": "2025-02-27",
+      "roomType": "0",
       "numberOfGuests": 2,
+      "status": "Pendente",
+      "remarks": "Reserva feita online"
+    },
+    {
+      "id": "18",
+      "guestId": "2",
+      "checkIn": "2025-02-27",
+      "checkOut": "2025-03-08",
+      "roomType": "0",
+      "numberOfGuests": 1,
+      "status": "Pendente",
+      "remarks": "Reserva feita online"
+    },
+    {
+      "id": "18",
+      "guestId": "1",
+      "checkIn": "2025-02-21",
+      "checkOut": "2025-03-08",
+      "roomType": "0",
+      "numberOfGuests": 2,
+      "status": "Pendente",
+      "remarks": "Reserva feita online"
+    },
+    {
+      "id": "12",
+      "guestId": "1",
+      "checkIn": "2025-02-21",
+      "checkOut": "2025-03-07",
+      "roomType": "0",
+      "numberOfGuests": 2,
+      "status": "Pendente",
+      "remarks": "Reserva feita online"
+    },
+    {
+      "id": "13",
+      "guestId": "3",
+      "checkIn": "2025-02-22",
+      "checkOut": "2025-02-28",
+      "roomType": "0",
+      "numberOfGuests": 2,
+      "status": "Pendente",
+      "remarks": "Reserva feita online"
+    },
+    {
+      "id": "14",
+      "guestId": "1",
+      "checkIn": "2025-02-22",
+      "checkOut": "2025-03-08",
+      "roomType": "0",
+      "numberOfGuests": 1,
+      "status": "Pendente",
+      "remarks": "Reserva feita online"
+    },
+    {
+      "id": "15",
+      "guestId": "1",
+      "checkIn": "2025-02-21",
+      "checkOut": "2025-03-08",
+      "roomType": "2",
+      "numberOfGuests": 1,
       "status": "Pendente",
       "remarks": "Reserva feita online"
     }

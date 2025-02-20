@@ -1,33 +1,68 @@
-<legend>Registrar Novo Hóspede</legend>
 
-<form class="" id="new-guest" [formGroup]="guestFormGroup" (ngSubmit)="submitGuest()">
-    @for (item of form; track $index) 
-    {
+<div class="container-fluid d-flex justify-content-center">
+    <form class="" id="new-guest" [formGroup]="guestFormGroup" (ngSubmit)="submitGuest()">
+
+        @if (guest)
+        {
+            <legend>Editar {{guest.name}}</legend>
+        }
+        @else 
+        {
+            <legend>Registrar Novo Hóspede</legend>
+        }
+        
         <div class="pt-2">
-            <label [for]="item.name">{{item.label}}</label>
+            <label for="name">Nome:</label>
+
+            <input class="form-control border-1 border-primary" id="name" [value]="guest?.name" type="text" name="name" formControlName="name" [(ngModel)]="nameModel">
             
-            @if(item.type == "select")
+            <p class="text-danger m-0" *ngIf="guestFormGroup.get('name')?.invalid && guestFormGroup.get('name')?.touched">
+                Digite um nome com pelo menos 3 caracteres
+            </p>
+        </div>
+
+        <div class="pt-2">
+            <label for="email">Email:</label>
+
+            <input class="form-control border-1 border-primary" id="email" [value]="guest?.email" type="email" name="email" formControlName="email" [(ngModel)]="emailModel">
+            
+            <p class="text-danger m-0" *ngIf="guestFormGroup.get('email')?.invalid && guestFormGroup.get('email')?.touched">
+                Digite um Email Válido
+            </p>
+        </div>
+        <div class="d-flex flex-column flex-md-row">
+            <div class="pt-2 pe-0 pe-md-2 w-100">
+                <label for="phone">Telefone:</label>
+        
+                <input class="form-control border-1 border-primary" id="phone" [value]="guest?.phone" type="text" phone="phone" formControlName="phone" [(ngModel)]="phoneModel">
+                
+                <p class="text-danger m-0" *ngIf="guestFormGroup.get('phone')?.invalid && guestFormGroup.get('phone')?.touched">
+                    Digite um Telefone Válido
+                </p>
+            </div>
+        
+            <div class="pt-2 ps-md-2 w-100">
+                <label for="document">CPF:</label>
+        
+                <input class="form-control border-1 border-primary" id="document" [value]="guest?.document" type="text" document="document" formControlName="document" [(ngModel)]="documentModel">
+                
+                <p class="text-danger m-0" *ngIf="guestFormGroup.get('document')?.invalid && guestFormGroup.get('document')?.touched">
+                    Digite um Telefone Válido
+                </p>
+            </div>
+        </div>
+
+        
+
+        <button class="btn btn-primary mt-2" type="submit">
+            @if(guest)
             {
-                <select class="form-select border-1 border-primary">
-                    @for (option of item.select; track $index)
-                    {
-                        <option [value]="option.id">{{option.name}}</option>
-                    }
-                </select>
+                Editar Hóspede
             }
             @else 
             {
-                <input class="form-control border-1 border-primary" [id]="item.name" [type]="item.type" [name]="item.name" [formControlName]="item.name" [(ngModel)]="item.model">
+                Registrar Hóspede
             }
-
-            
-            <p class="text-danger m-0" *ngIf="guestFormGroup.get(item.name)?.invalid && guestFormGroup.get(item.name)?.touched">
-                {{item.invalid}}
-            </p>
-        </div>
-    }
-    <button class="btn btn-primary mt-2" type="submit">
-        Registrar Hóspede
-    </button>
-</form>
-
+        </button>
+    </form>
+</div>

@@ -1,11 +1,11 @@
 <!-- Detalhes da Reserva -->
 @if(id)
 {
-    @if (guest && reservation)
+    @if (reservation)
     {
-        <legend>Hóspede</legend>
-
         <div class="container">
+            <legend class="row">Hóspede</legend>
+
             <div class="row border border-1 p-2">
                 <div class="col">
                     <b>ID</b>
@@ -28,36 +28,37 @@
                 </div>
             </div>
     
-            <div class="row border border-1 p-2">
-                <div class="col">
-                    {{guest.id}}
-                </div>
-    
-                <div class="col">
-                    {{guest.name}}
-                </div>
+            @if (guest)
+            {
+                <div class="row border border-1 p-2">
+                    <div class="col">
+                        {{guest.id}}
+                    </div>
         
-                <div class="col">
-                    {{guest.email}}
+                    <div class="col">
+                        {{guest.name}}
+                    </div>
+            
+                    <div class="col">
+                        {{guest.email}}
+                    </div>
+            
+                    <div class="col">
+                        {{guest.phone}}
+                    </div>
+            
+                    <div class="col">
+                        {{guest.document}}
+                    </div>
                 </div>
-        
-                <div class="col">
-                    {{guest.phone}}
-                </div>
-        
-                <div class="col">
-                    {{guest.document}}
-                </div>
-            </div>
+            }
         </div>
         
-
-
-
-
-        <legend class="pt-4">Reserva</legend>
+        
 
         <div class="container">
+            <legend class="row pt-4">Reserva</legend>
+
             <div class="row border border-1 p-2">
                 <div class="col">
                    <b>ID</b>
@@ -72,11 +73,11 @@
                 </div>
             
                 <div class="col">
-                    <b>Nº de Hóspedes</b>
-                </div>
-            
-                <div class="col">
                     <b>Tipo de Quarto</b>
+                </div>
+
+                <div class="col">
+                    <b>Nº de Hóspedes</b>
                 </div>
             
                 <div class="col">
@@ -101,11 +102,12 @@
                     {{reservation.checkOut}}
                 </div>
         
-                <div class="col">
-                    {{reservation.numberOfGuests}}
-                </div>
-        
-                <div class="col">
+                <div class="col" [ngClass]="
+                {
+                    'text-primary' : reservation.roomType == '0',
+                    'text-success' : reservation.roomType == '1',
+                    'text-purple' : reservation.roomType == '2'
+                }">
                     @if(reservation.roomType == "0")
                     {
                         Comum
@@ -120,6 +122,10 @@
                     {
                         Suíte
                     }
+                </div>
+
+                <div class="col">
+                    {{reservation.numberOfGuests}}
                 </div>
     
                 <div class="col">
@@ -136,29 +142,29 @@
                     {{reservation.status}}
                 </div>
             </div>
-        </div>
 
-        <div class="pt-3">
-            <button class="btn btn-primary me-2">
+            <button class="row btn btn-primary me-4 mt-3" routerLink="/reservationsForm/{{reservation.id}}">
                 Editar
             </button>
     
-            <button class="btn btn-danger">
+            <button class="row btn btn-danger mt-3" (click)="deleteReservation($event, reservation)">
                 Deletar
             </button>
         </div>
     }
     @else
     {
-        <legend>Não existe nenhuma reserva com este ID</legend>
+        <legend class="text-center">Não existe nenhuma reserva com este ID</legend>
     }
 }
 <!-- Tabela completa -->
 @else
 {
-<legend>Reservas</legend>
+
 
 <div class="container">
+    <legend class="row">Reservas</legend>
+
     <div class="row border border-1 p-2">
         <div class="col">
            <b>Nome</b>
@@ -173,11 +179,11 @@
         </div>
     
         <div class="col">
-            <b>Nº de Hóspedes</b>
-        </div>
-    
-        <div class="col">
             <b>Tipo de Quarto</b>
+        </div>
+
+        <div class="col">
+            <b>Nº de Hóspedes</b>
         </div>
     
         <div class="col">
@@ -207,28 +213,33 @@
             <div class="col">
                 {{reservation.checkOut}}
             </div>
+
+            <div class="col" [ngClass]="
+                {
+                    'text-primary' : reservation.roomType == '0',
+                    'text-success' : reservation.roomType == '1',
+                    'text-purple' : reservation.roomType == '2'
+                }">
+                    @if(reservation.roomType == "0")
+                    {
+                        Comum
+                    }
+        
+                    @if(reservation.roomType == "1")
+                    {
+                        Deluxe
+                    }
+        
+                    @if(reservation.roomType == "2")
+                    {
+                        Suíte
+                    }
+            </div>
     
             <div class="col">
                 {{reservation.numberOfGuests}}
             </div>
-    
-            <div class="col">
-                @if(reservation.roomType == "0")
-                {
-                    Comum
-                }
-    
-                @if(reservation.roomType == "1")
-                {
-                    Deluxe
-                }
-    
-                @if(reservation.roomType == "2")
-                {
-                    Suíte
-                }
-            </div>
-    
+        
             <div class="col" [ngClass]="
             {
                 'text-danger' : reservation.status == 'Cancelado',
@@ -238,12 +249,12 @@
                 {{reservation.status}}
             </div>
     
-            <div class="col action-buttons">
+            <div class="col action-buttons" (click)="$event.stopPropagation()" routerLink="/reservationsForm/{{reservation.id}}">
                 <button class="btn text-primary">
                     <i class="bi bi-pen"></i>
                 </button>
                 
-                <button class="btn text-danger">
+                <button class="btn text-danger" (click)="deleteReservation($event, reservation)">
                     <i class="bi bi-trash-fill"></i>
                 </button>
             </div>

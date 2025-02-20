@@ -107,7 +107,7 @@ export class MovieDetailsComponent {
         this.getMoviesService.setMovie(res);
       },
       error: () => {
-        //this.getRouter.navigate(['/movies']);
+        this.getRouter.navigate(['/movies']);
       }
     });
 

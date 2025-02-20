@@ -1,13 +1,15 @@
 
 
-<main class="container">
-    <nav class="d-flex flex-wrap pt-3 pb-3">
-        <button class="me-2 mt-2" routerLink="/guests" routerLinkActive="active">Hóspedes</button>
-        <button class="me-2 mt-2" routerLink="/reservations" routerLinkActive="active">Reservas</button>
-        <button class="me-2 mt-2" routerLink="/guestsForm" routerLinkActive="active">Registrar Hóspede</button>
-        <button class="mt-2" routerLink="/reservationsForm" routerLinkActive="active">Registrar Reserva</button>
-    </nav>
+<header class="p-1 w-100">
+    <h1 class="text-center ">Gestão de Hotéis</h1>
+</header>
 
-    <router-outlet/>
-</main>
+<nav class="d-flex justify-content-center flex-wrap pt-1 pb-3">
+    <button class="me-2 mt-2" routerLink="/guests" routerLinkActive="active">Hóspedes</button>
+    <button class="me-2 mt-2" routerLink="/reservations" routerLinkActive="active">Reservas</button>
+    <button class="me-2 mt-2" routerLink="/guestsForm" routerLinkActive="active">Registrar Hóspede</button>
+    <button class="mt-2" routerLink="/reservationsForm" routerLinkActive="active">Registrar Reserva</button>
+</nav>
+
+<router-outlet/>
 

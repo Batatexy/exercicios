@@ -2,9 +2,9 @@
 {
     @if (guest)
     {
-        <legend>{{guest.name}}</legend>
-
         <div class="container">
+            <legend class="row">{{guest.name}}</legend>
+            
             <div class="row border border-1 p-2">
                 <div class="col">
                     <b>ID</b>
@@ -40,6 +40,14 @@
                     {{guest.document}}
                 </div>
             </div>
+
+            <button class="row btn btn-primary me-4 mt-3" routerLink="/guestsForm/{{guest.id}}">
+                Editar
+            </button>
+    
+            <button class="row btn btn-danger mt-3" (click)="deleteGuest($event, guest)">
+                Deletar
+            </button>
         </div>
     }
     @else
@@ -49,9 +57,9 @@
 }
 @else 
 {
-    <legend>Hóspedes</legend>
-
     <div class="container">
+        <legend class="row">Hóspedes</legend>
+
         <div class="row border border-1 p-2">
             <div class="col">
                <b>Nome</b>
@@ -95,11 +103,11 @@
                 </div>
 
                 <div class="col action-buttons">
-                    <button class="btn text-primary">
+                    <button class="btn text-primary" (click)="$event.stopPropagation()" routerLink="/guestsForm/{{guest.id}}">
                         <i class="bi bi-pen"></i>
                     </button>
                     
-                    <button class="btn text-danger">
+                    <button class="btn text-danger" (click)="deleteGuest($event, guest)">
                         <i class="bi bi-trash-fill"></i>
                     </button>
                 </div>

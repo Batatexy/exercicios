@@ -1,70 +1,33 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { GuestsService } from '../../services/guests.service';
 import { Guest } from '../../models/guest';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Field } from '../../models/field';
-import { FormComponent } from '../../components/form/form.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-guests-form',
   imports:
     [
-      CommonModule, FormComponent, ReactiveFormsModule, FormsModule
+      CommonModule, ReactiveFormsModule, FormsModule
     ],
   templateUrl: './guests-form.component.html',
   styleUrl: './guests-form.component.scss'
 })
 export class GuestsFormComponent {
 
-  //Array para criar os campos de forma dinâmica
-  form: Array<Field> =
-    [
-      {
-        //Campo
-        model: "",
-        //Nome do Campo
-        name: "name",
-        //Tipo do Campo
-        type: "text",
-        //Texto acima do Campo
-        label: "Digite o Nome:",
-        //Texto de campo invalido abaixo do Campo
-        invalid: "Digite um nome com pelo menos 3 caracteres",
-      },
-      {
-        model: "",
-        name: "email",
-        type: "email",
-        label: "Digite o Email:",
-        invalid: "Digite um email válido",
-      },
-      {
-        model: "",
-        name: "phone",
-        type: "tel",
-        label: "Digite o Telefone:",
-        invalid: "Digite um telefone válido",
-      },
-      {
-        model: "",
-        name: "document",
-        type: "text",
-        label: "Digite o CPF:",
-        invalid: "Digite um CPF válido",
-      },
-    ];
-
+  //Campos do formulário
   guestFormGroup: FormGroup;
+  nameModel: string = "";
+  emailModel: string = "";
+  phoneModel: string = "";
+  documentModel: string = "";
 
+  //Edição de Hóspede
   id?: number;
   guest?: Guest;
 
-  // @ViewChild("guestId") selectName!: ElementRef;
-  // @ViewChild("roomType") selectRoomType!: ElementRef;
-
-  constructor(private getGuestsService: GuestsService, private getActivatedRoute: ActivatedRoute) {
+  constructor(private getGuestsService: GuestsService, private getActivatedRoute: ActivatedRoute, private getRouter: Router) {
     this.guestFormGroup = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]),
       email: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(100), Validators.email]),
@@ -78,75 +41,127 @@ export class GuestsFormComponent {
     this.id = Number(this.getActivatedRoute.snapshot.paramMap.get("id"));
 
     if (this.id) {
-
       this.getGuestsService.getGuestByID(this.id).subscribe({
         next: (guest) => {
           this.guest = guest[0];
         },
         complete: () => {
-
-        }
+          if (this.guest) {
+            this.nameModel = this.guest.name;
+            this.emailModel = this.guest.email;
+            this.phoneModel = this.guest.phone;
+            this.documentModel = this.guest.document;
+          }
+        },
+        error: () => { alert("Erro ao requisitar Hóspede"); }
       });
-
     }
   }
 
-  ngAfterContentInit() {
-
-  }
-
-
-  public validateInformation(guests: Array<Guest>,) {
-    let validation: boolean = true;
-
-    guests.forEach(guest => {
-      //Caso já haja o mesmo email registrado
-      if (validation && guest.email == this.form[1].model) {
-        alert("Este email já está cadastrado");
-        validation = false;
-        return;
-      }
-
-      //Caso já haja o mesmo CPF registrado
-      if (validation && guest.document == this.form[3].model) {
-        alert("Este CPF já está cadastrado");
-        validation = false;
-        return;
-      }
-    });
-
-    return validation;
-  }
-
-
-
   public submitGuest() {
-
+    //Validação padrão dos campos
     if (!this.guestFormGroup.invalid) {
+      //Validação de Dados, verificar se Email, CPF já estão registrados
+      let validation: boolean = false;
 
-      this.getGuestsService.getGuests().subscribe({
-        next: (guests) => {
+      this.getGuestsService.getGuestByEmail(this.emailModel).subscribe({
+        next: (guest) => {
+          //Se existir algum Hóspede com o mesmo email, mudar para false, senão, mudar para true
+          if (guest[0]) {
+            if (guest[0].id == this.guest?.id) {
+              validation = true;
+            }
+            else {
+              alert("Este email já está cadastrado");
+              validation = false;
+            }
+          }
+          else {
+            validation = true;
+          }
+        },
 
-          //Função que valida diversos campos, email ou CPF já registrado
-          if (this.validateInformation(guests)) {
-            let newGuest: Guest =
-            {
-              id: String(guests.length + 1),
-              name: this.form[0].model,
-              email: this.form[1].model,
-              phone: this.form[2].model,
-              document: this.form[3].model,
-            };
+        complete: () => {
+          if (validation) {
+            this.getGuestsService.getGuestByDocument(this.documentModel).subscribe({
+              next: (guest) => {
+                //Se existir algum Hóspede com o mesmo CPF, mudar para false, senão, mudar para true
+                if (guest[0]) {
+                  if (guest[0].id == this.guest?.id) {
+                    validation = true;
+                  }
+                  else {
+                    alert("Este CPF já está cadastrado");
+                    validation = false;
+                  }
+                }
+                else {
+                  validation = true;
+                }
+              },
 
-            this.getGuestsService.addGuest(newGuest).subscribe({
-              complete: () => { alert("Hóspede Registrado!"); },
-              error: () => { alert("Erro ao Registrar Hóspede"); }
+              complete: () => {
+                if (validation) {
+                  let newGuest: Guest =
+                  {
+                    id: "",
+                    name: this.nameModel,
+                    email: this.emailModel,
+                    phone: this.phoneModel,
+                    document: this.documentModel,
+                  };
+
+                  //Edição de Dados de um Hóspede
+                  if (this.guest) {
+                    newGuest.id = this.guest.id;
+                    this.getGuestsService.editGuest(newGuest).subscribe({
+                      complete: () => {
+                        alert("Hóspede Editado!");
+                        this.getRouter.navigate(['/guests']);
+
+                      },
+                      error: () => { alert("Erro ao editar Hóspede"); }
+                    });
+                  }
+                  //Adição de um novo Hóspede
+                  else {
+                    let allGuests: Array<Guest> = [];
+
+                    this.getGuestsService.getGuests().subscribe({
+                      next: (guests) => {
+                        allGuests = guests;
+                      },
+
+                      complete: () => {
+                        //Pegar o ID do ultimo Hóspede e adicionar 1
+                        newGuest.id = String(Number(allGuests[allGuests.length - 1].id) + 1);
+
+                        this.getGuestsService.addGuest(newGuest).subscribe({
+                          complete: () => {
+                            alert("Hóspede Registrado!");
+
+                            this.nameModel = "";
+                            this.emailModel = "";
+                            this.phoneModel = "";
+                            this.documentModel = "";
+                          },
+                          error: () => { alert("Erro ao Registrar Hóspede"); }
+                        });
+                      },
+                      error: () => { alert("Erro ao requisitar Hóspedes"); }
+                    });
+                  }
+                }
+              },
+              error: () => { alert("Erro ao validar CPF"); }
             });
           }
-        }
+        },
+        error: () => { alert("Erro ao validar email"); }
       });
-
-
+    }
+    else {
+      alert("Preencha os campos para registrar o Hóspede");
     }
   }
 }

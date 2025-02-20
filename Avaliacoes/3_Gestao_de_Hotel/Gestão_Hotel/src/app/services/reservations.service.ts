@@ -20,7 +20,21 @@ export class ReservationsService {
     return this.http.get<Array<Reservation>>(`${this.apiUrl}?id=${id}`);
   }
 
+  public getReservationByGuestId(guestId: number): Observable<Array<Reservation>> {
+    return this.http.get<Array<Reservation>>(`${this.apiUrl}?guestId=${guestId}`);
+  }
+
   public addReservation(reservation: Reservation): Observable<Reservation> {
     return this.http.post<Reservation>(`${this.apiUrl}`, { ...reservation });
+  }
+
+
+
+  public editReservation(reservation: Reservation): Observable<Reservation> {
+    return this.http.put<Reservation>(`${this.apiUrl}/${reservation.id}`, { ...reservation });
+  }
+
+  public deleteReservationByID(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }
