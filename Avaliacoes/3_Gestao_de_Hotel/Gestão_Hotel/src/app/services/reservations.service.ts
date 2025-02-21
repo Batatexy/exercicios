@@ -16,7 +16,7 @@ export class ReservationsService {
     return this.http.get<Array<Reservation>>(`${this.apiUrl}`);
   }
 
-  public getReservationByID(id: number): Observable<Array<Reservation>> {
+  public getReservationByID(id: string): Observable<Array<Reservation>> {
     return this.http.get<Array<Reservation>>(`${this.apiUrl}?id=${id}`);
   }
 
@@ -24,19 +24,17 @@ export class ReservationsService {
     return this.http.get<Array<Reservation>>(`${this.apiUrl}?guestId=${guestId}`);
   }
 
+
+
   public addReservation(reservation: Reservation): Observable<Reservation> {
     return this.http.post<Reservation>(`${this.apiUrl}`, { ...reservation });
   }
 
-
-
   public editReservation(reservation: Reservation): Observable<Reservation> {
-    reservation.id = String(reservation.id);
     return this.http.put<Reservation>(`${this.apiUrl}/${reservation.id}`, { ...reservation });
   }
 
-  public deleteReservationByID(id: number | string): Observable<void> {
-    id = String(id);
+  public deleteReservationByID(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

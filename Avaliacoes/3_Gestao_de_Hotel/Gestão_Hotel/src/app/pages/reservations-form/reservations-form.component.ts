@@ -20,7 +20,7 @@ import { NgxMaskPipe } from 'ngx-mask';
 export class ReservationsFormComponent {
 
   //Mesma página, mas se houver ID, muda as informações
-  id?: number;
+  id?: string;
 
   //Formulário
   reservationFormGroup: FormGroup;
@@ -60,7 +60,7 @@ export class ReservationsFormComponent {
 
   ngOnInit() {
     console.clear();
-    this.id = Number(this.getActivatedRoute.snapshot.paramMap.get("id"));
+    this.id = String(this.getActivatedRoute.snapshot.paramMap.get("id"));
 
     //Verificação para não color uma opção de Quantidade de Hóspedes no Quarto errado
     this.roomType$.subscribe({
@@ -88,7 +88,7 @@ export class ReservationsFormComponent {
             this.getRoomsAvailable();
 
             //Editar uma Reserva
-            if (this.id) {
+            if (this.id && this.id != "null") {
               //Requisitar  uma reserva especifica
               this.getReservationsService.getReservationByID(this.id).subscribe({
                 next: (reservation) => { this.reservation = reservation[0]; },
@@ -102,7 +102,7 @@ export class ReservationsFormComponent {
                   this.statusModel = String(this.reservation?.status);
 
                   //Requisitar Hóspede especifico
-                  this.getGuestsService.getGuestByID(Number(this.reservation?.guestId)).subscribe({
+                  this.getGuestsService.getGuestByID(String(this.reservation?.guestId)).subscribe({
                     next: (guest) => { this.guest = guest[0]; },
                     complete: () => {
                       //Pegar o valor e deixar selecionado o Hóspede
@@ -172,7 +172,6 @@ export class ReservationsFormComponent {
       if (this.validateInformation()) {
         //Nova Reserva
         let newReservation: Reservation = {
-          id: 0,
           guestId: Number(this.guestIdModel),
           checkIn: this.checkInModel,
           checkOut: this.checkOutModel,
@@ -201,8 +200,6 @@ export class ReservationsFormComponent {
           this.getReservationsService.getReservations().subscribe({
             next: (reservations) => { this.reservations = reservations; },
             complete: () => {
-              //Pegar o ID da ultima Reserva e adicionar 1
-              newReservation.id = Number(this.reservations[this.reservations.length - 1].id) + 1;
               this.getReservationsService.addReservation(newReservation).subscribe({
                 complete: () => {
                   alert("Reserva Registrada");
@@ -214,7 +211,6 @@ export class ReservationsFormComponent {
                   this.numberOfGuestsModel = "1";
 
                   this.getRoomsAvailable();
-                  this.roomTypeModel = String(this.roomsAvailable[0].id);
 
                   //Requisitar Hóspedes para atualizar as informações
                   this.getGuestsService.getGuests().subscribe({
@@ -262,11 +258,13 @@ export class ReservationsFormComponent {
         });
 
         //Caso não haja mais quartos, automaticamente redireciona para as Reservas
-        if (this.roomsAvailable.length == 0 && !this.return && !this.id) {
+        if (this.roomsAvailable.length == 0 && !this.return && this.id == "null") {
           alert("Não Há mais quartos disponíveis");
           this.return = true;
           this.getRouter.navigate(['/reservations']);
         }
+
+        this.roomTypeModel = String(this.roomsAvailable[0].id);
       }
     });
   }

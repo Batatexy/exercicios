@@ -17,7 +17,7 @@ export class GuestsService {
     return this.http.get<Array<Guest>>(`${this.apiUrl}`);
   }
 
-  public getGuestByID(id: number): Observable<Array<Guest>> {
+  public getGuestByID(id: string): Observable<Array<Guest>> {
     return this.http.get<Array<Guest>>(`${this.apiUrl}?id=${id}`);
   }
 
@@ -32,17 +32,14 @@ export class GuestsService {
 
 
   public addGuest(guest: Guest): Observable<Guest> {
-    guest.id = String(guest.id);
     return this.http.post<Guest>(`${this.apiUrl}`, { ...guest });
   }
 
   public editGuest(guest: Guest): Observable<Guest> {
-    guest.id = String(guest.id);
     return this.http.put<Guest>(`${this.apiUrl}/${guest.id}`, { ...guest });
   }
 
-  public deleteGuestByID(id: number | string): Observable<void> {
-    id = String(id);
+  public deleteGuestByID(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

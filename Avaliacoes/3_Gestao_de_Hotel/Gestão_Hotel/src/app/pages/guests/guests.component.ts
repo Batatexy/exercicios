@@ -21,13 +21,13 @@ export class GuestsComponent {
   guests: Array<Guest> = [];
   guest?: Guest;
 
-  id?: number;
+  id?: string;
 
   ngOnInit() {
     console.clear();
-    this.id = Number(this.getActivatedRoute.snapshot.paramMap.get("id"));
+    this.id = String(this.getActivatedRoute.snapshot.paramMap.get("id"));
 
-    if (this.id) {
+    if (this.id != "null") {
       this.getGuestsService.getGuestByID(this.id).subscribe({
         next: (guest) => { this.guest = guest[0]; },
 
@@ -73,12 +73,12 @@ export class GuestsComponent {
         else {
           //Confirmação de exclusão
           if (confirm(`Deseja excluir ${guest.name}?`) == true) {
-            this.getGuestsService.deleteGuestByID(Number(guest.id)).subscribe({
+            this.getGuestsService.deleteGuestByID(String(guest.id)).subscribe({
               next: (guest) => { console.log(guest); },
               complete: () => {
                 alert(`${guest.name} excluído com Sucesso`);
 
-                if (this.id) this.getRouter.navigate(['/guests']);
+                if (this.id != "null") this.getRouter.navigate(['/guests']);
                 else this.getGuests();
               },
               error: () => { alert(`${guest.name} não foi excluído`); }

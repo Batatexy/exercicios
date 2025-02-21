@@ -43,11 +43,11 @@ export class ReservationsComponent {
   searchType: string = "text";
 
   //Id Passado pela URL
-  id?: number;
+  id?: string;
 
   ngOnInit() {
     console.clear();
-    this.id = Number(this.getActivatedRoute.snapshot.paramMap.get("id"));
+    this.id = String(this.getActivatedRoute.snapshot.paramMap.get("id"));
 
     this.search$.subscribe({
       next: () => { this.getReservations(); }
@@ -62,7 +62,7 @@ export class ReservationsComponent {
     });
 
     //Detalhes de uma reserva especifica
-    if (this.id) {
+    if (this.id != "null") {
       //Buscar a Reserva a partir do ID passado pelo URL
       this.getReservationsService.getReservationByID(this.id).subscribe({
         next: (reservation) => {
@@ -71,7 +71,7 @@ export class ReservationsComponent {
 
         complete: () => {
           //Ao Completar, também buscar o Guest, mas a partir de guestID
-          this.getGuestsService.getGuestByID(Number(this.reservation?.guestId)).subscribe({
+          this.getGuestsService.getGuestByID(String(this.reservation?.guestId)).subscribe({
             next: (guest) => {
               this.guest = guest[0];
             }
@@ -213,21 +213,29 @@ export class ReservationsComponent {
   public deleteReservation(event: MouseEvent, reservation: Reservation) {
     event.stopPropagation();
 
-    reservation.status = "Excluído";
-
-    //Confirmação de exclusão
-    if (confirm(`Deseja excluir ${reservation.id}?`) == true) {
-      this.getReservationsService.editReservation(reservation).subscribe({
-        next: (reservation) => { console.log(reservation); },
-        complete: () => {
-          alert(`Reserva excluída com Sucesso`);
-
-          if (this.id) this.getRouter.navigate(['/reservations']);
-          else this.getReservations();
-        },
-        error: () => { alert(`A Reserva não foi excluída`); }
-      });
+    if (reservation.status == "Excluído") {
+      alert(`Reserva já excluída`);
     }
+    else {
+      //Confirmação de exclusão
+      if (confirm(`Deseja excluir ${reservation.id}?`) == true) {
+
+        reservation.status = "Excluído";
+        this.getReservationsService.editReservation(reservation).subscribe({
+          next: (reservation) => { console.log(reservation); },
+          complete: () => {
+            alert(`Reserva excluída com Sucesso`);
+
+            if (this.id) this.getRouter.navigate(['/reservations']);
+            else this.getReservations();
+          },
+          error: () => { alert(`A Reserva não foi excluída`); }
+        });
+
+      }
+    }
+
+
 
 
   }

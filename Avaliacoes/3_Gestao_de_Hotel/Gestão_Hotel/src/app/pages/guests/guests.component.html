@@ -1,4 +1,4 @@
-@if(id)
+@if(id != "null")
 {
     @if (guest)
     {
@@ -59,7 +59,7 @@
     }
     @else
     {
-        <legend>Não existe nenhuma reserva com este ID</legend>
+        <legend class="text-center">Não existe nenhum Hóspede com este ID</legend>
     }
 }
 @else 

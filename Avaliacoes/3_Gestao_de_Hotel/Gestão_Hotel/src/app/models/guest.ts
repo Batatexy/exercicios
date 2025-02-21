@@ -1,5 +1,5 @@
 export type Guest = {
-    id: number | string;
+    id?: string;
     name: string;
     email: string;
     phone: string;
