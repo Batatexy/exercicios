@@ -32,14 +32,17 @@ export class GuestsService {
 
 
   public addGuest(guest: Guest): Observable<Guest> {
+    guest.id = String(guest.id);
     return this.http.post<Guest>(`${this.apiUrl}`, { ...guest });
   }
 
   public editGuest(guest: Guest): Observable<Guest> {
+    guest.id = String(guest.id);
     return this.http.put<Guest>(`${this.apiUrl}/${guest.id}`, { ...guest });
   }
 
-  public deleteGuestByID(id: number): Observable<void> {
+  public deleteGuestByID(id: number | string): Observable<void> {
+    id = String(id);
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

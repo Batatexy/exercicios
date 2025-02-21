@@ -20,6 +20,8 @@ import { HttpClient } from '@angular/common/http';
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, '/assets/i18n/', '.json');
 
+import { provideEnvironmentNgxMask } from 'ngx-mask';
+
 
 export const appConfig: ApplicationConfig = {
 
@@ -35,6 +37,8 @@ export const appConfig: ApplicationConfig = {
       },
     })]),
     { provide: LOCALE_ID, useValue: "pt-BR" },
+    provideEnvironmentNgxMask()
+
 
   ],
 };

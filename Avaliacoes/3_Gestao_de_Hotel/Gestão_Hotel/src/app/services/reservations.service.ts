@@ -31,10 +31,12 @@ export class ReservationsService {
 
 
   public editReservation(reservation: Reservation): Observable<Reservation> {
+    reservation.id = String(reservation.id);
     return this.http.put<Reservation>(`${this.apiUrl}/${reservation.id}`, { ...reservation });
   }
 
-  public deleteReservationByID(id: number): Observable<void> {
+  public deleteReservationByID(id: number | string): Observable<void> {
+    id = String(id);
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

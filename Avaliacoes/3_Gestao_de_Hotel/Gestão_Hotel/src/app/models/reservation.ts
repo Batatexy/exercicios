@@ -1,9 +1,9 @@
 export type Reservation = {
-    id: string;
-    guestId: string;
+    id: number | string;
+    guestId: number;
     checkIn: string;
     checkOut: string;
-    roomType: string;
+    roomType: number;
     numberOfGuests: number;
     status: string;
     remarks: string;

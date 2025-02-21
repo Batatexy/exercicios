@@ -1,5 +1,5 @@
 export type Room = {
-    id: string;
+    id: number;
     name: string;
     amount: number,
     maxGuests: number,

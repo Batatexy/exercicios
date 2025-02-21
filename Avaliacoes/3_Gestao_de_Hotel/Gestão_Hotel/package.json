@@ -23,6 +23,7 @@
     "@ngx-translate/http-loader": "^16.0.1",
     "flag-icons": "^7.3.2",
     "json-server": "^1.0.0-beta.3",
+    "ngx-mask": "^19.0.6",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

@@ -33,11 +33,18 @@
                 </div>
         
                 <div class="col">
-                    {{guest.phone}}
+                    @if(guest.phone.length == 11)
+                    {
+                        {{guest.phone | mask:"(00) 00000-0000"}}
+                    }
+                    @else 
+                    {
+                        {{guest.phone | mask:"(00) 0000-0000"}}
+                    }
                 </div>
         
-                <div class="col">
-                    {{guest.document}}
+                <div class="col" >
+                    {{guest.document | mask:"000.000.000-00"}}
                 </div>
             </div>
 
@@ -95,11 +102,18 @@
                 </div>
 
                 <div class="col">
-                    {{guest.phone}}
+                    @if(guest.phone.length == 11)
+                    {
+                        {{guest.phone | mask:"(00) 00000-0000"}}
+                    }
+                    @else 
+                    {
+                        {{guest.phone | mask:"(00) 0000-0000"}}
+                    }
                 </div>
-
-                <div class="col">
-                    {{guest.document}}
+        
+                <div class="col" >
+                    {{guest.document | mask:"000.000.000-00"}}
                 </div>
 
                 <div class="col action-buttons">

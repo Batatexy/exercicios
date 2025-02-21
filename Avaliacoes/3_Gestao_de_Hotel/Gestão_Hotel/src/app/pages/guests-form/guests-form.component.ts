@@ -4,12 +4,14 @@ import { Guest } from '../../models/guest';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { NgxMaskDirective } from 'ngx-mask';
 
 @Component({
   selector: 'app-guests-form',
   imports:
     [
-      CommonModule, ReactiveFormsModule, FormsModule
+      CommonModule, ReactiveFormsModule, FormsModule, NgxMaskDirective
     ],
   templateUrl: './guests-form.component.html',
   styleUrl: './guests-form.component.scss'
@@ -27,6 +29,8 @@ export class GuestsFormComponent {
   id?: number;
   guest?: Guest;
 
+  guests: Array<Guest> = [];
+
   constructor(private getGuestsService: GuestsService, private getActivatedRoute: ActivatedRoute, private getRouter: Router) {
     this.guestFormGroup = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]),
@@ -39,6 +43,12 @@ export class GuestsFormComponent {
   ngOnInit() {
     console.clear();
     this.id = Number(this.getActivatedRoute.snapshot.paramMap.get("id"));
+
+
+
+
+
+
 
     if (this.id) {
       this.getGuestsService.getGuestByID(this.id).subscribe({
@@ -104,7 +114,7 @@ export class GuestsFormComponent {
                 if (validation) {
                   let newGuest: Guest =
                   {
-                    id: "",
+                    id: 0,
                     name: this.nameModel,
                     email: this.emailModel,
                     phone: this.phoneModel,
@@ -123,18 +133,16 @@ export class GuestsFormComponent {
                       error: () => { alert("Erro ao editar Hóspede"); }
                     });
                   }
-                  //Adição de um novo Hóspede
+                  //Novo Hóspede
                   else {
-                    let allGuests: Array<Guest> = [];
-
+                    //Requisição de Hóspedes
                     this.getGuestsService.getGuests().subscribe({
                       next: (guests) => {
-                        allGuests = guests;
+                        this.guests = guests;
                       },
-
                       complete: () => {
                         //Pegar o ID do ultimo Hóspede e adicionar 1
-                        newGuest.id = String(Number(allGuests[allGuests.length - 1].id) + 1);
+                        newGuest.id = Number(this.guests[this.guests.length - 1].id) + 1;
 
                         this.getGuestsService.addGuest(newGuest).subscribe({
                           complete: () => {
@@ -164,4 +172,27 @@ export class GuestsFormComponent {
       alert("Preencha os campos para registrar o Hóspede");
     }
   }
+
+
+
+
+
+
+
+
+  public phone$ = new Observable<string>((observer) => {
+    let previousPhone: string = this.phoneModel;
+    setInterval(() => {
+      if (this.phoneModel !== previousPhone) {
+        observer.next(this.phoneModel);
+        previousPhone = this.phoneModel;
+      }
+    },);
+  });
+
+  public document$ = new Observable<string>((observer) => {
+    setInterval(() => {
+      observer.next(this.documentModel);
+    },);
+  });
 }

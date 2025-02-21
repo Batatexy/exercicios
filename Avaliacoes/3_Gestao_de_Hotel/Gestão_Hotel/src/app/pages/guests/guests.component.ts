@@ -4,10 +4,11 @@ import { GuestsService } from '../../services/guests.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ReservationsService } from '../../services/reservations.service';
 import { Reservation } from '../../models/reservation';
+import { NgxMaskPipe } from 'ngx-mask';
 
 @Component({
   selector: 'app-guests',
-  imports: [RouterLink],
+  imports: [RouterLink, NgxMaskPipe],
   templateUrl: './guests.component.html',
   styleUrl: './guests.component.scss'
 })

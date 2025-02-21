@@ -8,57 +8,70 @@ import { Guest } from '../../models/guest';
 import { Room } from '../../models/room';
 import { RoomsService } from '../../services/rooms.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { NgxMaskPipe } from 'ngx-mask';
 
 @Component({
   selector: 'app-reservations-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgxMaskPipe],
   templateUrl: './reservations-form.component.html',
   styleUrl: './reservations-form.component.scss'
 })
 export class ReservationsFormComponent {
+
+  //Mesma página, mas se houver ID, muda as informações
+  id?: number;
 
   //Formulário
   reservationFormGroup: FormGroup;
   checkInModel: string = "";
   checkOutModel: string = "";
   remarksModel: string = "";
-
   guestIdModel: string = "";
   roomTypeModel: string = "0";
   numberOfGuestsModel: string = "1";
+  statusModel: string = "";
 
-  //Requisições de hóspedes e reservas
+  //Requisições de hóspedes, reservas e quartos
   guests: Array<Guest> = [];
   guest?: Guest;
-
   reservations: Array<Reservation> = [];
   reservation?: Reservation;
 
   rooms: Array<Room> = [];
   roomsAvailable: Array<Room> = [];
+  roomsCont: Array<number> = [0, 0, 0];
 
   constructor(
     private getReservationsService: ReservationsService, private getGuestsService: GuestsService,
     private getRoomsService: RoomsService, private getActivatedRoute: ActivatedRoute, private getRouter: Router
-
   ) {
     this.reservationFormGroup = new FormGroup({
       checkIn: new FormControl('', [Validators.required]),
       checkOut: new FormControl('', [Validators.required]),
-      remarks: new FormControl('', [Validators.required]),
-
+      remarks: new FormControl('', [Validators.minLength(3), Validators.maxLength(100)]),
       guestId: new FormControl('', [Validators.required]),
       roomType: new FormControl('', [Validators.required]),
       numberOfGuests: new FormControl('', [Validators.required]),
     });
   }
 
-  id?: number;
 
 
   ngOnInit() {
     console.clear();
     this.id = Number(this.getActivatedRoute.snapshot.paramMap.get("id"));
+
+    //Verificação para não color uma opção de Quantidade de Hóspedes no Quarto errado
+    this.roomType$.subscribe({
+      next: () => {
+        this.rooms.forEach((room) => {
+          if (Number(this.numberOfGuestsModel) > room.maxGuests && Number(this.roomTypeModel) == room.id) {
+            this.numberOfGuestsModel = String(room.maxGuests);
+          }
+        });
+      }
+    });
 
     //Requisitar Hóspedes
     this.getGuestsService.getGuests().subscribe({
@@ -72,47 +85,41 @@ export class ReservationsFormComponent {
         this.getRoomsService.getRooms().subscribe({
           next: (rooms) => { this.rooms = rooms; },
           complete: () => {
-            this.getReservationsService.getReservations().subscribe({
-              next: (reservations) => { this.reservations = reservations; },
-              complete: () => {
-                this.getRoomsAvailable();
+            this.getRoomsAvailable();
 
-                //Editar uma Reserva
-                if (this.id) {
-                  //Requisitar  uma reserva especifica
-                  this.getReservationsService.getReservationByID(this.id).subscribe({
-                    next: (reservation) => { this.reservation = reservation[0]; },
+            //Editar uma Reserva
+            if (this.id) {
+              //Requisitar  uma reserva especifica
+              this.getReservationsService.getReservationByID(this.id).subscribe({
+                next: (reservation) => { this.reservation = reservation[0]; },
+                complete: () => {
+                  //Pegar valores da requisição e colocar nos campos
+                  this.roomTypeModel = String(this.reservation?.roomType);
+                  this.numberOfGuestsModel = String(this.reservation?.numberOfGuests);
+                  this.checkInModel = String(this.reservation?.checkIn);
+                  this.checkOutModel = String(this.reservation?.checkOut);
+                  this.remarksModel = String(this.reservation?.remarks);
+                  this.statusModel = String(this.reservation?.status);
+
+                  //Requisitar Hóspede especifico
+                  this.getGuestsService.getGuestByID(Number(this.reservation?.guestId)).subscribe({
+                    next: (guest) => { this.guest = guest[0]; },
                     complete: () => {
-                      //Alterar valores dos campos
-                      this.roomTypeModel = String(this.reservation?.roomType);
-                      this.numberOfGuestsModel = String(this.reservation?.numberOfGuests);
-                      this.checkInModel = String(this.reservation?.checkIn);
-                      this.checkOutModel = String(this.reservation?.checkOut);
-                      this.remarksModel = String(this.reservation?.remarks);
-
-                      //Requisitar Hóspede especifico
-                      this.getGuestsService.getGuestByID(Number(this.reservation?.guestId)).subscribe({
-                        next: (guest) => { this.guest = guest[0]; },
-                        complete: () => {
-                          //Alterar valores dos campos
-                          this.guestIdModel = (String(this.guest?.id));
-                        },
-                        error: () => { alert("Erro ao requisitar Hóspede"); }
-                      });
+                      //Pegar o valor e deixar selecionado o Hóspede
+                      this.guestIdModel = (String(this.guest?.id));
                     },
-                    error: () => { alert("Erro ao requisitar Reserva"); }
+                    error: () => { alert("Erro ao requisitar Hóspede"); }
                   });
-                }
-                //Registrar uma nova Reserva
-                else {
-                  this.guestIdModel = this.guests[0].id;
-                  //this.numberOfGuestsModel = "1";
-                }
-              }
-            });
-
-
-
+                },
+                error: () => { alert("Erro ao requisitar Reserva"); }
+              });
+            }
+            //Registrar uma nova Reserva
+            else {
+              //Colocar o Primeiro Hóspede
+              this.guestIdModel = String(this.guests[0].id);
+              this.numberOfGuestsModel = "1";
+            }
           },
           error: () => { alert("Erro ao requisitar Quartos"); }
         });
@@ -127,10 +134,7 @@ export class ReservationsFormComponent {
     let checkInDate = new Date(this.checkInModel);
     let checkOutDate = new Date(this.checkOutModel);
 
-    if (checkInDate < new Date()) {
-      alert("A data de checkIn não deve ser anterior a data de hoje");
-      validation = false;
-    }
+    //Data de CheckIn Não passar de CheckOut
     if (checkInDate > checkOutDate) {
       alert("A data de checkOut não deve ser posterior que a de checkIn");
       validation = false;
@@ -138,65 +142,86 @@ export class ReservationsFormComponent {
 
     //Não passar o número de Hóspedes por quarto
     this.rooms.forEach(room => {
-      if (room.id = this.roomTypeModel) {
+      if (room.id == Number(this.roomTypeModel)) {
         if (Number(this.numberOfGuestsModel) > room.maxGuests) {
           validation = false;
           alert("O número de Hóspedes ultrapassa o tamanho máximo para o quarto");
-          return;
         }
       }
     });
 
-
-
     return validation;
   }
 
+  public verifyDeletedReservations() {
+    let notDeletedReservations: Array<Reservation> = [];
+
+    this.reservations.forEach(reservation => {
+      if (reservation.status != "Excluído") {
+        notDeletedReservations.push(reservation);
+      }
+    });
+
+    this.reservations = notDeletedReservations;
+  }
+
   public submitReservation() {
+    //Validação de campos obrigatórios
     if (!this.reservationFormGroup.invalid) {
+      //Validação de informações, como verificação de datas e possíveis erros que poderiam passar
       if (this.validateInformation()) {
+        //Nova Reserva
         let newReservation: Reservation = {
-          id: "",
-          guestId: this.guestIdModel,
+          id: 0,
+          guestId: Number(this.guestIdModel),
           checkIn: this.checkInModel,
           checkOut: this.checkOutModel,
-          roomType: this.roomTypeModel,
+          roomType: Number(this.roomTypeModel),
           numberOfGuests: Number(this.numberOfGuestsModel),
           status: "Pendente",
-          remarks: "Reserva feita online",
+          remarks: this.remarksModel,
         };
 
+        //Editar uma Reserva
         if (this.reservation) {
+          //Alterar o ID = "" para o que a reserva possuí
           newReservation.id = this.reservation.id;
+          //Editar no BD as informações
           this.getReservationsService.editReservation(newReservation).subscribe({
             complete: () => {
               alert("Reserva Editada");
               this.getRouter.navigate(['/reservations']);
-
             },
             error: () => { alert("Erro ao editar Hóspede"); }
           });
         }
+        //Nova Reserva
         else {
+          //Requisitar Reservas
           this.getReservationsService.getReservations().subscribe({
             next: (reservations) => { this.reservations = reservations; },
             complete: () => {
-              newReservation.id = String(this.reservations.length + 1);
+              //Pegar o ID da ultima Reserva e adicionar 1
+              newReservation.id = Number(this.reservations[this.reservations.length - 1].id) + 1;
               this.getReservationsService.addReservation(newReservation).subscribe({
                 complete: () => {
                   alert("Reserva Registrada");
 
+                  //Resetar Campos
                   this.checkInModel = "";
                   this.checkOutModel = "";
                   this.remarksModel = "";
-                  this.guestIdModel = "";
-                  this.roomTypeModel = "0";
                   this.numberOfGuestsModel = "1";
 
+                  this.getRoomsAvailable();
+                  this.roomTypeModel = String(this.roomsAvailable[0].id);
 
-                  this.getReservationsService.getReservations().subscribe({
-                    next: (reservations) => { this.reservations = reservations; },
-                    complete: () => { this.getRoomsAvailable(); }
+                  //Requisitar Hóspedes para atualizar as informações
+                  this.getGuestsService.getGuests().subscribe({
+                    next: (guests) => { this.guests = guests; },
+                    complete: () => {
+                      this.guestIdModel = String(this.guests[0].id);
+                    }
                   });
                 },
                 error: () => { alert("Erro ao Registrar Reserva"); }
@@ -214,26 +239,36 @@ export class ReservationsFormComponent {
   return: boolean = false;
 
   public getRoomsAvailable(): void {
-    this.roomsAvailable = [];
-    let roomsCont: Array<number> = [0, 0, 0];
+    //Requisitar Reservas para atualizar as informações
+    this.getReservationsService.getReservations().subscribe({
+      next: (reservations) => { this.reservations = reservations; },
+      complete: () => {
+        this.verifyDeletedReservations();
 
-    this.reservations.forEach(reservation => {
-      roomsCont[Number(reservation.roomType)]++;
-    });
+        //Resetar para verificar as quantidades de quartos
+        this.roomsAvailable = [];
+        this.roomsCont = [0, 0, 0];
 
-    this.rooms.forEach((room, index) => {
-      if (roomsCont[index] < room.amount) {
-        this.roomsAvailable.push(room);
+        //Contar quantos quartos estão ocupados
+        this.reservations.forEach(reservation => {
+          this.roomsCont[Number(reservation.roomType)]++;
+        });
+
+        //Salvar informações de quartos livres em um array personalizado
+        this.rooms.forEach((room, index) => {
+          if (this.roomsCont[index] < room.amount) {
+            this.roomsAvailable.push(room);
+          }
+        });
+
+        //Caso não haja mais quartos, automaticamente redireciona para as Reservas
+        if (this.roomsAvailable.length == 0 && !this.return && !this.id) {
+          alert("Não Há mais quartos disponíveis");
+          this.return = true;
+          this.getRouter.navigate(['/reservations']);
+        }
       }
     });
-
-    console.log(this.roomsAvailable);
-
-    if (this.roomsAvailable.length == 0 && !this.return) {
-      alert("Não Há mais quartos disponíveis");
-      this.return = true;
-      this.getRouter.navigate(['/reservations']);
-    }
   }
 
   public generateNumberOfGuestsFor(id: string): Array<number> {
@@ -241,7 +276,7 @@ export class ReservationsFormComponent {
     let number: number = 0;
 
     this.roomsAvailable.forEach(room => {
-      if (room.id == id) {
+      if (room.id == Number(id)) {
         number = room.maxGuests;
       }
     });
@@ -253,10 +288,9 @@ export class ReservationsFormComponent {
     return array;
   }
 
-
-
-
-  // public String(number: number | undefined) {
-  //   return String(number);
-  // }
+  public roomType$ = new Observable<string>((observer) => {
+    setInterval(() => {
+      observer.next(this.roomTypeModel);
+    },);
+  });
 }

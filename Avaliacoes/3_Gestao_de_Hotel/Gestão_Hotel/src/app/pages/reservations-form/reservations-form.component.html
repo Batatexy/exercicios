@@ -3,7 +3,7 @@
         <legend>
             @if (guest)
             {
-                Editar Reserva de {{guest.name}}
+                Editar Reserva de {{guest.name}} | {{guest.document | mask:"000.000.000-00"}}
             }
             @else 
             {
@@ -18,7 +18,7 @@
             <select class="form-select border-1 border-primary" id="guestId" formControlName="guestId" [(ngModel)]="guestIdModel"> 
                 @for (guest of guests; track $index)
                 {
-                    <option [value]="guest.id">{{guest.name}} </option>
+                    <option [value]="guest.id">{{guest.document | mask:'000.000.000-00'}} - {{guest.name}}</option>
                 }
             </select>
     
@@ -57,7 +57,8 @@
                 <select class="form-select border-1 border-primary" id="roomType" formControlName="roomType" [(ngModel)]="roomTypeModel">
                     @for (room of roomsAvailable; track $index)
                     {
-                        <option [value]="room.id">{{room.name}}</option>
+                        <p>{{room.amount}} {{roomsCont[room.id]}}</p>
+                        <option [value]="room.id">{{room.amount - roomsCont[room.id]}} - {{room.name}}</option>
                     }
                 </select>
             </div>
@@ -74,12 +75,8 @@
             </div>
         </div>
     
-        
-    
-        
-    
         <div class="pt-2">
-            <label for="remarks">Observações:</label>
+            <label for="remarks">Observações: <span class="text-gray">(Opcional)</span></label>
             
             <input class="form-control border-1 border-primary" id="remarks" [value]="reservation?.remarks" type="text" name="remarks" formControlName="remarks" [(ngModel)]="remarksModel">
             
@@ -87,6 +84,19 @@
                 Digite uma Observação com pelo menos 3 caracteres
             </p>
         </div>
+
+        @if (id)
+        {
+            <div class="pt-2">
+                <label for="status">Status:</label>
+                
+                <input class="form-control border-1 border-primary" id="status" [value]="reservation?.status" type="text" name="status" formControlName="status" [(ngModel)]="statusModel">
+                
+                <p class="text-danger m-0" *ngIf="reservationFormGroup.get('status')?.invalid && reservationFormGroup.get('status')?.touched">
+                    Digite uma Observação com pelo menos 3 caracteres
+                </p>
+            </div>
+        }
     
         <button class="btn btn-primary mt-2" type="submit">
             @if(reservation)
