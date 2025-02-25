@@ -41,6 +41,7 @@ export class ReservationsComponent {
   searchModel: string = "";
   searchOptions: number = 0;
   searchType: string = "text";
+  orderOption: number = 0;
 
   //Id Passado pela URL
   id?: string;
@@ -112,7 +113,7 @@ export class ReservationsComponent {
             //Filtrar por somente hóspedes com reservas e salvar em um array separado
             this.reservations.forEach(reservation => {
               this.guests.forEach(guest => {
-                if (Number(reservation.guestId) == Number(guest.id)) {
+                if (reservation.guestId == guest.id) {
 
                   switch (this.searchOptions) {
                     case 0: {
@@ -200,7 +201,6 @@ export class ReservationsComponent {
               });
             });
 
-
             console.log(this.guestsReservations);
           },
 
@@ -235,11 +235,13 @@ export class ReservationsComponent {
       }
     }
 
-
-
-
   }
 
+
+  public changeOrder(option: number) {
+    this.orderOption = option;
+    this.getReservations();
+  }
 
 
 
@@ -250,7 +252,6 @@ export class ReservationsComponent {
         observer.next(this.searchModel);
         lastSearch = this.searchModel;
       }
-
     },);
   });
 
@@ -261,7 +262,6 @@ export class ReservationsComponent {
         observer.next(this.searchOptions);
         lastSearchOptions = this.searchOptions;
       }
-
     },);
   });
 }

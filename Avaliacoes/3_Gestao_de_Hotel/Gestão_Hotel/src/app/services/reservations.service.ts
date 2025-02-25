@@ -20,7 +20,7 @@ export class ReservationsService {
     return this.http.get<Array<Reservation>>(`${this.apiUrl}?id=${id}`);
   }
 
-  public getReservationByGuestId(guestId: number): Observable<Array<Reservation>> {
+  public getReservationByGuestId(guestId: string): Observable<Array<Reservation>> {
     return this.http.get<Array<Reservation>>(`${this.apiUrl}?guestId=${guestId}`);
   }
 

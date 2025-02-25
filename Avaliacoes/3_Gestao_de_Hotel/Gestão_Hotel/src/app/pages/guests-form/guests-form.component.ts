@@ -51,6 +51,7 @@ export class GuestsFormComponent {
         },
         complete: () => {
           if (this.guest) {
+            //this.guestFormGroup.patchValue({ ...this.guest });
             this.nameModel = this.guest.name;
             this.emailModel = this.guest.email;
             this.phoneModel = this.guest.phone;

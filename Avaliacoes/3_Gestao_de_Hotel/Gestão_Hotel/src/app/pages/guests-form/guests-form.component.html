@@ -34,7 +34,7 @@
             <div class="pt-2 pe-0 pe-md-2 w-100">
                 <label for="phone">Telefone:</label>
         
-                <input class="form-control border-1 border-primary" id="phone" mask="(00) 00000-0000||(00) 0000-0000" [dropSpecialCharacters]="false" [value]="guest?.phone" type="tel" phone="phone" formControlName="phone" [(ngModel)]="phoneModel">
+                <input class="form-control border-1 border-primary" id="phone" mask="(00) 00000-0000||(00) 0000-0000" [dropSpecialCharacters]="true" [value]="guest?.phone" type="tel" phone="phone" formControlName="phone" [(ngModel)]="phoneModel">
                 
                 <p class="text-danger m-0" *ngIf="guestFormGroup.get('phone')?.invalid && guestFormGroup.get('phone')?.touched">
                     Digite um Telefone Válido
@@ -47,7 +47,7 @@
                 <input class="form-control border-1 border-primary" id="document" mask="000.000.000-00" [value]="guest?.document" type="text" document="document" formControlName="document" [(ngModel)]="documentModel">
                 
                 <p class="text-danger m-0" *ngIf="guestFormGroup.get('document')?.invalid && guestFormGroup.get('document')?.touched">
-                    Digite um Telefone Válido
+                    Digite um CPF Válido
                 </p>
             </div>
         </div>

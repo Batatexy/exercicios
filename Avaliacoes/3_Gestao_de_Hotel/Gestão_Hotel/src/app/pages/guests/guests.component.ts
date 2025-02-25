@@ -15,7 +15,6 @@ import { NgxMaskPipe } from 'ngx-mask';
 export class GuestsComponent {
   constructor(private getGuestsService: GuestsService, private getActivatedRoute: ActivatedRoute, private getRouter: Router,
     private getReservationsService: ReservationsService
-
   ) { }
 
   guests: Array<Guest> = [];
@@ -62,11 +61,13 @@ export class GuestsComponent {
 
     let reservationFromGuest: Reservation;
 
-    this.getReservationsService.getReservationByGuestId(Number(guest.id)).subscribe({
+    this.getReservationsService.getReservationByGuestId(String(guest.id)).subscribe({
       next: (reservation) => {
         reservationFromGuest = reservation[0];
       },
       complete: () => {
+        console.log(reservationFromGuest);
+
         if (reservationFromGuest) {
           alert(`Este Hóspede possui uma Reserva`);
         }

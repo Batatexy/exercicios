@@ -53,6 +53,7 @@ export class ReservationsFormComponent {
       guestId: new FormControl('', [Validators.required]),
       roomType: new FormControl('', [Validators.required]),
       numberOfGuests: new FormControl('', [Validators.required]),
+      status: new FormControl('', []),
     });
   }
 
@@ -71,6 +72,10 @@ export class ReservationsFormComponent {
           }
         });
       }
+    });
+
+    this.checkIn$.subscribe({
+      next: () => { this.getRoomsAvailable(); }
     });
 
     //Requisitar Hóspedes
@@ -150,6 +155,12 @@ export class ReservationsFormComponent {
       }
     });
 
+    //Caso não haja mais quartos, automaticamente redireciona para as Reservas
+    if (this.roomsAvailable.length == 0 && this.id == "null") {
+      validation = false;
+      alert("Não há mais quartos disponíveis neste dia");
+    }
+
     return validation;
   }
 
@@ -172,14 +183,18 @@ export class ReservationsFormComponent {
       if (this.validateInformation()) {
         //Nova Reserva
         let newReservation: Reservation = {
-          guestId: Number(this.guestIdModel),
+          guestId: this.guestIdModel,
           checkIn: this.checkInModel,
           checkOut: this.checkOutModel,
           roomType: Number(this.roomTypeModel),
           numberOfGuests: Number(this.numberOfGuestsModel),
-          status: "Pendente",
+          status: this.statusModel,
           remarks: this.remarksModel,
         };
+
+        if (newReservation.status == "") {
+          newReservation.status = "Pendente";
+        }
 
         //Editar uma Reserva
         if (this.reservation) {
@@ -232,8 +247,6 @@ export class ReservationsFormComponent {
     }
   }
 
-  return: boolean = false;
-
   public getRoomsAvailable(): void {
     //Requisitar Reservas para atualizar as informações
     this.getReservationsService.getReservations().subscribe({
@@ -245,10 +258,26 @@ export class ReservationsFormComponent {
         this.roomsAvailable = [];
         this.roomsCont = [0, 0, 0];
 
-        //Contar quantos quartos estão ocupados
+        //Pegar valor do campo CheckIn / Colocar uma data nele caso vazia
+        if (this.checkInModel == "") {
+          let today = new Date();
+          let zeroDay = "";
+          let zeroMonth = "";
+
+          if (today.getDate() < 10) zeroDay = "0";
+          if (today.getMonth() + 1 < 10) zeroMonth = "0";
+
+          this.checkInModel = String(today.getFullYear() + "-" + zeroMonth + (today.getMonth() + 1) + "-" + zeroDay + (today.getDate()));
+        }
+
+        //Contar quantos quartos estão ocupados, considerando suas datas de CheckOuts
         this.reservations.forEach(reservation => {
-          this.roomsCont[Number(reservation.roomType)]++;
+          if (new Date(this.checkInModel) < new Date(reservation.checkOut)) {
+            this.roomsCont[Number(reservation.roomType)]++;
+          }
         });
+
+        console.log(this.roomsCont);
 
         //Salvar informações de quartos livres em um array personalizado
         this.rooms.forEach((room, index) => {
@@ -257,14 +286,9 @@ export class ReservationsFormComponent {
           }
         });
 
-        //Caso não haja mais quartos, automaticamente redireciona para as Reservas
-        if (this.roomsAvailable.length == 0 && !this.return && this.id == "null") {
-          alert("Não Há mais quartos disponíveis");
-          this.return = true;
-          this.getRouter.navigate(['/reservations']);
+        if (String(this.roomsAvailable[0].id)) {
+          this.roomTypeModel = String(this.roomsAvailable[0].id);
         }
-
-        this.roomTypeModel = String(this.roomsAvailable[0].id);
       }
     });
   }
@@ -287,8 +311,22 @@ export class ReservationsFormComponent {
   }
 
   public roomType$ = new Observable<string>((observer) => {
+    let lastRoomType = this.roomTypeModel;
     setInterval(() => {
-      observer.next(this.roomTypeModel);
+      if (lastRoomType != this.roomTypeModel) {
+        observer.next(this.roomTypeModel);
+        lastRoomType = this.roomTypeModel;
+      }
+    },);
+  });
+
+  public checkIn$ = new Observable<string>((observer) => {
+    let lastCheckIn = this.checkInModel;
+    setInterval(() => {
+      if (lastCheckIn != this.checkInModel) {
+        observer.next(this.checkInModel);
+        lastCheckIn = this.checkInModel;
+      }
     },);
   });
 }

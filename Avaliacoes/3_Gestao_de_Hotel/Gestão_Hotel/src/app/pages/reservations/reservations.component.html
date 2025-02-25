@@ -183,13 +183,13 @@
                     </div>
                     <div class="form-check pe-3">
                         <input class="form-check-input"  id="search-check-in" [(ngModel)]="searchOptions" type="radio" name="search" [value]="1">
-                        <label class="form-check-label" for="search-check-in">
+                        <label class="form-check-label" for="search-check-in" >
                           CheckIn
                         </label>
                     </div>
                     <div class="form-check pe-3">
                         <input class="form-check-input" id="search-check-out" [(ngModel)]="searchOptions" type="radio" name="search"  [value]="2">
-                        <label class="form-check-label" for="search-check-out">
+                        <label class="form-check-label" for="search-check-out" >
                           CheckOut
                         </label>
                     </div>
@@ -201,13 +201,13 @@
                     </div>
                     <div class="form-check pe-3">
                         <input class="form-check-input" id="number-guests" [(ngModel)]="searchOptions" type="radio" name="search"  [value]="4">
-                        <label class="form-check-label" for="number-guests">
+                        <label class="form-check-label" for="number-guests" >
                           Nº de Quartos
                         </label>
                     </div>
                     <div class="form-check pe-3">
                         <input class="form-check-input" id="status" [(ngModel)]="searchOptions" type="radio" name="search"  [value]="5">
-                        <label class="form-check-label" for="status">
+                        <label class="form-check-label" for="status"  >
                           Status
                         </label>
                     </div>
@@ -219,27 +219,27 @@
     </div>
               
     <div class="row border border-1 p-2">
-        <div class="col">
+        <div class="col" role="button" (click)="changeOrder(1)">
            <b>Hóspede</b>
         </div>
     
-        <div class="col">
+        <div class="col" role="button" (click)="changeOrder(2)">
             <b>CheckIn</b>
         </div>
     
-        <div class="col">
+        <div class="col" role="button" (click)="changeOrder(3)">
             <b>CheckOut</b>
         </div>
     
-        <div class="col">
+        <div class="col" role="button" (click)="changeOrder(4)">
             <b>Tipo de Quarto</b>
         </div>
 
-        <div class="col">
+        <div class="col" role="button" (click)="changeOrder(5)">
             <b>Nº de Hóspedes</b>
         </div>
     
-        <div class="col">
+        <div class="col" role="button" (click)="changeOrder(6)">
             <b>Status</b>
         </div>
     
