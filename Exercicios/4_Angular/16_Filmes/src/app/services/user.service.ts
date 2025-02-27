@@ -46,17 +46,20 @@ export class UserService {
   }
 
   public generateFavoriteMoviesList() {
-    console.log("null");
+    this.getUser$(1).subscribe({
+      next: (user) => { this.user = user[0]; },
 
-    this.setFavoritesMovies([]);
+      complete: () => {
+        this.favoritesMovies = [];
 
-    this.getUser()?.favorites.forEach(movie => {
-      this.getMoviesService.getMovieById(movie, this.getConfigurationsService.getSelectedLanguage()).subscribe
-        ({
-          next: (movie) => {
-            this.favoritesMovies.push(movie);
-          }
+        this.user?.favorites.forEach(movie => {
+          this.getMoviesService.getMovieById(movie, this.getConfigurationsService.getSelectedLanguage()).subscribe({
+            next: (movie) => {
+              this.favoritesMovies.push(movie);
+            }
+          });
         });
+      }
     });
   }
 

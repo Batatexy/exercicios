@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
 import { ConfigurationsService } from './configurations.service';
 import { Credits } from '../models/credits';
+import { MoviesList } from '../models/moviesList';
 
 @Injectable({
   providedIn: 'root'
@@ -20,10 +21,26 @@ export class MoviesService {
   // } 
 
   //Filmes
-  private movies: Array<Movie> = [];
-  private movie?: Movie;
+  private movies: Array<MoviesList> =
+    [
+      {
+        name: "popular",
+        page: 1,
+        list: []
+      },
+      {
+        name: "top_rated",
+        page: 1,
+        list: []
+      },
+      {
+        name: "now_playing",
+        page: 1,
+        list: []
+      },
+    ];
 
-  private page: number = 1;
+  private movie?: Movie;
 
   //SearchBar
   private search: string = "";
@@ -39,22 +56,22 @@ export class MoviesService {
     Authorization: 'Bearer ' + environment.apiKey,
   };
 
-  public getPopularMovies(page: number, language: string): Observable<{ results: Array<Movie>; }> {
-    // tipar o retorno
+  public getMoviesByName(): Array<Movie> {
+    if (this.search != "") {
+      let searchMovies: Array<Movie> = [];
 
-    let params = new HttpParams(); // query params
-    params = params.set('language', language);
-    params = params.set('page', page);
+      this.getMovies("popular").slice(0, this.range).forEach((movie) => {
+        if (movie.title.toLowerCase().includes(this.search.toLowerCase())) {
+          searchMovies.push(movie);
+        }
+      });
 
-    return this.http.get<{ results: []; }>(`${this.apiUrl}/popular`, {
-      params: params,
-      headers: this.defaultHeaders,
-    });
+      return searchMovies;
+    }
+    return this.getMovies("popular").slice(0, this.range);
   }
 
   public getMovieById(id: number, language: string): Observable<Movie> {
-    // tipar o retorno
-
     let params = new HttpParams(); // query params
     params = params.set('language', language);
 
@@ -64,28 +81,7 @@ export class MoviesService {
     });
   }
 
-
-
-  public getMoviesByName(): Array<Movie> {
-    if (this.search != "") {
-      let searchMovies: Array<Movie> = [];
-
-      this.movies.slice(0, this.range).forEach((movie) => {
-        if (movie.title.toLowerCase().includes(this.search.toLowerCase())) {
-          searchMovies.push(movie);
-        }
-      });
-
-      return searchMovies;
-    }
-
-    return this.movies.slice(0, this.range);
-  }
-
-
   public getCredits(id: number, language: string): Observable<Credits> {
-    // tipar o retorno
-
     let params = new HttpParams(); // query params
     params = params.set('language', language);
 
@@ -100,13 +96,12 @@ export class MoviesService {
 
     this.addRange();
 
-    if (this.range >= this.movies.length) {
-      this.page++;
+    if (this.range >= this.getMovies("popular").length) {
+      this.setPage(this.getPage("popular") + 1, "popular");
 
-      this.getPopularMovies(this.page, this.getConfigurationsService.getSelectedLanguage()).subscribe({
+      this.getMovies$(this.getPage("popular"), this.getConfigurationsService.getSelectedLanguage(), "popular").subscribe({
         next: (res) => {
-          this.addMovies(res.results);
-          console.log("Filmes:", this.movies);
+          this.addMovies(res.results, "popular");
         },
         error: (err) => {
           console.error(err);
@@ -115,57 +110,52 @@ export class MoviesService {
     }
   }
 
+  public getMovies$(page: number, language: string, list: string): Observable<{ results: Array<Movie>; }> {
+    let params = new HttpParams(); // query params
+    params = params.set('language', language);
+    params = params.set('page', page);
+
+    let url = `${this.apiUrl}/${list}`;
+    console.log("url:", url);
 
 
+    return this.http.get<{ results: []; }>(url, {
+      params: params,
+      headers: this.defaultHeaders,
+    });
+  }
 
+  public getMovies(name: string): Array<Movie> {
+    return this.movies.filter(movieList => movieList.name == name)[0].list;
+  }
 
+  public setMovies(movies: Array<Movie>, name: string): void {
+    this.movies.forEach(movieList => {
+      if (movieList.name == name) {
+        movieList.list = movies;
+      }
+    });
+  }
 
+  public addMovies(newMovies: Array<Movie>, name: string): void {
+    this.movies.forEach(movieList => {
+      if (movieList.name == name) {
+        movieList.list = movieList.list.concat(newMovies);
+      }
+    });
+  }
 
+  public getPage(name: string): number {
+    return this.movies.filter(movieList => movieList.name == name)[0].page;
+  }
 
-
-
-
-
-
-
-  // //Getters and Setters
-  // public addLikedMovies(movie: Movie): void {
-  //   let likedMovies: Array<LikedMovie> = this.getLikedMovies();
-  //   let toPush: boolean = true;
-
-  //   likedMovies.forEach((likedMovie, index) => {
-  //     if (likedMovie.movieID == movie.id) {
-  //       likedMovie.liked = !likedMovie.liked;
-  //       toPush = false;
-  //     }
-  //   });
-
-  //   if (toPush) {
-  //     likedMovies.push({ movieID: movie.id, liked: true });
-  //   }
-
-  //   this.setLikedMovies(likedMovies);
-  // }
-
-  // public setLikedMovies(likedMovies: Array<LikedMovie>): void {
-  //   this.likedMovies = likedMovies;
-  // }
-
-  // public getLikedMovies(): Array<LikedMovie> {
-  //   return this.likedMovies;
-  // };
-
-
-
-
-
-
-
-
-
-
-
-
+  public setPage(page: number, name: string): void {
+    this.movies.forEach(movieList => {
+      if (movieList.name == name) {
+        movieList.page = page;
+      }
+    });
+  }
 
 
 
@@ -204,17 +194,7 @@ export class MoviesService {
     this.rangeIncrease = rangeIncrease;
   }
 
-  public getMovies(): Array<Movie> {
-    return this.movies;
-  }
 
-  public setMovies(movies: Array<Movie>): void {
-    this.movies = movies;
-  }
-
-  public addMovies(newMovies: Array<Movie>): void {
-    this.movies = this.movies.concat(newMovies);
-  }
 
   public getApiUrl(): string {
     return this.apiUrl;
@@ -224,13 +204,7 @@ export class MoviesService {
     return this.imagesUrl;
   }
 
-  public getPage(): number {
-    return this.page;
-  }
 
-  public setPage(page: number): void {
-    this.page = page;
-  }
 
   public getMovie(): Movie | undefined {
     return this.movie;

@@ -17,7 +17,6 @@ import { TranslatePipe } from '@ngx-translate/core';
     [
       MovieCardComponent, WhiteCardComponent, CommonModule,
       CommonActionButtonComponent, SearchAreaComponent, TranslatePipe
-
     ],
   templateUrl: './movies.component.html',
   styleUrl: './movies.component.scss'
@@ -36,29 +35,30 @@ export class MoviesComponent implements OnInit {
     this.getConfigurationsService.selectedLanguage$.subscribe({
       next: (language) => {
         console.log(language);
-        this.getMovies();
+        this.setPopularMovies();
       }
     });
 
     if (this.getMoviesService.getRange() == this.getMoviesService.getRangeIncrease()) {
-      this.getMovies();
+      this.setPopularMovies();
     }
 
   }
 
-  public getMovies() {
-    this.getMoviesService.setMovies([]);
+  public setPopularMovies() {
+    this.getMoviesService.setMovies([], "popular");
 
-    for (let page = 1; page <= this.getMoviesService.getPage(); page++) {
-      this.getMoviesService.getPopularMovies(page, this.getConfigurationsService.getSelectedLanguage()).subscribe({
+    for (let page = 1; page <= this.getMoviesService.getPage("popular"); page++) {
+      this.getMoviesService.getMovies$(page, this.getConfigurationsService.getSelectedLanguage(), "popular").subscribe({
         next: (res) => {
-          this.getMoviesService.addMovies(res.results);
+          this.getMoviesService.addMovies(res.results, "popular");
         },
         error: (err) => {
           console.error(err);
         },
         complete: () => {
-          console.log("Filmes:", this.getMoviesService.getMovies());
+          this.getMoviesByName();
+          console.log("Filmes:", this.getMoviesService.getMovies("popular"));
         }
       });
     }
@@ -112,13 +112,6 @@ export class MoviesComponent implements OnInit {
 
   public getSearch(): string {
     return this.getMoviesService.getSearch();
-  }
-
-  public setLikedMovies(movie: Movie): void {
-    // this.getMoviesService.addLikedMovies(movie);
-
-
-
   }
 
   public createZeroBeforeNumbers(number: number,): string {

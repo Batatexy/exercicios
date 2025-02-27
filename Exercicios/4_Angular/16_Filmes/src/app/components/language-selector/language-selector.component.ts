@@ -28,7 +28,6 @@ export class LanguageSelectorComponent {
 
   public setSelectedLanguage(language: string): void {
     if (language != this.getConfigurationsService.getSelectedLanguage()) {
-      this.getMoviesService.setMovies([]);
       this.getConfigurationsService.setSelectedLanguage(language);
     }
 

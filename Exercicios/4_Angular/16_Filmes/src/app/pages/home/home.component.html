@@ -20,7 +20,7 @@
 
     <div class="banner"></div>
 
-    <h1 class="font-36 work-sans d-flex">
+    <h1 class="row listed-movies font-36 work-sans d-flex">
         {{"home.yourFavoriteMovies" | translate}}
     </h1>
 
@@ -29,41 +29,10 @@
     {    
         @if(getFavoritesMovies())
         {
-            <app-white-card class="d-flex justify-content-center">
+            <app-white-card class="row listed-movies d-flex justify-content-center w-100 pt-4">
                 <ng-container content>
-                      <div id="carouselExample" class="carousel slide">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <div class="movies d-flex flex-wrap justify-content-center w-100">
-                                    @for (movie of getFavoritesMovies().slice(0, movieSlice); track $index) 
-                                    {
-                                        <app-movie-card [movie]="movie"/>
-                                    }
-                                </div>
-                            </div>
-    
-                            @for (i of getFavoritesMovies().slice((this.getFavoritesMovies().length - movieSlice) / movieSlice); track $index) 
-                            {
-                                <div class="carousel-item">
-                                    <div class="movies d-flex flex-wrap justify-content-center w-100">
-                                        @for (movie of getFavoritesMovies().slice((($index * movieSlice) + movieSlice), ($index * movieSlice) + (movieSlice * 2)); track $index) 
-                                        {
-                                            <app-movie-card [movie]="movie"/>
-                                        }
-                                    </div>
-                                </div>
-                            }
-    
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                          <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                          <span class="visually-hidden">Next</span>
-                        </button>
-                      </div>
+                    <h1 class="row listed-movies font-36 work-sans d-flex">Filmes Mais Bem Avaliados</h1>
+                    <app-carrousel-movies [id]="'favorites-movies'" [movies]="getFavoritesMovies()" [movieSlice]="movieSlice" />
                 </ng-container>
             </app-white-card>
         }
@@ -78,5 +47,19 @@
             <p>{{"moviesPage.noListedMovies" | translate}}</p>
         </div>
     }
+
+    <app-white-card class="row listed-movies d-flex justify-content-center w-100 pt-4">
+        <ng-container content>
+            <h1 class="row listed-movies font-36 work-sans d-flex">Filmes Mais Bem Avaliados</h1>
+            <app-carrousel-movies [id]="'top-rated'" [movies]="getMovies('top_rated')" [movieSlice]="movieSlice" />
+        </ng-container>
+    </app-white-card>
+
+    <app-white-card class="row listed-movies d-flex justify-content-center w-100 pt-4">
+        <ng-container content>
+            <h1 class="row listed-movies font-36 work-sans d-flex">Filmes em Cartaz</h1>
+            <app-carrousel-movies [id]="'now-playing'" [movies]="getMovies('now_playing')" [movieSlice]="movieSlice" />
+        </ng-container>
+    </app-white-card>
 
 </section>
