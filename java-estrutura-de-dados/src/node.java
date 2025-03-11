@@ -14,24 +14,19 @@ public class node
 		this.data = data;
 	}
 	
-	//Apenas os métodos necessários são publicos
-	public node getPrevious() 
-	{
+	public node getPrevious() {
 		return previous;
 	}
 
-	public void setPrevious(node previous) 
-	{
+	public void setPrevious(node previous) {
 		this.previous = previous;
 	}
 
-	public long getId() 
-	{
+	public long getId() {
 		return id;
 	}
 
-	public String getData() 
-	{
+	public String getData() {
 		return data;
 	}
 }
