@@ -76,6 +76,16 @@ label
     position: relative;
 }
 
+#erro-login
+{
+    color:red;
+}
+
+.tela-login
+{
+    width: 40em;
+}
+
 @media (max-width:574px)
 {
     .formulario-comprar-jogos img
@@ -117,5 +127,10 @@ label
     {
         top:0;
         font-size: 16px;
+    }
+
+    .tela-login
+    {
+        width: 100%;
     }
 }

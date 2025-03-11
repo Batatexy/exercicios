@@ -97,15 +97,24 @@ footer
     filter:saturate(100%);
 }
 
-.formulario-projeto form
+.formulario-projeto .formulario
 {
-    width: 42em;
+    width: 30em;
 }
 
 .formulario-projeto-datas span
 {
     width: 11em;
 }
+
+.aviso::placeholder
+{
+    color:red !important;
+}
+
+
+
+
 
 @media (max-width: 991px) 
 {
