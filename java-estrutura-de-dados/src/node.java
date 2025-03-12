@@ -1,32 +1,36 @@
-public class node 
+public class node
 {
-	//Cada nó aponta para o nó anterior
+	// Cada nó aponta para o nó anterior
 	private node previous;
-	
-	//Cada nó contem um ID e um dado
+
+	// Cada nó contem um ID e um dado
 	private long id;
 	private String data;
-	
-	//Construtor do nó
+
+	// Construtor do nó
 	public node(String data, long id)
 	{
 		this.id = id;
 		this.data = data;
 	}
-	
-	public node getPrevious() {
+
+	public node getPrevious()
+	{
 		return previous;
 	}
 
-	public void setPrevious(node previous) {
+	public void setPrevious(node previous)
+	{
 		this.previous = previous;
 	}
 
-	public long getId() {
+	public long getId()
+	{
 		return id;
 	}
 
-	public String getData() {
+	public String getData()
+	{
 		return data;
 	}
 }

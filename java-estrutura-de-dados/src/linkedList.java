@@ -11,7 +11,7 @@ public class linkedList
 
 	public void addData(String[] data)
 	{
-		for (int i = 0 ; i < data.length ; i++)
+		for (int i = 0; i < data.length; i++)
 		{
 			addData(data[i]);
 		}
@@ -24,7 +24,7 @@ public class linkedList
 
 	public void addDataStart(String[] data)
 	{
-		for (int i = 0 ; i < data.length ; i++)
+		for (int i = 0; i < data.length; i++)
 		{
 			addDataStart(data[i]);
 		}

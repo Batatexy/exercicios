@@ -146,4 +146,10 @@ public class commonMethods
 		return 1;
 	}
 
+	public void printLine()
+	{
+		System.out.println(
+				"\n==========================================================================================\n");
+	}
+
 }

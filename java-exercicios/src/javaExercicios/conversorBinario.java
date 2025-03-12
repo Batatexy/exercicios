@@ -1,6 +1,6 @@
 package javaExercicios;
 
-public class main
+public class conversorBinario
 {
 
 	public static void main(String[] args){
