@@ -16,12 +16,10 @@ public class hotelPraias
 
 		while (!(nome.toLowerCase().equals("zzz")))
 		{
-			System.out.println("Média das Distâncias de Praias: " + media);
-
-			System.out.println("Digite o Nome da Praia:");
+			System.out.print("Digite o Nome da Praia: ");
 			nome = scanner.nextLine();
 
-			System.out.println("Digite o Distância da Praia(Km):");
+			System.out.print("Digite o Distância da Praia(Km): ");
 			int distancia = scanner.nextInt();
 			scanner.nextLine();
 
@@ -32,9 +30,10 @@ public class hotelPraias
 
 			if (distancia > 10 && distancia < 15)
 			{
-				System.out.println("A Praia está a mais de 10 Km e Menos que 15Km de Distância\n");
+				System.out.println("A Praia está entre 10Km e 15Km de Distância!");
 			}
 
+			System.out.println("Média das Distâncias de Praias: " + media + "\n");
 		}
 
 	}

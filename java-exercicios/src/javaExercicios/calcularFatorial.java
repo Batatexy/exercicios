@@ -5,21 +5,14 @@ public class calcularFatorial
 
 	public static void main(String[] args)
 	{
-		// 21! é o Máximo
-		System.out.println(calcularFatorial(21));
-
-	}
-
-	public static long calcularFatorial(int numero)
-	{
 		long fatorial = 1;
 
-		for (int i = 1; i < numero; i++)
+		// 21! é o Máximo que o double suporta
+		for (int i = 2; i < 22; i++)
 		{
+			System.out.print(fatorial + " x " + i + " = ");
 			fatorial *= i;
+			System.out.println(fatorial);
 		}
-
-		return fatorial;
 	}
-
 }

@@ -1,5 +1,7 @@
 package javaExercicios;
 
+import java.util.Scanner;
+
 public class mediaAluno
 {
 	static double mediaEscola = 6;
@@ -14,21 +16,37 @@ public class mediaAluno
 		double media = calcularMedia(nota1, nota2, nota3);
 		System.out.println("Media: " + media + ", " + validarMedia(media));
 		System.out.println(maiorNota(nota1, nota2, nota3));
-		System.out.println(menorNota(nota1, nota2, nota3));
+		System.out.println(menorNota(nota1, nota2, nota3) + "\n");
 
 		// Exercicio 6
 
-		String alunos = "g345345;1.23;5;8/h234242;4;10;7.5/k84835834;6;4.5;1";
+		Scanner scanner = new Scanner(System.in);
 
-		for (int i = 0; i < alunos.split("/").length; i++)
+		while (true)
 		{
-			String aluno = alunos.split("/")[i];
-			String matricula = aluno.split(";")[0];
-			double alunoNota1 = Double.valueOf(aluno.split(";")[1]);
-			double alunoNota2 = Double.valueOf(aluno.split(";")[2]);
-			double alunoNota3 = Double.valueOf(aluno.split(";")[3]);
-			System.out.println(matricula + ": " + validarMedia(calcularMedia(alunoNota1, alunoNota2, alunoNota3)));
+			System.out.print("Insira a Matricula: ");
+			String matricula1 = scanner.nextLine();
+
+			System.out.println("Insira as 3 Notas: ");
+			double matricula1Nota1 = scanner.nextDouble();
+			double matricula1Nota2 = scanner.nextDouble();
+			double matricula1Nota3 = scanner.nextDouble();
+
+			System.out.println(matricula1 + ": " + validarMedia(calcularMedia(matricula1Nota1, matricula1Nota2, matricula1Nota3)) + "\n");
 		}
+
+		// Exercicio 6
+//		String alunos = "g345345;1.23;5;8/h234242;4;10;7.5/k84835834;6;4.5;1";
+//
+//		for (int i = 0; i < alunos.split("/").length; i++)
+//		{
+//			String aluno = alunos.split("/")[i];
+//			String matricula = aluno.split(";")[0];
+//			double alunoNota1 = Double.valueOf(aluno.split(";")[1]);
+//			double alunoNota2 = Double.valueOf(aluno.split(";")[2]);
+//			double alunoNota3 = Double.valueOf(aluno.split(";")[3]);
+//			System.out.println(matricula + ": " + validarMedia(calcularMedia(alunoNota1, alunoNota2, alunoNota3)));
+//		}
 	}
 
 	public static String maiorNota(double nota1, double nota2, double nota3)
@@ -58,7 +76,7 @@ public class mediaAluno
 
 	public static String validarMedia(double media)
 	{
-		if (media > mediaEscola)
+		if (media >= mediaEscola)
 		{
 			return "Aluno Aprovado";
 		} else if (media < mediaEscola - 2)
