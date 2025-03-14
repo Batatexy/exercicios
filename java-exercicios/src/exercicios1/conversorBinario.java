@@ -1,4 +1,4 @@
-package javaExercicios;
+package exercicios1;
 
 public class conversorBinario
 {

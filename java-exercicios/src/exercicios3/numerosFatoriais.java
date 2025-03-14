@@ -1,6 +1,6 @@
-package javaExercicios;
+package exercicios3;
 
-public class calcularFatorial
+public class numerosFatoriais
 {
 
 	public static void main(String[] args)
@@ -10,7 +10,12 @@ public class calcularFatorial
 		// 21! é o Máximo que o double suporta
 		for (int i = 2; i < 22; i++)
 		{
-			System.out.print(fatorial + " x " + i + " = ");
+			String espaco = "";
+
+			if (i < 10)
+				espaco = " ";
+
+			System.out.print(i + "! " + espaco + "= " + fatorial + " x " + i + " = ");
 			fatorial *= i;
 			System.out.println(fatorial);
 		}

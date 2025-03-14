@@ -1,4 +1,4 @@
-package javaExercicios;
+package exercicios3;
 
 public class numerosPrimos
 {
@@ -24,5 +24,15 @@ public class numerosPrimos
 			if (primo)
 				System.out.print(i + " ");
 		}
+		
+		System.out.println();
+
+		for (int i = 0; i <= 200; i++)
+		{
+			char c = (char) i;
+			
+			System.out.print(c + " ");
+		}
+
 	}
 }

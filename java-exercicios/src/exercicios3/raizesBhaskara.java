@@ -1,6 +1,6 @@
-package javaExercicios;
+package exercicios3;
 
-public class Bhaskara
+public class raizesBhaskara
 {
 	public static void main(String[] args)
 	{
