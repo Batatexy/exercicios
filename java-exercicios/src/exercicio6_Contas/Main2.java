@@ -52,7 +52,7 @@ public class Main2
 					System.out.println(i + ". " + Pessoa.pessoas.get(i - 1).getNome());
 				}
 
-				System.out.println("Escolha uma das Pessoa.pessoas acima:");
+				System.out.println("Escolha uma das pessoas acima:");
 				int pessoaEscolhida = scanner.nextInt();
 				pessoaEscolhida--;
 				scanner.nextLine();
