@@ -1,49 +1,48 @@
 package exercicios09_MaquinaDeGuloseima;
 
-import java.util.ArrayList;
-
 public class MaquinaDeGuloseimas
 {
-	private ArrayList<Produto> produtos = new ArrayList<>();
+	private Produto[] produtos;
+	private int somador;
+
 	private double dinheiroAcumulado;
 
-	public MaquinaDeGuloseimas(ArrayList<Produto> produtos)
+	public MaquinaDeGuloseimas(Produto[] produtos)
 	{
 		this.produtos = produtos;
 		this.dinheiroAcumulado = 0;
+		this.somador = 0;
 	}
 
-	public MaquinaDeGuloseimas(Produto produto)
-	{
-		this.produtos.add(produto);
-		this.dinheiroAcumulado = 0;
-	}
-
-	
-	
 	public void depositar(Dinheiro dinheiro)
 	{
 		dinheiroAcumulado += dinheiro.getValor();
 	}
 
-	
-	
-	public void comprar(int indice, Dinheiro dinheiro)
+	public void comprar(int indice, Dinheiro dinheiro) throws ExceptionsSaldoInsuficiente, ExceptionsProdutoIndisponivel
 	{
-		String trocoString = "\n";
-		if (dinheiro.getValor() > produtos.get(indice).getValor())
+		if (indice >= 0 && indice < 4)
 		{
-			// Sla tem que testar
+			if (produtos[indice] == null)
+				throw new ExceptionsProdutoIndisponivel();
+		} 
+		else
+		{
+			throw new ExceptionsProdutoInexistente();
+		}
+
+		String trocoString = "\n";
+		if (dinheiro.getValor() > produtos[indice].getValor())
+		{
 			dinheiroAcumulado += dinheiro.getValor();
-			dinheiroAcumulado -= (dinheiro.getValor() - produtos.get(indice).getValor());
-			double troco = (dinheiro.getValor() - produtos.get(indice).getValor());
+			dinheiroAcumulado -= (dinheiro.getValor() - produtos[indice].getValor());
+			double troco = (dinheiro.getValor() - produtos[indice].getValor());
 
 			trocoString = "\nTroco de R$" + troco + "\n";
 		}
-		else if (dinheiro.getValor() < produtos.get(indice).getValor())
+		else if (dinheiro.getValor() < produtos[indice].getValor())
 		{
-			System.out.println("Dinheiro Insuficiente\n");
-			return;
+			throw new ExceptionsSaldoInsuficiente();
 		}
 		else
 		{
@@ -56,14 +55,20 @@ public class MaquinaDeGuloseimas
 
 	//////////
 
-	public ArrayList<Produto> getProdutos()
+	public Produto[] getProdutos()
 	{
-		return produtos;
+		return this.produtos;
 	}
 
-	public void addProduto(Produto produto)
+	public void addProduto(Produto produto) throws ExceptionsEspacoInsuficiente
 	{
-		this.produtos.add(produto);
+		if (somador > 4)
+		{
+			throw new ExceptionsEspacoInsuficiente();
+		}
+		
+		this.produtos[somador] = produto;
+		somador++;
 	}
 
 	public double getDinheiroAcumulado()

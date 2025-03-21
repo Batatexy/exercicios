@@ -1,5 +1,7 @@
 package exercicios07_ArvoreBinaria;
 
+import ConsoleColors.Colors;
+
 public class Main
 {
 
@@ -19,19 +21,19 @@ public class Main
 		for (int i = 1; i <= 50; i++)
 		{
 			String zero = "";
-			String cor = ConsoleColors.GREEN_BRIGHT;
+			String cor = Colors.GREEN_BRIGHT;
 
 			if (i < 10)
 				zero = "0";
 
-			System.out.print(ConsoleColors.WHITE + zero + i + ": ");
+			System.out.print(Colors.WHITE + zero + i + ": ");
 
 			boolean dado = raiz.procurar(i);
 
 			if (!dado)
-				cor = ConsoleColors.RED_BRIGHT;
+				cor = Colors.RED_BRIGHT;
 
-			System.out.print(cor + dado + ConsoleColors.WHITE + ", ");
+			System.out.print(cor + dado + Colors.WHITE + ", ");
 
 
 			if (dado)
