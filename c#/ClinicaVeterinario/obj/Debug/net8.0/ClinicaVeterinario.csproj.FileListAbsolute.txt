@@ -1,0 +1,14 @@
+C:\Users\Gabriel Carrascosa\cs-workspace\ClinicaVeterinario\obj\Debug\net8.0\ClinicaVeterinario.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Gabriel Carrascosa\cs-workspace\ClinicaVeterinario\obj\Debug\net8.0\ClinicaVeterinario.AssemblyInfoInputs.cache
+C:\Users\Gabriel Carrascosa\cs-workspace\ClinicaVeterinario\obj\Debug\net8.0\ClinicaVeterinario.AssemblyInfo.cs
+C:\Users\Gabriel Carrascosa\cs-workspace\ClinicaVeterinario\obj\Debug\net8.0\ClinicaVeterinario.csproj.CoreCompileInputs.cache
+C:\Users\Gabriel Carrascosa\cs-workspace\ClinicaVeterinario\bin\Debug\net8.0\ClinicaVeterinario.exe
+C:\Users\Gabriel Carrascosa\cs-workspace\ClinicaVeterinario\bin\Debug\net8.0\ClinicaVeterinario.deps.json
+C:\Users\Gabriel Carrascosa\cs-workspace\ClinicaVeterinario\bin\Debug\net8.0\ClinicaVeterinario.runtimeconfig.json
+C:\Users\Gabriel Carrascosa\cs-workspace\ClinicaVeterinario\bin\Debug\net8.0\ClinicaVeterinario.dll
+C:\Users\Gabriel Carrascosa\cs-workspace\ClinicaVeterinario\bin\Debug\net8.0\ClinicaVeterinario.pdb
+C:\Users\Gabriel Carrascosa\cs-workspace\ClinicaVeterinario\obj\Debug\net8.0\ClinicaVeterinario.dll
+C:\Users\Gabriel Carrascosa\cs-workspace\ClinicaVeterinario\obj\Debug\net8.0\refint\ClinicaVeterinario.dll
+C:\Users\Gabriel Carrascosa\cs-workspace\ClinicaVeterinario\obj\Debug\net8.0\ClinicaVeterinario.pdb
+C:\Users\Gabriel Carrascosa\cs-workspace\ClinicaVeterinario\obj\Debug\net8.0\ClinicaVeterinario.genruntimeconfig.cache
+C:\Users\Gabriel Carrascosa\cs-workspace\ClinicaVeterinario\obj\Debug\net8.0\ref\ClinicaVeterinario.dll

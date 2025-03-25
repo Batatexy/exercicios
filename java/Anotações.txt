@@ -1,0 +1,39 @@
+// Nomeclaturas / organizações de pastas e etc
+
+com = comercial
+org = organização
+opensource / org = opensource
+
+// Nome da Empresa: HyperTech
+
+com.hypertech.notification.app
+com.hypertech.notification.model
+com.hypertech.notification.util
+com.hypertech.notification.service
+
+// Nome: Lucas
+
+edu.lucas.tema.logica
+edu.lucas.tema.logicadefluxo
+edu.lucas.tema.primeirasemana
+
+
+
+// Não abreviar variáveis pra uns nomes esquisitos:
+
+salmedio = 1500
+salarioMedio = 1500
+
+// Não colocar no plural algo que não precise estar
+
+String emails = "aluno@escola.com"
+
+// Escolher apenas um idioma para nomear as variáveis
+
+// Escrever o nome dos métodos com verbos
+
+somar(int n1, int n2)
+
+// Dividir os métodos
+
+calcularImprimir(){} // afinal, ele vai calcular ou imprimir?

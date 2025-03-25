@@ -1,0 +1,97 @@
+{
+    // Use o IntelliSense para saber mais sobre os atributos possíveis.
+    // Focalizar para exibir as descrições dos atributos existentes.
+    // Para obter mais informações, acesse: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CalculadoraFoda",
+            "request": "launch",
+            "mainClass": "CalculadoraFoda",
+            "projectName": "java-terminal_ae3b8240"
+        },
+        {
+            "type": "java",
+            "name": "scanner",
+            "request": "launch",
+            "mainClass": "scanner",
+            "projectName": "java-terminal_ae3b8240"
+        },
+        {
+            "type": "java",
+            "name": "javaTerminal",
+            "request": "launch",
+            "mainClass": "javaTerminal",
+            "projectName": "java-terminal_ae3b8240"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "javaTerminal",
+            "request": "launch",
+            "mainClass": "javaTerminal",
+            "args": [
+                "Gabriel",
+                "Carrascosa",
+                "19",
+                "1.71"
+            ],
+            "projectName": "java-terminal_d790d133"
+        },
+        {
+            "type": "java",
+            "name": "usuario",
+            "request": "launch",
+            "mainClass": "edu.gabriel.metodos.usuario",
+            "projectName": "java_cd4f8e7b"
+        },
+        {
+            "type": "java",
+            "name": "boletimEstudantil",
+            "request": "launch",
+            "mainClass": "edu.gabriel.semana1.boletimEstudantil",
+            "projectName": "java_cd4f8e7b"
+        },
+        {
+            "type": "java",
+            "name": "myClass",
+            "request": "launch",
+            "mainClass": "edu.gabriel.semana1.myClass",
+            "projectName": "java_cd4f8e7b"
+        },
+        {
+            "type": "java",
+            "name": "operadores",
+            "request": "launch",
+            "mainClass": "edu.gabriel.semana1.operadores",
+            "projectName": "java_cd4f8e7b"
+        },
+        {
+            "type": "java",
+            "name": "palavrasReservadas",
+            "request": "launch",
+            "mainClass": "edu.gabriel.semana1.palavrasReservadas",
+            "projectName": "java_cd4f8e7b"
+        },
+        {
+            "type": "java",
+            "name": "tiposVariaveis",
+            "request": "launch",
+            "mainClass": "edu.gabriel.semana1.tiposVariaveis",
+            "projectName": "java_cd4f8e7b"
+        },
+        {
+            "type": "java",
+            "name": "sera",
+            "request": "launch",
+            "mainClass": "sera",
+            "projectName": "java_cd4f8e7b"
+        }
+    ]
+}

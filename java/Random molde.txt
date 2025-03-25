@@ -1,0 +1,7 @@
+import java.util.Random;
+
+new Random().nextInt(3)==1;
+
+// Exemplos:
+
+boolean atendeu = new Random().nextInt(3)==1;

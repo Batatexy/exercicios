@@ -1,0 +1,94 @@
+é uma linguagem simples
+
+termos são classes e objetos
+encapsulamento
+abstração
+herança
+polimorfismo
+
+platafaroma independente que
+funciona em multiplos dispositivos
+
+linguagem robusta, é capaz de lidar com o
+encerramento inesperado de um programa
+
+usa um gerenciamento de memoria forte
+fornece coleta de lixo automatico
+
+seguro
+concegue verificaqr se tem algum virus, algum
+comportamento que foi adulterado
+
+é compilada para gerar arquivos bytecode e 
+JVM(Java Virtual Machine) que interpreta o arquivo de bytecode durante a execução
+
+multi thread
+realiza diversos processos leves, tornanodo a leve
+
+
+
+Historia
+
+Sun Microsystems financiou uma pesquisa com o coidnome Green em 1991
+baseada em c e c++ que o criado James Gosling chamou de oak, por conta de uma arvore que da para sua janela do escritorio
+
+mas ai ja existia a oak, ent colocaram java, cidade de origem de um tipo de café importado
+
+n tava dando bom, nao estava se desenvolvendo rapido, o projeto tava em risco
+
+1993, a world wide web explodiu em popularidade e começaram a usar java
+
+1995, uma conferença deu bom de vdd
+
+Aplicações mais utilizadas:
+pagias web com conteuro interativo e dinamico
+aplicações corporrativos de grande porte
+softwares destinados ao consumdor final
+aplicativos para smartphones
+
+25 de Java, provavelmente mais
+
+J2SE 5.0
+JAVA SE 8
+
+agr é da Oracle
+
+
+IDEs (Ambiente de Desenvolvimento Integrado)
+
+São usadadas para a aceleração da escrita com auto-complete ou intellisense,
+formatação de palavras e blocos de códigos
+analise de erro de sintaxe
+compilação de programa
+depuração, acompanhamento de execução do programa
+
+-Visual Studio Code
+Serve pra td meu fi
+
+-NetBeans
+Mais academico, interface em portugues e etc
+
+-Eclipse
+Interface simples, plugins
+
+-IntelliJIDEA
+Bão mas tem umas paradas pagas, ela dá dicas ao longo do tempo
+
+
+
+Java EE, Java SE, Java ME e JavaFX.
+
+contém recursos para desenvolvimento de páginas Web:
+Java EE
+
+biblioteca de componentes visuais:
+Java SE
+
+aplicação compilada para seus clientes, oq tem q serinstalado na máquina do seu cliente?
+JRE
+
+Após a compilação do código fonte na linguagem, qual a extensão do conteúdo gerado?
+.class
+
+Quais são os componentes de instalação da plataforma Java?
+JDk / JRE
