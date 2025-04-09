@@ -12,6 +12,7 @@ INSERT INTO Clientes VALUES (1, 'João',       345220,       'Rua sla',    'sajd
 INSERT INTO Clientes VALUES (2, 'Maria Souza',324234234234, 'Rua B, 456', 'maria@email.com', 11999990002, TO_DATE('2000-02-20','YYYY-MM-DD'));
 INSERT INTO Clientes VALUES (3, 'Carlos Lima',2423423432,   'Rua C, 789', 'carlos@email.com', 11999990003, TO_DATE('1987-12-30','YYYY-MM-DD'));
 INSERT INTO Clientes VALUES (4, 'João Silva', 43534534534,  'Rua A, 123', 'joao@email.com', 11999990001, TO_DATE('1990-07-02','YYYY-MM-DD'));
+INSERT INTO Clientes VALUES (5, 'Wilson Marques', 6456456456,  'Rua Ç, 987', 'wilson@gmail.com', 11999490601, TO_DATE('1985-05-20','YYYY-MM-DD'));
 select * from Clientes;
 
 /***************************************************************************************************************/
@@ -32,6 +33,7 @@ CREATE TABLE Veiculos (
 INSERT INTO Veiculos VALUES (1, 2, 'Fiesta', 'Ford', 2015, 'ABC1A23', 'Vermelho', 119.99);
 INSERT INTO Veiculos VALUES (2, 3, 'Onix', 'Chevrolet', 2020, 'DEF4B56', 'Prata', 129.99);
 INSERT INTO Veiculos VALUES (3, 4, 'Corolla', 'Toyota',  2018, 'GHI7C89', 'Preto', 139.99);
+INSERT INTO Veiculos VALUES (4, 5, 'Civic', 'Honda',  2008, 'GDN3U52', 'Prata', 119.99);
 select * from Veiculos;
 
 /***************************************************************************************************************/

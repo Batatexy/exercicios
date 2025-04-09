@@ -8,6 +8,7 @@ CREATE TABLE Pecas (
     lote NUMBER,
     serial NUMBER,
     quantidade NUMBER
+    
 );
 
 INSERT INTO Pecas VALUES (1, 'Pastilha de freio', 101, 7375, 50);
