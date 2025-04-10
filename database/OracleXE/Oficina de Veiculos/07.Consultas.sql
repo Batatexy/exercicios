@@ -17,9 +17,11 @@ join servicos s on s.id_cliente = cli.id_cliente;
     campo_data >= '01/01/2025' and campo_data < '01/04/2025';
  */
  
+select count(distinct os.id_ordem_servico) as Ordens_Serviço_01_01_2025 from ordem_servico os
+where os.data_fim >= '01/01/2025' or os.data_inicio >= '01/01/2025';
 
-
-
+select count(distinct s.id_servico) as Serviços_01_01_2025 from servicos s
+where s.data_fim >= '01/01/2025' or s.data_inicio >= '01/01/2025';
 
 
 
