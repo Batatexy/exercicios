@@ -117,8 +117,6 @@ e também é possivel realizar selects a partir desta view criada*/
 /*lower, upper*/
 select r.nome from relatorio r where lower(r.nome) like lower('carlos lima');
 
-
-
 /*LISTAGG*/
 select t.descricao, listagg(p.descricao, '; ') as peças_usadas from pecas p
 join pecas_servico ps on ps.id_peca = p.id_peca
@@ -126,6 +124,19 @@ join servicos s on s.id_servico = ps.id_servico
 join tipo t on t.id_tipo_servico = s.id_tipo_servico
 group by t.descricao;
 
+select c.descricao as categorias, listagg(p.descricao, '; ') as peças from pecas p
+join categorias c on c.id_categoria = p.id_categoria
+group by c.descricao;
+
+/*Concatenações*/
+SELECT 'Peça: ' || p.descricao || '-Novo' AS Peças FROM pecas p;
+
+SELECT 
+  'UPDATE Materiais SET peca = ''' || descricao || ''' WHERE id_peca = ' || id_peca || ';' AS comando_sql
+FROM pecas;
+
+/*   SQL Injection Nome: ' or '1'='1   */
+SELECT * FROM clientes WHERE nome ='' or '1'='1';
 
 
 
