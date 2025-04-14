@@ -139,7 +139,8 @@ FROM pecas;
 SELECT * FROM clientes WHERE nome ='' or '1'='1';
 
 
-
+select * from veiculos  
+where lower(modelo) in lower('onix');
 
 
 
